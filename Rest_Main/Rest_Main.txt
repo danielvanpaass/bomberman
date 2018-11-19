@@ -49,5 +49,5 @@ With the coördinates of the bomb it gets decided what should happen with it:
 X = even AND Y = uneven = vertical explosion
 X = uneven AND Y = even = horizontal explosion
 X = even AND Y = even = + explosion
-This is with X = even, that has to be set at the beginning of the FSM.
+This is with  0 = even, that has to be set at the beginning of the FSM.
 
