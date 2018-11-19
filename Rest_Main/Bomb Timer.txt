@@ -1,0 +1,48 @@
+Amount of flip-flops + workings of rest-main:
+
+Tc = 8E-8s
+
+26 bits = max time for counter of 2.68s. Should be enough for bomb.
+Counter: #bits = #flip-flops = 26 flip-flops per counter.
+
+Maaaaaar, "output" module has to make a signal of 60Hz for the screen. So the counters can tap off this signal to create a timer with way less flip-flops, making more space for the rest.
+
+If Tc = 16.7E-3s
+7 bits = max time of 2.13s = 7 flip-flops per counter
+
+Input bomb timer: 2 bits, because bomb yes or no = 1 bit, and 1 bit for player 1 or 26
+Output bomb timer: 2 bit, see input, first time bomb then place it, next time that flag is high remove it (exploded)
+
+
+Bomb timer:
+Two timers that keep tab of each bomb and let the coördinates block know when one gets placed or when one explodees.
+Input bomb timer: bomb yes or no = 1 bit, and 1 bit for player 1 or 2
+Output bomb timer: see input, first time bomb then place it, next time that flag is high remove it (exploded)
+
+If Tc = 16.7E-3s (60Hz)
+7 bits = max time of 2.13s = 7 flip-flops per counter
+#Flip-Flops= input 2 + output 2 + timers 2*7 = 18 flip-flops 
+
+Hit register:
+Option 1: have as input both player locations and active entities of exploding bomb, depending on grid size is and size of bomb explotion.
+Option 2: have as input both player locations and location of bomb, from which it calculates where the bomb reaches and if it reaches, then grid-gen would have to go to hit register and 
+the output should somehow merge with the output of coördinates, = annoying. Unless grid location is going to get sent through the loop, then it would just be an addition and possible.
+
+Assuming grid = 7x7 = 49 pixels
+Option 1:
+#Flip-flops = input player loc 49*2=98 options + input bomb loc 9*49 = 441 different possibilities = 539 options = 10 bits = 10 flip-flops? Waarschijnlijk niet   
+Option 2: not necessary
+
+Victory:
+Multiplexer, either output of grid or victory screen. Depending on VGA difficulty relatively easy to do.
+#Flip-flops = 0
+
+Hit register:
+
+Input: if bomb exploded: location bomb + location players + bomb name (8 + 8 + 8 + 4 = 28 bits) 
+Output: bomb name + action + on/off (4 + 2 + 1 = 7 bits per bomb)
+
+Structure: 
+With a FSM it gets decided what action should happen, bomb explosion vertical, horizontal or both, and if a player got hit.
+The timer keeps the on bit high for a certain amount of time, after which it will go low.
+With the coördinates of the bomb it gets decided what should happen with it (x uneven means block above and below bomb etc.)
