@@ -45,4 +45,9 @@ Output: bomb name + action + on/off (4 + 2 + 1 = 7 bits per bomb)
 Structure: 
 With a FSM it gets decided what action should happen, bomb explosion vertical, horizontal or both, and if a player got hit.
 The timer keeps the on bit high for a certain amount of time, after which it will go low.
-With the coördinates of the bomb it gets decided what should happen with it (x uneven means block above and below bomb etc.)
+With the coördinates of the bomb it gets decided what should happen with it:
+X = even AND Y = uneven = vertical explosion
+X = uneven AND Y = even = horizontal explosion
+X = even AND Y = even = + explosion
+This is with X = even, that has to be set at the beginning of the FSM.
+
