@@ -32,7 +32,7 @@ case dir_state_p1 is
 	when attempt_to_right =>
 		new_x_p1<= old_x_p1;
 		new_y_p1<= old_y_p1;
-		pass_enabled <= not((crates((conv_integer(old_y_p1)) * 11 + conv_integer(old_x_p1)+1))OR(walls((conv_integer(old_y_p1)) * 11 + conv_integer(old_x_p1)+1))
+		pass_enabled <= not(crates((conv_integer(old_y_p1)) * 11 + conv_integer(old_x_p1)+1))
 		if pass_enabled = '1' then
 			new_state <= right_output;
 		else 
@@ -40,7 +40,8 @@ case dir_state_p1 is
 		end if;
 	when right_output
 		new_x_p1 <= std_logic_vector(to_unsigned(to_integer(unsigned( old_x_p1 )) + 1, 4));
-		new_y_p1 <= old_y_p1;
+		new_y_p1 <= 
+	when
 end
 
 end hitbox_behaviour;

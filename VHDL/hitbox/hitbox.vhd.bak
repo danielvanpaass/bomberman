@@ -9,7 +9,6 @@ entity hitbox is
         old_x_p2 : in  std_logic_vector(3 downto 0);
         old_y_p2 : in  std_logic_vector(3 downto 0);
         crates   : in  std_logic_vector(120 downto 0);
-        walls    : in  std_logic_vector(120 downto 0);
         up_p1    : in  std_logic;
         right_p1 : in  std_logic;
         down_p1  : in  std_logic;
