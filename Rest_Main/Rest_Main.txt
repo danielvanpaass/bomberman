@@ -51,3 +51,16 @@ X = uneven AND Y = even = horizontal explosion
 X = even AND Y = even = + explosion
 This is with  0 = even, that has to be set at the beginning of the FSM.
 
+END RESULT:
+Rest-main will consist of multiple "layers"
+Rest-main will consist mostly of 8 timers, one for each bomb. Which will keep track ONLY of when a bomb explodes, because the grid block will also have player and bomb placed as input.
+Every timer of rest-main is connected to one storage block from grid, the timer only lets the storage block know when the bomb there has to explode.
+
+Timer bomb consists of 8 timers, one for each bomb. Every timer manages the timing of the bomb and lets the storage block in grid know when it explodes. This is the "lowest" layer.
+The layer above that will decide which counters are in use at the moment, so it decides which timer needs to be turned on. This is done in correspondance with the grid block, by using the same type of multiplexer for it.
+if a bomb explodes, a timer starts that will keep track for how long the blocks around the bomb are "lethal". This needs to be decided.
+
+Timer bomb input: bomb placed, which player, clk
+Timer bomb output: one bit for every timer, to let them know if a bomb explodes or not.
+
+
