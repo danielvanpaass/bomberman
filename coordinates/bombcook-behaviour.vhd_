@@ -1,0 +1,70 @@
+library IEEE;
+use IEEE.std_logic_1164.ALL;
+
+architecture behaviour of bombcook is
+
+type bombcook_states is (nobomb, cook, still_cook, explode);
+
+signal state, new_state: bombcook_states;
+signal bombxsample, bombysample : std_logic_vector(3 downto 0);
+
+begin
+
+process (clk, reset)
+  begin
+   if (rising_edge (clk)) then
+     if (reset = '1') then
+       state <= nobomb;
+     else
+       state <= new_state;
+     end if;
+   end if;
+end process;
+
+process (state, clk, reset)
+
+	begin
+	case state is
+		when nobomb =>
+		bombx <= "0000";
+		bomby <= "0000";
+		bombdisplay <= '0';
+		if (bombinit = '1') then
+			new_state <= cook;
+		else
+			new_state <= nobomb;
+		end if;
+
+		when cook =>
+		bombxsample <= playerx;
+		bombysample <= playery;
+		bombx <= "0000";
+		bomby <= "0000";
+		bombdisplay <= '0';
+		new_state <= still_cook;
+
+		when still_cook =>
+		bombx <= bombxsample;
+		bomby <= bombysample;
+		bombdisplay <= '1';
+		if (expl = '1') then
+			new_state <= explode;
+		else
+			new_state <= still_cook;
+		end if;
+
+		when explode =>
+		bombx <= playerx;
+		bomby <= playery;
+		bombdisplay <= '1';
+		if (expl = '0') then
+			new_state <= nobomb;
+		else
+			new_state <= explode;
+		end if;
+
+	end case;
+end process;
+
+end behaviour;
+
