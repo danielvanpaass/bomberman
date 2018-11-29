@@ -56,8 +56,9 @@ PROCESS (count_p2)
 ------------- Check if there's an obstacle module for P1 (might be a problem that this doesnt update on clock)
 process (clk, crates, walls, check_x_p1, check_y_p1, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active)---bomb_x_c, bomb_y_c, bomb_c_active,bomb_x_d, bomb_y_d, bomb_d_active,bomb_x_e, bomb_y_e, bomb_e_active,bomb_x_f, bomb_y_f, bomb_f_active,bomb_x_g, bomb_y_g, bomb_g_active,bomb_x_h, bomb_y_h, bomb_h_active
 begin
-	if (  ( crates(  to_integer(unsigned(check_x_p1))+to_integer(unsigned(check_y_p1))*11) = '0')
-	AND (  walls (  to_integer(unsigned(check_x_p1))+to_integer(unsigned(check_y_p1))*11) = '0')
+	if (  
+		(   crates(unsigned(check_x_p1) + unsigned(check_y_p1)*11) = '0'   )
+	AND (  walls (  unsigned(check_x_p1)+unsigned(check_y_p1)*11) = '0')
 	AND (    bomb_x_a /= std_logic_vector(check_x_p1) OR (bomb_y_a /= std_logic_vector(check_y_p1)) OR ( bomb_a_active = '0' ) )
 	AND (    bomb_x_b /= std_logic_vector(check_x_p1) OR (bomb_y_b /= std_logic_vector(check_y_p1)) OR( bomb_b_active = '0' ) )
 	--AND (    bomb_x_c /= std_logic_vector(check_x_p1) OR (bomb_y_c /= std_logic_vector(check_y_p1)) OR( bomb_c_active = '0' ) )
@@ -207,6 +208,8 @@ case dir_state_p1 is
 		check_y_p1 <= "0000";
 	start_hitbox_count_p1<='0';
 	when cooldown =>
+	new_x_p1<=  x_p1;
+	new_y_p1<= y_p1;
 	start_hitbox_count_p1<='1';
 		check_x_p1 <= "0000";
 		check_y_p1 <= "0000";
@@ -325,6 +328,7 @@ case dir_state_p2 is
 		start_hitbox_count_p2<='0';
 		check_x_p2 <= "0000";
 		check_y_p2 <= "0000";
+
 	when cooldown =>
 	start_hitbox_count_p2<='1';
 	if (hitbox_count_p2 > "001000110101") then --"110000110101"
@@ -332,6 +336,8 @@ case dir_state_p2 is
 	else
 		new_state_p2<= cooldown;
 	end if;
+	new_x_p2<=  x_p2;
+	new_y_p2<= y_p2;
 	check_x_p2 <= "0000";
 	check_y_p2 <= "0000";
 END CASE;
