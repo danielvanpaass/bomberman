@@ -11,7 +11,7 @@ signal switch_state, new_switch_state: switch_type;
 signal new_x_player, new_y_player, x_player, y_player : STD_logic_vector (3 downto 0);
 signal check_x_player, check_y_player: std_logic_vector (3 downto 0); 
 signal hitbox_count_players: std_logic_vector (11 downto 0);
-signal start_hitbox_count_players, move_player, up_player, down_player, right_player, left_player: std_logic;
+signal start_hitbox_count_players, move_player, up_player, down_player, right_player, left_player, switch_players: std_logic;
 SIGNAL count_players,  new_count_players : unsigned (11 DOWNTO 0);
 begin
  PROCESS (clk)
@@ -51,6 +51,7 @@ PROCESS (switch_state, hitbox_count_players)
  BEGIN
 case switch_state is
 	when begin_state=>
+		switch_players <= '0';
 		x_player <= "0001";
 		y_player <= "0001";
 		x_p1 <= "0001";
@@ -65,7 +66,11 @@ case switch_state is
 		down_player <= '0';
 
 	when P1=>
-
+		if (hitbox_count_players = "000000110100" OR (hitbox_count_players > "000001110100")) then
+		switch_players <= '1';
+		else
+		switch_players <= '0';
+		end if;
 		x_player <= x_p1;
 		y_player <= y_p1;
 		start_hitbox_count_players <= '1';
@@ -83,6 +88,11 @@ case switch_state is
 		end if;
 	
 	when P2 =>
+		if (hitbox_count_players = "000000110100" OR (hitbox_count_players > "000001110100")) then
+		switch_players <= '1';
+		else
+		switch_players <= '0';
+		end if;
 		--p1_turn <= '0';-- p2 is active
 		start_hitbox_count_players <= '1';
 		x_player <= x_p2;
@@ -193,7 +203,7 @@ case dir_state is
 		new_y_player <= y_player;
 		check_x_player <= "0000";
 		check_y_player <= "0000";
-		if (hitbox_count_players = "000000110100" OR (hitbox_count_players > "000001110100")) then -- 
+		if (switch_players = '1') then -- 
 			new_state<=which_direction;
 		else
 			new_state<= right_output;
@@ -204,7 +214,7 @@ case dir_state is
 		new_y_player <= y_player;
 		check_x_player <= "0000";
 		check_y_player <= "0000";
-		if (hitbox_count_players = "000000110100" OR (hitbox_count_players > "000001110100")) then -- 
+		if (switch_players = '1') then -- 
 			new_state<=which_direction;
 		else
 			new_state<= left_output;
@@ -214,7 +224,7 @@ case dir_state is
 		new_y_player <= std_logic_vector(unsigned( y_player)-"0001");
 		check_x_player <= "0000";
 		check_y_player <= "0000";
-		if (hitbox_count_players = "000000110100" OR (hitbox_count_players > "000001110100")) then -- 
+		if (switch_players = '1') then -- 
 			new_state<=which_direction;
 		else
 			new_state<= up_output;
@@ -224,7 +234,7 @@ case dir_state is
 		new_y_player <= std_logic_vector(unsigned( y_player)+"0001");
 		check_x_player <= "0000";
 		check_y_player <= "0000";
-		if (hitbox_count_players = "000000110100" OR (hitbox_count_players > "000001110100")) then -- this signal changes when P2 goes to one or 
+		if (switch_players = '1') then -- this signal changes when P2 goes to one or 
 			new_state<=which_direction;
 		else
 			new_state<= down_output;
