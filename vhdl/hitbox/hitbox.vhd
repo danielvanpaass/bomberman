@@ -4,8 +4,7 @@ use IEEE.std_logic_1164.ALL;
 entity hitbox is
    port(clk		 : in  std_logic;
 	reset	 : in  std_logic;
-        crates   : in  std_logic_vector(120 downto 0);
-        walls    : in  std_logic_vector(120 downto 0);
+        walls_and_crates   : in  std_logic_vector(120 downto 0);
 	bomb_x_a	 : in  std_logic_vector(3 downto 0);
 	bomb_y_a	 : in  std_logic_vector(3 downto 0);
 	bomb_x_b	 : in  std_logic_vector(3 downto 0);

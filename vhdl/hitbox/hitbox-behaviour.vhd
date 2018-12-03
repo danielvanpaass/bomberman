@@ -105,7 +105,7 @@ end case;
  END PROCESS;
 --------------
 
- process(right_player,left_player, up_player, down_player, dir_state, y_player,  x_player, crates, hitbox_count_players, move_player)
+ process(right_player,left_player, up_player, down_player, dir_state, y_player,  x_player, hitbox_count_players, move_player)
 begin
 
 case dir_state is
@@ -235,11 +235,10 @@ END CASE;
 end process;
  
 ------------- Check if there's an obstacle module for P1 (might be a problem that this doesnt update on clock)
-process (clk, crates, walls, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active)---bomb_x_c, bomb_y_c, bomb_c_active,bomb_x_d, bomb_y_d, bomb_d_active,bomb_x_e, bomb_y_e, bomb_e_active,bomb_x_f, bomb_y_f, bomb_f_active,bomb_x_g, bomb_y_g, bomb_g_active,bomb_x_h, bomb_y_h, bomb_h_active
+process (clk,  walls_and_crates, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active)---bomb_x_c, bomb_y_c, bomb_c_active,bomb_x_d, bomb_y_d, bomb_d_active,bomb_x_e, bomb_y_e, bomb_e_active,bomb_x_f, bomb_y_f, bomb_f_active,bomb_x_g, bomb_y_g, bomb_g_active,bomb_x_h, bomb_y_h, bomb_h_active
 begin
 	if (  
-		(   crates(  to_integer(unsigned(check_x_player))+to_integer(unsigned(check_y_player))*11) = '0')
-	AND (  walls (  to_integer(unsigned(check_x_player))+to_integer(unsigned(check_y_player))*11) = '0')
+		(   walls_and_crates(  to_integer(unsigned(check_x_player))+to_integer(unsigned(check_y_player))*11) = '0')
 	AND (    bomb_x_a /= std_logic_vector(check_x_player) OR (bomb_y_a /= std_logic_vector(check_y_player)) OR ( bomb_a_active = '0' ) )
 	AND (    bomb_x_b /= std_logic_vector(check_x_player) OR (bomb_y_b /= std_logic_vector(check_y_player)) OR( bomb_b_active = '0' ) )
 	--AND (    bomb_x_c /= std_logic_vector(check_x_player) OR (bomb_y_c /= std_logic_vector(check_y_player)) OR( bomb_c_active = '0' ) )
