@@ -103,10 +103,10 @@ BEGIN
      CASE dir_state IS
       WHEN begin_state =>
        new_state      <= which_direction;
-       new_x_player   <= x_player;
-       new_y_player   <= y_player;
+       new_x_player   <= x_player;--- could these be removed? the output of this isnt important at this state
+       new_y_player   <= y_player;--- could these be removed? the output of this isnt important at this state
        check_x_player <= "0000";--- could these be removed? the output of this isnt important at this state
-       check_y_player <= "0000";
+       check_y_player <= "0000";--- could these be removed? the output of this isnt important at this state
       WHEN which_direction =>
        check_x_player <= "0000";
        check_y_player <= "0000";
