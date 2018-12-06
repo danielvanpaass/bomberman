@@ -12,7 +12,7 @@ entity hitscan_top is
         X_p2  : IN  std_logic_vector(3 downto 0);
         Y_p2  : IN  std_logic_vector(3 downto 0);
 	victoryv   : OUT std_logic_vector(1 downto 0);
-        X_out : OUT std_logic_vector(3 downto 0);
-        Y_out : OUT std_logic_vector(3 downto 0));
+        lethaltile_x : OUT std_logic_vector(3 downto 0);
+        lethaltile_y : OUT std_logic_vector(3 downto 0));
 end hitscan_top;
 

@@ -15,8 +15,7 @@ entity hitscan is
 	victoryv   : OUT std_logic_vector(1 downto 0);
 	read  : OUT std_logic;
 	FF2_reset : OUT std_logic;
-        X_out : OUT std_logic_vector(3 downto 0);
-        Y_out : OUT std_logic_vector(3 downto 0);
-	enable : out std_logic_vector(1 downto 0));
+        lethaltile_x : OUT std_logic_vector(3 downto 0);
+        lethaltile_y : OUT std_logic_vector(3 downto 0));
 end hitscan;
 

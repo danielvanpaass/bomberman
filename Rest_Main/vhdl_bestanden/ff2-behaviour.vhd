@@ -24,7 +24,7 @@ begin
 			new_FF2 <= FF2;
 		end if;
 
-		if(FF2 = "101") then
+		if(FF2 = "100") then
 			FF2_read <= '1';
 		else
 			FF2_read <= '0';

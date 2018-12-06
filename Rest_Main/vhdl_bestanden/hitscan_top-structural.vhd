@@ -23,9 +23,8 @@ architecture structural of hitscan_top is
    		victoryv   : OUT std_logic_vector(1 downto 0);
    		read  : OUT std_logic;
    		FF2_reset : OUT std_logic;
-           		X_out : OUT std_logic_vector(3 downto 0);
-           		Y_out : OUT std_logic_vector(3 downto 0);
-		enable : out std_logic_vector(1 downto 0));
+           		lethaltile_x : OUT std_logic_vector(3 downto 0);
+           		lethaltile_y : OUT std_logic_vector(3 downto 0));
    end component;
 
 	signal read, FF2_read, FF2_reset : std_logic;
@@ -33,6 +32,6 @@ architecture structural of hitscan_top is
 begin
 
 pm_ff2: FF2 port map(read,FF2_reset,clk,FF2_read);
-pm_hs: hitscan port map(X_b, Y_b,res,clk,explode,FF2_read,X_p1,Y_p1,X_p2,Y_p2,victoryv,read,FF2_reset,X_out,Y_out);
+pm_hs: hitscan port map(X_b, Y_b,res,clk,explode,FF2_read,X_p1,Y_p1,X_p2,Y_p2,victoryv,read,FF2_reset,lethaltile_x,lethaltile_y);
 end structural;
 

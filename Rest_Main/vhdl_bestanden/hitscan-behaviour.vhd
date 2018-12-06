@@ -29,9 +29,8 @@ begin
 				FF2_reset <= '1';
 				read <= '0';
 				victoryv <= "00";
-				enable <= "00";
-				X_out <= "0000";
-				Y_out <= "0000";
+				lethaltile_x <= "0000";
+				lethaltile_y <= "0000";
 				if (explode = '1' and X_b(0) = '1') then
 					new_state <= horizontal;
 				elsif (explode = '1') then
@@ -51,8 +50,8 @@ begin
 
 			when vertical =>
 				FF2_reset <= '1';
-				X_out <= X_b;
-				coor_signed <= "0" & signed(Y_b) - "00011";
+				lethaltile_x <= X_b;
+				coor_signed <= "0" & signed(Y_b) - "00010";
 				coor_signed_p1 <= "0" & signed(Y_p1);
 				coor_signed_p2 <= "0" & signed(Y_P2);
 				new_state <= vert_wait;
@@ -63,12 +62,13 @@ begin
 			when vert_out =>
 				coor_signed <= coor_signed + "00001";
 				if coor_signed(4) = '0' then
-					Y_out <= std_logic_vector(coor_signed(3 downto 0));
+					lethaltile_y <= std_logic_vector(coor_signed(3 downto 0));
 					read <= '1';
-				end if;				read <= '1';
-				if (X_out = X_p1 AND coor_signed_p1 = coor_signed) then
+				end if;
+				read <= '1';
+				if (lethaltile_x = X_p1 AND coor_signed_p1 = coor_signed) then
 					new_state <= victory_2;
-				elsif (X_out = X_p2 AND coor_signed_p2 = coor_signed) then
+				elsif (lethaltile_x = X_p2 AND coor_signed_p2 = coor_signed) then
 					new_state <= victory_1;
 				elsif coor_signed < 0  then
 					new_state <= vert_wait;
@@ -85,9 +85,9 @@ begin
 			when horizontal =>
 				read <= '0';
 				FF2_reset <= '1';
-				Y_out <= Y_b;
+				lethaltile_y <= Y_b;
 				new_state <= hori_wait;
-				coor_signed <= "0" & signed(X_b) - "00011";
+				coor_signed <= "0" & signed(X_b) - "00010";
 				coor_signed_p1 <= "0" & signed(X_p1);
 				coor_signed_p2 <= "0" & signed(X_P2);
 			when hori_wait =>
@@ -97,12 +97,12 @@ begin
 			when hori_out =>
 				coor_signed <= coor_signed + "00001";
 				if coor_signed(4) = '0' then
-					X_out <= std_logic_vector(coor_signed(3 downto 0));
+					lethaltile_x <= std_logic_vector(coor_signed(3 downto 0));
 					read <= '1';
 				end if;
-				if (Y_out = Y_p1 AND coor_signed_p1 = coor_signed) then
+				if (lethaltile_y = Y_p1 AND coor_signed_p1 = coor_signed) then
 					new_state <= victory_2;
-				elsif (Y_out = Y_p2 AND coor_signed_p2 = coor_signed) then
+				elsif (lethaltile_y = Y_p2 AND coor_signed_p2 = coor_signed) then
 					new_state <= victory_1;
 				elsif coor_signed < 0  then
 					new_state <= hori_wait;
