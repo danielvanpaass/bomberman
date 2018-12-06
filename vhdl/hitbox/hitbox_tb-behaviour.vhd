@@ -93,7 +93,7 @@ test: hitbox port map (clk,   reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
 --v_clk <= '1' after 0 ns,
 -- '0' AFTER 16.6666 ms WHEN v_clk /= '0' ELSE '1' AFTER 16.6666 ms;
   reset <= '1' AFTER 0 ns,
-   '0' AFTER 50 ms;
+   '0' AFTER 0.1 ms;
    walls_and_crates(0) <= '1' after 0 ns;
    walls_and_crates(1) <= '0' after 0 ns;
    walls_and_crates(2) <= '0' after 0 ns;
@@ -117,10 +117,10 @@ test: hitbox port map (clk,   reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
    walls_and_crates(20) <= '0' after 0 ns;
    walls_and_crates(21) <= '0' after 0 ns;
    walls_and_crates(22) <= '0' after 0 ns;
-   walls_and_crates(23) <= '0' after 0 ns;
-   walls_and_crates(24) <= '0' after 0 ns;
-   walls_and_crates(25) <= '0' after 0 ns;
-   walls_and_crates(26) <= '0' after 0 ns;
+   walls_and_crates(23) <= '1' after 0 ns;
+   walls_and_crates(24) <= '1' after 0 ns;
+   walls_and_crates(25) <= '1' after 0 ns;
+   walls_and_crates(26) <= '1' after 0 ns;
    walls_and_crates(27) <= '0' after 0 ns;
    walls_and_crates(28) <= '0' after 0 ns;
    walls_and_crates(29) <= '0' after 0 ns;
@@ -150,7 +150,7 @@ test: hitbox port map (clk,   reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
    walls_and_crates(53) <= '0' after 0 ns;
    walls_and_crates(54) <= '0' after 0 ns;
    walls_and_crates(55) <= '0' after 0 ns;
-   walls_and_crates(56) <= '0' after 0 ns;
+   walls_and_crates(56) <= '1' after 0 ns;
    walls_and_crates(57) <= '0' after 0 ns;
    walls_and_crates(58) <= '0' after 0 ns;
    walls_and_crates(59) <= '0' after 0 ns;
@@ -167,7 +167,7 @@ test: hitbox port map (clk,   reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
    walls_and_crates(70) <= '0' after 0 ns;
    walls_and_crates(71) <= '0' after 0 ns;
    walls_and_crates(72) <= '0' after 0 ns;
-   walls_and_crates(73) <= '0' after 0 ns;
+   walls_and_crates(73) <= '1' after 0 ns;
    walls_and_crates(74) <= '0' after 0 ns;
    walls_and_crates(75) <= '0' after 0 ns;
    walls_and_crates(76) <= '0' after 0 ns;
@@ -215,15 +215,15 @@ test: hitbox port map (clk,   reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
    walls_and_crates(118) <= '0' after 0 ns;
    walls_and_crates(119) <= '0' after 0 ns;
    walls_and_crates(120) <= '0' after 0 ns;
-   bomb_x_a(0) <= '0' after 0 ns;
+   bomb_x_a(0) <= '1' after 0 ns;
    bomb_x_a(1) <= '1' after 0 ns;
    bomb_x_a(2) <= '0' after 0 ns;
-   bomb_x_a(3) <= '1' after 0 ns;
+   bomb_x_a(3) <= '0' after 0 ns;
    bomb_y_a(0) <= '1' after 0 ns;
    bomb_y_a(1) <= '0' after 0 ns;
    bomb_y_a(2) <= '0' after 0 ns;
    bomb_y_a(3) <= '0' after 0 ns;
-   bomb_x_b(0) <= '0' after 0 ns;
+   bomb_x_b(0) <= '1' after 0 ns;
    bomb_x_b(1) <= '1' after 0 ns;
    bomb_x_b(2) <= '1' after 0 ns;
    bomb_x_b(3) <= '0' after 0 ns;
@@ -289,8 +289,10 @@ test: hitbox port map (clk,   reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
    bomb_h_active <= '0' after 0 ns;
    up_p1            <= '0' AFTER 0 ns;
    right_p1         <= '0' AFTER 0 ns,
-    '1' AFTER 4 ms;
-    down_p1  <= '0' AFTER 0 ns;
+'1' AFTER 0.1 ms,
+'0' AFTER 1656983 ns; 
+    down_p1  <= '0' AFTER 0 ns,
+'1' after 1657383 ns;
     left_p1  <= '0' AFTER 0 ns;
     up_p2    <= '0' AFTER 0 ns,
 '1' after 40 ms,
@@ -298,5 +300,5 @@ test: hitbox port map (clk,   reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
     right_p2 <= '0' AFTER 0 ns;
     down_p2  <= '0' AFTER 0 ns;
     left_p2  <= '0' AFTER 0 ns,
-     '1' AFTER 3 ms;
+     '1' AFTER 0.2 ms;
 end behaviour;

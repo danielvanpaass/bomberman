@@ -11,8 +11,8 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
  SIGNAL hitbox_count_players : std_logic_vector (10 DOWNTO 0);
  SIGNAL start_hitbox_count_players, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
  SIGNAL count_players, new_count_players : unsigned (10 DOWNTO 0);
- CONSTANT switch_to_p2 : std_logic_vector := "00010000000";
- CONSTANT switch_to_p1 : std_logic_vector := "00100000000";
+ CONSTANT switch_to_p2 : std_logic_vector := "00000000100";
+ CONSTANT switch_to_p1 : std_logic_vector := "00000001000";
 BEGIN
  PROCESS (clk, reset)
  BEGIN
