@@ -290,9 +290,9 @@ test: hitbox port map (clk,   reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
    up_p1            <= '0' AFTER 0 ns;
    right_p1         <= '0' AFTER 0 ns,
 '1' AFTER 0.1 ms,
-'0' AFTER 1656983 ns; 
+'0' AFTER 1023297  ns; 
     down_p1  <= '0' AFTER 0 ns,
-'1' after 1657383 ns;
+'1' after 1023400  ns;
     left_p1  <= '0' AFTER 0 ns;
     up_p2    <= '0' AFTER 0 ns,
 '1' after 40 ms,
