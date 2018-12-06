@@ -24,6 +24,7 @@ begin
 	lbl2: process (Y_b, X_b, X_p1, Y_p1, X_p2, Y_p2, explode, state)
 	begin
 		case state is
+-- Everything needs to be reset in the rest state and checked if a bomb is exploding
 			when rest =>
 				FF1 <= '0';
 				FF2_reset <= '1';
@@ -38,16 +39,19 @@ begin
 				else
 					new_state <= rest;
 				end if;
+-- If a bomb is not right above and below a wall, the system does not know if it needs to be an explosion in a vertical line or in a plus form.
 			when undicided =>
 				if Y_b(0) = '1' then
 					new_state <= vertical;
 				else
 					new_state <= plusform;
 				end if;
+-- It has been decided that a plus form needs to be generated and FF1 stores that.
 			when plusform =>
 				FF1 <= '1';
 				new_state <= vertical;
 
+-- All the requirements to make a vertical line are being initiated
 			when vertical =>
 				FF2_reset <= '1';
 				lethaltile_x <= X_b;
@@ -59,6 +63,7 @@ begin
 				FF2_reset <= '0';
 				read <= '0';
 				new_state <= vert_out;
+-- If a player is hit, the victory state will be taken. If a wall is met or it has checked enough tiles and needs to be a plus form, the FSM will go to horizontal. If it is not a plusform, the FSM will go to rest state. Otherwise it will go back to the wait state
 			when vert_out =>
 				coor_signed <= coor_signed + "00001";
 				if coor_signed(4) = '0' then
@@ -81,7 +86,7 @@ begin
 				else
 					new_state <= vert_wait;
 				end if;
-
+-- If a player is hit, the victory state will be taken. If it checked enough tiles or has met a border wall, it will go to the rest state. Otherwise, it will go to the wait sate
 			when horizontal =>
 				read <= '0';
 				FF2_reset <= '1';
@@ -111,7 +116,7 @@ begin
 				else
 					new_state <= hori_wait;
 				end if;
-
+-- The victory states will generate a victory signal with the winning player
 			when victory_1 =>
 				victoryv <= "10";
 				new_state <= victory_1;

@@ -1,6 +1,6 @@
 library IEEE;
 use IEEE.std_logic_1164.ALL;
-
+-- This connects EVERYTHING
 architecture structural of hitscan_top is
    component ff2
       port(read      : IN  std_logic;
