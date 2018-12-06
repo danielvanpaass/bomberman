@@ -8,13 +8,13 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
  SIGNAL switch_state, new_switch_state : switch_type;
  SIGNAL new_x_player, new_y_player, x_player, y_player : STD_logic_vector (3 DOWNTO 0);
  SIGNAL check_x_player, check_y_player : std_logic_vector (3 DOWNTO 0);
- SIGNAL hitbox_count_players : std_logic_vector (4 DOWNTO 0);
+ SIGNAL hitbox_count_players : std_logic_vector (10 DOWNTO 0);
  SIGNAL start_hitbox_count_players, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
- SIGNAL count_players, new_count_players : unsigned (4 DOWNTO 0);
- CONSTANT switch_to_p2 : std_logic_vector := "01000";
- CONSTANT switch_to_p1 : std_logic_vector := "10000";
+ SIGNAL count_players, new_count_players : unsigned (10 DOWNTO 0);
+ CONSTANT switch_to_p2 : std_logic_vector := "00010000000";
+ CONSTANT switch_to_p1 : std_logic_vector := "00100000000";
 BEGIN
- PROCESS (clk)
+ PROCESS (clk, reset)
  BEGIN
   IF rising_edge (clk) THEN
    IF reset = '1' THEN -- reset the whole system
@@ -26,18 +26,29 @@ BEGIN
    END IF;
   END IF;
  END PROCESS;
- -----------slow clock: v_clk
- PROCESS (v_clk)
- BEGIN
-  IF rising_edge (v_clk) THEN
-   IF reset = '1' OR start_hitbox_count_players = '0' THEN -- reset the whole system
+  PROCESS (clk, start_hitbox_count_players, reset)
+BEGIN
+    IF rising_edge (clk) THEN
+      IF ((start_hitbox_count_players = '0') OR (reset = '1')) THEN -- reset the whole system
     count_players <= (OTHERS => '0');
-
-   ELSE
-    count_players <= new_count_players;
-   END IF;
+      ELSE
+       count_players <= new_count_players;
+    END IF;
   END IF;
- END PROCESS;
+END PROCESS;
+ -----------slow clock: v_clk
+ --PROCESS (clk, v_clk, reset, start_hitbox_count_players)
+ --BEGIN
+ -- IF rising_edge (clk) THEN
+ 	--IF (start_hitbox_count_players = '0') OR (reset = '1') THEN
+	--count_players <= (OTHERS => '0');
+	--ELSE
+	--  IF rising_edge (v_clk) THEN
+	--      count_players <= new_count_players;
+   --	  END IF;
+	--END IF;
+  --END IF;
+ --END PROCESS;
  -- counter for P1 and P2 playtime
  PROCESS (count_players)
  BEGIN
