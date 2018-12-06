@@ -113,7 +113,7 @@ BEGIN
    WHEN which_direction =>
     check_x_player <= "0000";
     check_y_player <= "0000";
-    IF (hitbox_count_players = switch_to_p1 OR hitbox_count_players = switch_to_p2) THEN--- so dont go to attempt state if new player is inserted in fsm
+    IF (switch_players = '1') THEN--- so dont go to attempt state if new player is inserted in fsm
      new_state <= which_direction;
     ELSE
      IF ((down_player = '0') AND (up_player = '0') AND (left_player = '0') AND (right_player = '1')) THEN ---maybe change this back to priority case
