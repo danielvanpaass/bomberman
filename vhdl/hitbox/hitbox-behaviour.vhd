@@ -2,17 +2,18 @@ LIBRARY IEEE;
 USE IEEE.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 ARCHITECTURE hitbox_behaviour OF hitbox IS
- TYPE state_type IS (begin_state, which_direction, attempt_to_right, attempt_to_left, attempt_to_up, attempt_to_down, right_output, left_output, up_output, down_output);
+ TYPE state_type IS (begin_state, which_direction, attempt_to_right, attempt_to_left, attempt_to_up, attempt_to_down, right_output, left_output, up_output, down_output, stay_output);
  TYPE switch_type IS (begin_state, P1, P2);
  SIGNAL dir_state, new_state : state_type;
  SIGNAL switch_state, new_switch_state : switch_type;
  SIGNAL new_x_player, new_y_player, x_player, y_player : STD_logic_vector (3 DOWNTO 0);
  SIGNAL check_x_player, check_y_player : std_logic_vector (3 DOWNTO 0);
- SIGNAL hitbox_count_players : std_logic_vector (10 DOWNTO 0);
- SIGNAL start_hitbox_count_players, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
- SIGNAL count_players, new_count_players : unsigned (10 DOWNTO 0);
- CONSTANT switch_to_p2 : std_logic_vector := "00000000100";
- CONSTANT switch_to_p1 : std_logic_vector := "00000001000";
+ SIGNAL hitbox_count_players : std_logic_vector (2 DOWNTO 0);
+ SIGNAL begin_counting, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
+ SIGNAL count_players, new_count_players : unsigned (2 DOWNTO 0);
+ CONSTANT switch_to_p2 : std_logic_vector := "011"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
+ CONSTANT switch_to_p1 : std_logic_vector := "111"; --:= "1011111010111100001000"- this equals0.25 seconds, meaning that a full cycle of P1+P2 turn is in 0.25 seconds.
+--however, for simulation purposes we used much smaller values.
 BEGIN
  PROCESS (clk, reset)
  BEGIN
@@ -26,29 +27,28 @@ BEGIN
    END IF;
   END IF;
  END PROCESS;
-  PROCESS (clk, start_hitbox_count_players, reset)
+--  PROCESS (clk, begin_counting, reset)
+--BEGIN
+--    IF rising_edge (clk) THEN
+--      IF ((begin_counting = '0') OR (reset = '1')) THEN -- reset the whole system
+--    count_players <= (OTHERS => '0');
+--      ELSE
+--       count_players <= new_count_players;
+--    END IF;
+--  END IF;
+--END PROCESS;
+
+--- slow clock: v_clk
+PROCESS (v_clk, reset, begin_counting)
 BEGIN
-    IF rising_edge (clk) THEN
-      IF ((start_hitbox_count_players = '0') OR (reset = '1')) THEN -- reset the whole system
-    count_players <= (OTHERS => '0');
-      ELSE
-       count_players <= new_count_players;
-    END IF;
+ IF rising_edge (v_clk) THEN
+	IF (begin_counting = '0') THEN --so reset should be longer than v_clk cycle
+	count_players <= (OTHERS => '0');
+	ELSE 
+	      count_players <= new_count_players;
+	END IF;
   END IF;
-END PROCESS;
- -----------slow clock: v_clk
- --PROCESS (clk, v_clk, reset, start_hitbox_count_players)
- --BEGIN
- -- IF rising_edge (clk) THEN
- 	--IF (start_hitbox_count_players = '0') OR (reset = '1') THEN
-	--count_players <= (OTHERS => '0');
-	--ELSE
-	--  IF rising_edge (v_clk) THEN
-	--      count_players <= new_count_players;
-   --	  END IF;
-	--END IF;
-  --END IF;
- --END PROCESS;
+ END PROCESS;
  -- counter for P1 and P2 playtime
  PROCESS (count_players)
  BEGIN
@@ -68,7 +68,7 @@ END PROCESS;
     x_p2 <= "1001";
     y_p2 <= "1001";
     new_switch_state <= P1;
-    start_hitbox_count_players <= '0';
+    begin_counting <= '0';
     up_player <= '0';
     left_player <= '0';
     right_player <= '0';
@@ -76,7 +76,7 @@ END PROCESS;
    WHEN P1 =>
     x_player <= x_p1;
     y_player <= y_p1;
-    start_hitbox_count_players <= '1';
+    begin_counting <= '1';
     up_player <= up_p1;
     left_player <= left_p1;
     right_player <= right_p1;
@@ -91,7 +91,7 @@ END PROCESS;
      switch_players <= '0';
     END IF;
    WHEN P2 =>
-    start_hitbox_count_players <= '1';
+    begin_counting <= '1';
     x_player <= x_p2;
     y_player <= y_p2;
     up_player <= up_p2;
@@ -99,7 +99,7 @@ END PROCESS;
     right_player <= right_p2;
     down_player <= down_p2;
     IF (hitbox_count_players = switch_to_p1) THEN -- should be the above but doubled, for the reset
-     start_hitbox_count_players <= '0';--the reset
+     begin_counting <= '0';--the reset
      new_switch_state <= P1;
      x_p2 <= new_x_player; -- output the new location for P2
      y_p2 <= new_y_player;-- or new_?
@@ -136,9 +136,7 @@ END PROCESS;
      ELSIF ((down_player = '1') AND (up_player = '0') AND (left_player = '0') AND (right_player = '0')) THEN
       new_state <= attempt_to_down;
      ELSE
-      check_x_player <= "0000";
-      check_y_player <= "0000";
-      new_state <= which_direction;
+      new_state <= stay_output;
       new_x_player <= x_player;
       new_y_player <= y_player;
      END IF;
@@ -153,7 +151,7 @@ END PROCESS;
     IF (move_player = '1') THEN
      new_state <= right_output;
     ELSE
-     new_state <= which_direction;
+     new_state <= stay_output;
     END IF;
    WHEN attempt_to_left =>
     new_x_player <= x_player;
@@ -163,7 +161,7 @@ END PROCESS;
     IF (move_player = '1') THEN
      new_state <= left_output;
     ELSE
-     new_state <= which_direction;
+     new_state <= stay_output;
     END IF;
    WHEN attempt_to_up =>
     new_x_player <= x_player;
@@ -173,7 +171,7 @@ END PROCESS;
     IF (move_player = '1') THEN
      new_state <= up_output;
     ELSE
-     new_state <= which_direction;
+     new_state <= stay_output;
     END IF;
    WHEN attempt_to_down =>
     new_x_player <= x_player;
@@ -183,7 +181,7 @@ END PROCESS;
     IF (move_player = '1') THEN
      new_state <= down_output;
     ELSE
-     new_state <= which_direction;
+     new_state <= stay_output;
     END IF;
     --- output states
    WHEN right_output =>
@@ -225,6 +223,16 @@ END PROCESS;
      new_state <= which_direction;
     ELSE
      new_state <= down_output;
+    END IF;
+   WHEN stay_output =>
+    new_x_player <= x_player;
+    new_y_player <= y_player;
+    check_x_player <= "0000";
+    check_y_player <= "0000";
+   IF (switch_players = '1') THEN -- this signal changes when P2 goes to one or reversed
+     new_state <= which_direction;
+    ELSE
+     new_state <= stay_output;
     END IF;
   END CASE;
  END PROCESS;
