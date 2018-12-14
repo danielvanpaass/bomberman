@@ -27,8 +27,10 @@ ENTITY top_de1 IS
 		clock_50mhz 		  :  IN  STD_LOGIC;
 		reset		  : in std_logic;
 		lay0in		  : in std_logic_vector(241 downto 0);
-		lay1in		  : in std_logic_vector(7 downto 0);
-		lay2in		  : in std_logic_vector(7 downto 0);
+		lay1inx		  : in std_logic_vector(3 downto 0);
+		lay1iny		  : in std_logic_vector(3 downto 0);
+		lay2inx		  : in std_logic_vector(3 downto 0);
+		lay2iny		  : in std_logic_vector(3 downto 0);
 		lay3in	  	  : in std_logic_vector(7 downto 0);
 		lay3enin  		  : in std_logic;
 		vga_hsync : OUT  STD_LOGIC;
