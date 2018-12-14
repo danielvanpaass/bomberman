@@ -4,15 +4,20 @@ use IEEE.std_logic_1164.ALL;
 entity toplvl_coor is
    port(clk : in  std_logic;
 	reset : in std_logic;
+
         p1_x : in  std_logic_vector(3 downto 0); --player coordinates
 	p1_y : in  std_logic_vector(3 downto 0);
 	p2_x : in  std_logic_vector(3 downto 0);
 	p2_y : in  std_logic_vector(3 downto 0);
-	p1_bombplant : in std_logic; --bomb planting commands
-	p2_bombplant : in std_logic;
+
+	p_bomb : in std_logic; --bomb planting commands
+	p_bombplant : in std_logic;
+	expl_htoa : in std_logic_vector(7 downto 0);
+
 	lethaltile_x : in  std_logic_vector(3 downto 0); --explosive tiles
 	lethaltile_y : in  std_logic_vector(3 downto 0);
 	lethal_flag : in std_logic;
+
 	bomb_a_x : out std_logic_vector(3 downto 0); --8 bomb outputs, 4 per player
 	bomb_a_y : out std_logic_vector(3 downto 0);
 	bomb_a_cook : out std_logic;
@@ -37,16 +42,21 @@ entity toplvl_coor is
 	bomb_h_x : out std_logic_vector(3 downto 0);
 	bomb_h_y : out std_logic_vector(3 downto 0);
 	bomb_h_cook : out std_logic;
-	y0 : out std_logic_vector(21 downto 0); --output array, 2 bits per tile, 11 tiles per row, 11 rows
-	y1 : out std_logic_vector(21 downto 0);
-	y2 : out std_logic_vector(21 downto 0);
-	y3 : out std_logic_vector(21 downto 0);
-	y4 : out std_logic_vector(21 downto 0);
-	y5 : out std_logic_vector(21 downto 0);
-	y6 : out std_logic_vector(21 downto 0);
-	y7 : out std_logic_vector(21 downto 0);
-	y8 : out std_logic_vector(21 downto 0);
-	y9 : out std_logic_vector(21 downto 0);
-	y10 : out std_logic_vector(21 downto 0));
+
+	bombflag_htoa : out std_logic_vector(7 downto 0);
+	maptoVGA : out std_logic_vector(241 downto 0);
+	obstacle_grid : out std_logic_vector(120 downto 0));
+
+--	y0 : out std_logic_vector(21 downto 0); --output array, 2 bits per tile, 11 tiles per row, 11 rows
+--	y1 : out std_logic_vector(21 downto 0);
+--	y2 : out std_logic_vector(21 downto 0);
+--	y3 : out std_logic_vector(21 downto 0);
+--	y4 : out std_logic_vector(21 downto 0);
+--	y5 : out std_logic_vector(21 downto 0);
+--	y6 : out std_logic_vector(21 downto 0);
+--	y7 : out std_logic_vector(21 downto 0);
+--	y8 : out std_logic_vector(21 downto 0);
+--	y9 : out std_logic_vector(21 downto 0);
+--	y10 : out std_logic_vector(21 downto 0));
 end toplvl_coor;
 

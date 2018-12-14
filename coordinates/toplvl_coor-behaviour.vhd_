@@ -3,51 +3,6 @@ use IEEE.std_logic_1164.ALL;
 
 architecture behaviour of toplvl_coor is
 --components used within toplvl_coor
-component xy_convert is
-   port(x_in : in  std_logic_vector(3 downto 0);
-	y_in : in  std_logic_vector(3 downto 0);
-	clk : in std_logic;
-	x0 : out std_logic;
-	x1 : out std_logic;
-	x2 : out std_logic;
-	x3 : out std_logic;
-	x4 : out std_logic;
-	x5 : out std_logic;
-	x6 : out std_logic;
-	x7 : out std_logic;
-	x8 : out std_logic;
-	x9 : out std_logic;
-	x10 : out std_logic;
-	y0 : out std_logic;
-	y1 : out std_logic;
-	y2 : out std_logic;
-	y3 : out std_logic;
-	y4 : out std_logic;
-	y5 : out std_logic;
-	y6 : out std_logic;
-	y7 : out std_logic;
-	y8 : out std_logic;
-	y9 : out std_logic;
-	y10 : out std_logic);
-end component;
-
-component tile_stdempty is
-   port(xlethal : in  std_logic;
-	ylethal : in std_logic;
-	expl : in std_logic;
-	clk : in std_logic;
-	reset : in std_logic;
-	tiletype : out std_logic_vector(1 downto 0));
-end component;
-
-component tile_stdcrate is
-   port(xlethal : in  std_logic;
-	ylethal : in std_logic;
-	expl : in std_logic;
-	clk : in std_logic;
-	reset : in std_logic;
-	tiletype : out std_logic_vector(1 downto 0));
-end component;
 
 component selector is
    port(p : in  std_logic;
@@ -62,6 +17,7 @@ component playground is
 	lethalx : in std_logic_vector(3 downto 0);
 	lethaly : in std_logic_vector(3 downto 0);
 	lethal : in std_logic;
+	y0 : out std_logic_vector(21 downto 0);
 	y1 : out std_logic_vector(21 downto 0);
 	y2 : out std_logic_vector(21 downto 0);
 	y3 : out std_logic_vector(21 downto 0);
@@ -71,8 +27,7 @@ component playground is
 	y7 : out std_logic_vector(21 downto 0);
 	y8 : out std_logic_vector(21 downto 0);
 	y9 : out std_logic_vector(21 downto 0);
-	y10 : out std_logic_vector(21 downto 0);
-	y11 : out std_logic_vector(21 downto 0));
+	y10 : out std_logic_vector(21 downto 0));
 end component;
 
 component bombcook is
@@ -84,18 +39,57 @@ component bombcook is
 	clk : in std_logic;
 	bombdisplay : out std_logic;
 	bombx : out std_logic_vector(3 downto 0);
-	bomby : out std_logic_vector(3 downto 0));
+	bomby : out std_logic_vector(3 downto 0);
+	expl_flag : out std_logic);
 end component;
 
 component bomb_select is
    port(startbomb : in  std_logic;
 	clk : in std_logic;
 	reset : in std_logic;
-	bombno : out std_logic_vector(3 downto 0));
+	bombno : out std_logic_vector(3 downto 0)
+	);
 end component;
 
+component obstacle_map is
+   port(playground : in  std_logic_vector(241 downto 0);
+        obstacle   : out std_logic_vector(120 downto 0));
+end component;
 
+signal p1b, p2b: std_logic;
+signal bombflag_htoa: std_logic_vector(7 downto 0);
+signal bombnop1, bombnop2: std_logic_vector(3 downto 0);
+signal y0i, y1i, y2i, y3i, y4i, y5i, y6i, y7i, y8i, y9i, y10i: std_logic_vector(21 downto 0);
+signal renderedmap: std_logic_vector(241 downto 0);
 
 begin
+
+-- BOMB MECHANICS
+pbomb: selector port map(p_bomb, p_bombplant, p1b, p2b); --select bomb to initialize for specific player
+
+bombselp1: bomb_select port map(p1b, clk, reset, bombnop1); --select bomb to initialize (max 4 per player, 1 per player at the moment)
+
+bombcooka: bombcook port map(bombnop1(0), expl_htoa(0), p1_x, p1_y, reset, clk, bomb_a_cook, bomb_a_x, bomb_a_y, bombflag_htoa(0)); --bombs a to d for player 1
+bombcookb: bombcook port map(bombnop1(1), expl_htoa(1), p1_x, p1_y, reset, clk, bomb_b_cook, bomb_b_x, bomb_b_y, bombflag_htoa(1));
+bombcookc: bombcook port map(bombnop1(2), expl_htoa(2), p1_x, p1_y, reset, clk, bomb_c_cook, bomb_c_x, bomb_c_y, bombflag_htoa(2));
+bombcookd: bombcook port map(bombnop1(3), expl_htoa(3), p1_x, p1_y, reset, clk, bomb_d_cook, bomb_d_x, bomb_d_y, bombflag_htoa(3));
+
+bombselp2: bomb_select port map(p2b, clk, reset, bombnop2);
+
+bombcooke: bombcook port map(bombnop2(0), expl_htoa(4), p2_x, p2_y, reset, clk, bomb_e_cook, bomb_e_x, bomb_e_y, bombflag_htoa(4)); --bombs e to h for player 2
+bombcookf: bombcook port map(bombnop2(1), expl_htoa(5), p2_x, p2_y, reset, clk, bomb_f_cook, bomb_f_x, bomb_f_y, bombflag_htoa(5));
+bombcookg: bombcook port map(bombnop2(2), expl_htoa(6), p2_x, p2_y, reset, clk, bomb_g_cook, bomb_g_x, bomb_g_y, bombflag_htoa(6));
+bombcookh: bombcook port map(bombnop2(3), expl_htoa(7), p2_x, p2_y, reset, clk, bomb_h_cook, bomb_h_x, bomb_h_y, bombflag_htoa(7));
+
+--
+
+--MAP MECHANICS
+mapmech: playground port map(clk, reset, lethaltile_x, lethaltile_y, lethal_flag, y0i, y1i, y2i, y3i, y4i, y5i, y6i, y7i, y8i, y9i, y10i);
+lblrenderedmap: renderedmap <= y0i & y1i & y2i & y3i & y4i & y5i & y6i & y7i & y8i & y9i & y10i;
+lblmaptoVGA: maptoVGA <= renderedmap;
+
+--OBSTACLE GRID RENDERING
+lblobst: obstacle_map port map(renderedmap, obstacle_grid);
+
 end behaviour;
 
