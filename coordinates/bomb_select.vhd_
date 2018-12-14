@@ -27,7 +27,7 @@ process (clk, reset)
    end if;
 end process;
 
-process (state, reset)
+process (state, clk, reset)
 	begin
 	case state is
 		when b1w =>

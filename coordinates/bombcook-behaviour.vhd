@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.ALL;
 
 architecture behaviour of bombcook is
 
-type bombcook_states is (nobomb, cook, still_cook, explode);
+type bombcook_states is (nobomb, cook, still_cook, explosion_flag, explode);
 
 signal state, new_state: bombcook_states;
 signal bombxsample, bombysample : std_logic_vector(3 downto 0);
@@ -21,7 +21,7 @@ process (clk, reset)
    end if;
 end process;
 
-process (state, clk, reset)
+process (state, bombinit, expl)
 
 	begin
 	case state is
@@ -29,6 +29,7 @@ process (state, clk, reset)
 		bombx <= "0000";
 		bomby <= "0000";
 		bombdisplay <= '0';
+		expl_flag <= '0';
 		if (bombinit = '1') then
 			new_state <= cook;
 		else
@@ -41,22 +42,32 @@ process (state, clk, reset)
 		bombx <= "0000";
 		bomby <= "0000";
 		bombdisplay <= '0';
+		expl_flag <= '0';
 		new_state <= still_cook;
 
 		when still_cook =>
 		bombx <= bombxsample;
 		bomby <= bombysample;
 		bombdisplay <= '1';
+		expl_flag <= '0';
 		if (expl = '1') then
-			new_state <= explode;
+			new_state <= explosion_flag;
 		else
 			new_state <= still_cook;
 		end if;
+
+		when explosion_flag =>
+		bombx <= bombxsample;
+		bomby <= bombysample;
+		bombdisplay <= '1';
+		expl_flag <= '1';
+		new_state <= explode;
 
 		when explode =>
 		bombx <= bombxsample;
 		bomby <= bombysample;
 		bombdisplay <= '1';
+		expl_flag <= '0';
 		if (expl = '0') then
 			new_state <= nobomb;
 		else

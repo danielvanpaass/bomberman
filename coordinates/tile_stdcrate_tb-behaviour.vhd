@@ -18,16 +18,19 @@ architecture behaviour of tile_stdcrate_tb is
    signal tiletype : std_logic_vector(1 downto 0);
 begin
 test: tile_stdcrate port map (xlethal, ylethal, expl, clk, reset, tiletype);
-   clk <= '1' after 0 ns,
-          '0' after 10 ns when clk /= '0' else '1' after 10 ns;
-   xlethal <= '1' after 70 ns,
-	'0' after 90 ns;
-   ylethal <= '1' after 70 ns,
-	'0' after 90 ns;
-   expl <= '1' after 70 ns,
-	'0' after 150 ns;
---   clk <= '0' after 0 ns;
+clk <= '1' after 0 ns,
+     '0' after 10 ns when clk /= '0' else '1' after 10 ns;
+   xlethal <= '0' after 0 ns,
+'1' after 60 ns,
+	'0' after 100 ns;
+   ylethal <= '0' after 0 ns,
+'1' after 60 ns,
+	'0' after 100 ns;
+   expl <= '0' after 0 ns,
+'1' after 60 ns,
+'0' after 100 ns;
+ --  clk <= '0' after 0 ns;
    reset <= '1' after 0 ns,
-	'0' after 25 ns;
+	'0' after 40 ns;
 end behaviour;
 

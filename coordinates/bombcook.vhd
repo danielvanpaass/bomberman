@@ -10,6 +10,7 @@ entity bombcook is
 	clk : in std_logic;
 	bombdisplay : out std_logic;
 	bombx : out std_logic_vector(3 downto 0);
-	bomby : out std_logic_vector(3 downto 0));
+	bomby : out std_logic_vector(3 downto 0);
+	expl_flag : out std_logic);
 end bombcook;
 

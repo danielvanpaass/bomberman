@@ -1,0 +1,47 @@
+(DELAYFILE
+  (SDFVERSION  "OVI 3.0")
+  (DESIGN      "selector")
+  (DATE        "Thu Dec 06 10:58:56 CET 2018")
+  (VENDOR      "Cadence, Inc.")
+  (PROGRAM     "Genus(TM) Synthesis Solution")
+  (VERSION     "17.11-s014_1")
+  (DIVIDER     .)
+  (VOLTAGE     ::1.62)
+  (PROCESS     "::1.0")
+  (TEMPERATURE ::125.0)
+  (TIMESCALE   1ps)
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g17)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1290) (::1231))
+          (IOPATH A2 Z (::1278) (::1239))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g18)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1290) (::1231))
+          (IOPATH A2 Z (::1284) (::1238))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "INVD0BWP7T")
+     (INSTANCE g19)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I ZN (::123) (::96))
+        )
+     )
+  )
+)

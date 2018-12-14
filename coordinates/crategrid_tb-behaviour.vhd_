@@ -1,0 +1,76 @@
+library IEEE;
+use IEEE.std_logic_1164.ALL;
+
+architecture behaviour of crategrid_tb is
+   component crategrid
+      port(y1 : in std_logic_vector(2 downto 0); --crates in first row
+   	y2 : in std_logic_vector(2 downto 0);
+   	y3 : in std_logic_vector(6 downto 0);
+   	y4 : in std_logic_vector(3 downto 0);
+   	y5 : in std_logic_vector(5 downto 0);
+   	y6 : in std_logic_vector(3 downto 0);
+   	y7 : in std_logic_vector(6 downto 0);
+   	y8 : in std_logic_vector(2 downto 0);
+   	y9 : in std_logic_vector(2 downto 0);
+   	crategrid : out std_logic_vector (80 downto 0)
+   );
+   end component;
+   signal y1 : std_logic_vector(2 downto 0);
+   signal y2 : std_logic_vector(2 downto 0);
+   signal y3 : std_logic_vector(6 downto 0);
+   signal y4 : std_logic_vector(3 downto 0);
+   signal y5 : std_logic_vector(5 downto 0);
+   signal y6 : std_logic_vector(3 downto 0);
+   signal y7 : std_logic_vector(6 downto 0);
+   signal y8 : std_logic_vector(2 downto 0);
+   signal y9 : std_logic_vector(2 downto 0);
+   signal crategrid : std_logic_vector (80 downto 0);
+begin
+test: crategrid port map (y1, y2, y3, y4, y5, y6, y7, y8, y9, crategrid);
+-- clk <= '1' after 0 ns,
+--      '0' after 100 ns when clk /= '0' else '1' after 100 ns;
+   y1(0) <= '1' after 0 ns,
+	'0' after 300 ns;
+   y1(1) <= '1' after 0 ns,
+	'0' after 200 ns;
+   y1(2) <= '1' after 0 ns,
+	'0' after 100 ns;
+   y2(0) <= '1' after 0 ns;
+   y2(1) <= '1' after 0 ns;
+   y2(2) <= '1' after 0 ns;
+   y3(0) <= '1' after 0 ns;
+   y3(1) <= '1' after 0 ns;
+   y3(2) <= '1' after 0 ns;
+   y3(3) <= '1' after 0 ns;
+   y3(4) <= '1' after 0 ns;
+   y3(5) <= '1' after 0 ns;
+   y3(6) <= '1' after 0 ns;
+   y4(0) <= '1' after 0 ns;
+   y4(1) <= '1' after 0 ns;
+   y4(2) <= '1' after 0 ns;
+   y4(3) <= '1' after 0 ns;
+   y5(0) <= '1' after 0 ns;
+   y5(1) <= '1' after 0 ns;
+   y5(2) <= '1' after 0 ns;
+   y5(3) <= '1' after 0 ns;
+   y5(4) <= '1' after 0 ns;
+   y5(5) <= '1' after 0 ns;
+   y6(0) <= '1' after 0 ns;
+   y6(1) <= '1' after 0 ns;
+   y6(2) <= '1' after 0 ns;
+   y6(3) <= '1' after 0 ns;
+   y7(0) <= '1' after 0 ns;
+   y7(1) <= '1' after 0 ns;
+   y7(2) <= '1' after 0 ns;
+   y7(3) <= '1' after 0 ns;
+   y7(4) <= '1' after 0 ns;
+   y7(5) <= '1' after 0 ns;
+   y7(6) <= '1' after 0 ns;
+   y8(0) <= '1' after 0 ns;
+   y8(1) <= '1' after 0 ns;
+   y8(2) <= '1' after 0 ns;
+   y9(0) <= '1' after 0 ns;
+   y9(1) <= '1' after 0 ns;
+   y9(2) <= '1' after 0 ns;
+end behaviour;
+

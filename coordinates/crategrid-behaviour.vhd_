@@ -1,0 +1,44 @@
+library IEEE;
+use IEEE.std_logic_1164.ALL;
+
+architecture behaviour of crategrid is
+begin
+
+crategrid(3) <= y1(2); --crates in first horizontal row of tiles
+crategrid(4) <= y1(1);
+crategrid(5) <= y1(0);
+
+crategrid(11) <= y2(2); --crates in second row
+crategrid(13) <= y2(1);
+crategrid(15) <= y2(0);
+
+crategrid(19) <= y3(6); --crates in third row
+crategrid(20) <= y3(5);
+crategrid(21) <= y3(4);
+crategrid(22) <= y3(3);
+crategrid(23) <= y3(2);
+crategrid(24) <= y3(1);
+crategrid(25) <= y3(0);
+
+crategrid(27) <= y4(3); --fourth row
+crategrid(29) <= y4(2);
+crategrid(33) <= y4(1);
+crategrid(35) <= y4(0);
+
+crategrid(36) <= y5(5); --fifth row
+crategrid(37) <= y5(4);
+crategrid(38) <= y5(3);
+crategrid(42) <= y5(2);
+crategrid(43) <= y5(1);
+crategrid(44) <= y5(0);
+
+crategrid(27) <= y6(3); --fifth row
+crategrid(29) <= y6(2);
+crategrid(33) <= y6(1);
+crategrid(35) <= y6(0);
+
+crategrid <= (others => '0');
+
+
+end behaviour;
+
