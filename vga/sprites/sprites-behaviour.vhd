@@ -6,7 +6,7 @@ architecture behaviour of sprites is
  signal v_map : std_logic_vector (3 downto 0);
 signal h_map : std_logic_vector (3 downto 0);
 signal coordinates_vector : std_logic_vector (241 downto 0);
-signal P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector : std_logic_vector (120 downto 0);
+signal P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector : std_logic_vector (0 to 120);
 begin
 v_map <= input_v_map(5 downto 2);
 h_map <= input_h_map(4 downto 1);
@@ -21,7 +21,7 @@ wall_vector <=
 explosion_vector <=
 "1111101111111111011111111110111110000000000011011111011110111110110000000000011111011111111110111111111101111100000000000";
 
-PROCESS (victory, playground, x_p1, y_p1, x_bomb_a , y_bomb_a, bomb_a_enable, x_bomb_b, y_bomb_b, bomb_b_enable, x_bomb_c,  y_bomb_c, bomb_c_enable, x_bomb_d, y_bomb_d, bomb_d_enable, x_bomb_e, y_bomb_e, bomb_e_enable, x_bomb_f, y_bomb_f ,bomb_f_enable , x_bomb_g, y_bomb_g, bomb_g_enable, x_bomb_h, y_bomb_h, bomb_h_enable, x_map, y_map, input_h_map, input_v_map, rgb)
+PROCESS (victory, playground, x_p1, y_p1, x_bomb_a , y_bomb_a, bomb_a_enable, x_bomb_b, y_bomb_b, bomb_b_enable, x_bomb_c,  y_bomb_c, bomb_c_enable, x_bomb_d, y_bomb_d, bomb_d_enable, x_bomb_e, y_bomb_e, bomb_e_enable, x_bomb_f, y_bomb_f ,bomb_f_enable , x_bomb_g, y_bomb_g, bomb_g_enable, x_bomb_h, y_bomb_h, bomb_h_enable, x_map, y_map, h_map, v_map)
 BEGIN
 
 if victory = '1' then
