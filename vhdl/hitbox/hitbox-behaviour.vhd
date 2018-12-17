@@ -11,10 +11,12 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
  SIGNAL hitbox_count_players : std_logic_vector (3 DOWNTO 0);
  SIGNAL begin_counting, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
  SIGNAL count_players, new_count_players : unsigned (3 DOWNTO 0);
+SIGNAL walls_and_crates_inverted : std_logic_vector(0 to 120);
  CONSTANT switch_to_p2 : std_logic_vector := "0111"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
  CONSTANT switch_to_p1 : std_logic_vector := "1111"; --:= "1011111010111100001000"- this equals0.25 seconds, meaning that a full cycle of P1+P2 turn is in 0.25 seconds.
 --however, for simulation purposes we used much smaller values.
 BEGIN
+walls_and_crates_inverted <= walls_and_crates;
  PROCESS (clk, reset)
  BEGIN
   IF rising_edge (clk) THEN
@@ -127,13 +129,13 @@ BEGIN
     IF (switch_players = '1') THEN--- so dont go to attempt state if new player is inserted in fsm
      new_state <= which_direction;
     ELSE
-     IF ((down_player = '0') AND (up_player = '0') AND (left_player = '0') AND (right_player = '1')) THEN ---maybe change this back to priority case
+     IF (right_player = '1') THEN ---maybe change this back to priority case
       new_state <= attempt_to_right;
-     ELSIF ((down_player = '0') AND (up_player = '0') AND (left_player = '1') AND (right_player = '0')) THEN
+     ELSIF (left_player = '1') THEN
       new_state <= attempt_to_left;
-     ELSIF ((down_player = '0') AND (up_player = '1') AND (left_player = '0') AND (right_player = '0')) THEN
+     ELSIF (up_player = '1') THEN
       new_state <= attempt_to_up;
-     ELSIF ((down_player = '1') AND (up_player = '0') AND (left_player = '0') AND (right_player = '0')) THEN
+     ELSIF (down_player = '1') THEN
       new_state <= attempt_to_down;
      ELSE
       new_state <= stay_output;
@@ -237,10 +239,10 @@ BEGIN
   END CASE;
  END PROCESS;
  ------------- Check if there's an obstacle module for P1 (might be a problem that this doesnt update on clock)
- PROCESS (clk, walls_and_crates, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active)
+ PROCESS (clk, walls_and_crates_inverted, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active)
  BEGIN
   IF (
-   (walls_and_crates(to_integer(unsigned(check_x_player)) + to_integer(unsigned(check_y_player)) * 11) = '0')
+   (walls_and_crates_inverted(to_integer(unsigned(check_x_player)) + to_integer(unsigned(check_y_player)) * 11) = '0')
    AND (bomb_x_a /= std_logic_vector(check_x_player) OR (bomb_y_a /= std_logic_vector(check_y_player)) OR (bomb_a_active = '0'))
    AND (bomb_x_b /= std_logic_vector(check_x_player) OR (bomb_y_b /= std_logic_vector(check_y_player)) OR(bomb_b_active = '0'))
    AND (bomb_x_c /= std_logic_vector(check_x_player) OR (bomb_y_c /= std_logic_vector(check_y_player)) OR(bomb_c_active = '0'))
