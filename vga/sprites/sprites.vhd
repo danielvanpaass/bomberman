@@ -4,6 +4,7 @@ use IEEE.std_logic_1164.ALL;
 entity sprites is
    port(clk : in std_logic;
 reset : in std_logic;
+victory : in std_logic;
 playground_y0 : in  std_logic_vector(21 downto 0);
 playground_y1 : in  std_logic_vector(21 downto 0);
 playground_y2 : in  std_logic_vector(21 downto 0);
