@@ -1,7 +1,5 @@
 configuration toplvl_coor_behaviour_cfg of toplvl_coor is
    for behaviour
-      for all: selector use configuration work.selector_behaviour_cfg;
-      end for;
       for all: bomb_select use configuration work.bomb_select_behaviour_cfg;
       end for;
       for all: bombcook use configuration work.bombcook_behaviour_cfg;

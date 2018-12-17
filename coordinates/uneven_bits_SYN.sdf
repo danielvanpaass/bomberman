@@ -1,0 +1,123 @@
+(DELAYFILE
+  (SDFVERSION  "OVI 3.0")
+  (DESIGN      "uneven_bits")
+  (DATE        "Thu Dec 06 11:03:35 CET 2018")
+  (VENDOR      "Cadence, Inc.")
+  (PROGRAM     "Genus(TM) Synthesis Solution")
+  (VERSION     "17.11-s014_1")
+  (DIVIDER     .)
+  (VOLTAGE     ::1.62)
+  (PROCESS     "::1.0")
+  (TEMPERATURE ::125.0)
+  (TIMESCALE   1ps)
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs25)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs28)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs31)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs34)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs37)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs40)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs43)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs46)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs49)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "BUFFD4BWP7T")
+     (INSTANCE drc_bufs52)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I Z (::1194) (::712))
+        )
+     )
+  )
+)

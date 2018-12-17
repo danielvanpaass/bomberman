@@ -1,0 +1,459 @@
+(DELAYFILE
+  (SDFVERSION  "OVI 3.0")
+  (DESIGN      "xy_convert")
+  (DATE        "Thu Dec 06 11:05:01 CET 2018")
+  (VENDOR      "Cadence, Inc.")
+  (PROGRAM     "Genus(TM) Synthesis Solution")
+  (VERSION     "17.11-s014_1")
+  (DIVIDER     .)
+  (VOLTAGE     ::1.62)
+  (PROCESS     "::1.0")
+  (TEMPERATURE ::125.0)
+  (TIMESCALE   1ps)
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g529)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1270) (::1235))
+          (IOPATH A2 Z (::1302) (::1263))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g528)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1270) (::1235))
+          (IOPATH A2 Z (::1308) (::1259))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g530)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1271) (::1225))
+          (IOPATH A2 Z (::1302) (::1263))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g533)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1271) (::1225))
+          (IOPATH A2 Z (::1308) (::1259))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g531)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1271) (::1225))
+          (IOPATH A2 Z (::1308) (::1261))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g534)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1271) (::1225))
+          (IOPATH A2 Z (::1291) (::1243))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g540)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1377) (::1254))
+          (IOPATH A2 Z (::1346) (::1264))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g537)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1362) (::1250))
+          (IOPATH A2 Z (::1342) (::1262))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g547)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1377) (::1254))
+          (IOPATH A2 Z (::1344) (::1263))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AN3D4BWP7T")
+     (INSTANCE g532)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (PORT A3 (::0.0))
+          (IOPATH A3 Z (::1324) (::792))
+          (IOPATH A1 Z (::1383) (::767))
+          (IOPATH A2 Z (::1323) (::771))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g541)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1260))
+          (IOPATH A2 Z (::1385) (::1286))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g542)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1260))
+          (IOPATH A2 Z (::1385) (::1286))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g546)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1359) (::1249))
+          (IOPATH A2 Z (::1346) (::1264))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g549)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1261))
+          (IOPATH A2 Z (::1385) (::1286))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AN2D1BWP7T")
+     (INSTANCE g552)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::300) (::216))
+          (IOPATH A2 Z (::235) (::208))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AN2D1BWP7T")
+     (INSTANCE g543)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::296) (::215))
+          (IOPATH A2 Z (::249) (::222))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AN3D4BWP7T")
+     (INSTANCE g536)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (PORT A3 (::0.0))
+          (IOPATH A3 Z (::1335) (::806))
+          (IOPATH A1 Z (::1417) (::788))
+          (IOPATH A2 Z (::1343) (::790))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g539)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1261))
+          (IOPATH A2 Z (::1385) (::1289))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g548)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1260))
+          (IOPATH A2 Z (::1385) (::1289))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g550)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1260))
+          (IOPATH A2 Z (::1385) (::1289))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "AN3D4BWP7T")
+     (INSTANCE g535)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (PORT A3 (::0.0))
+          (IOPATH A3 Z (::1335) (::806))
+          (IOPATH A1 Z (::1418) (::785))
+          (IOPATH A2 Z (::1343) (::790))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g538)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1261))
+          (IOPATH A2 Z (::1360) (::1272))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g551)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1260))
+          (IOPATH A2 Z (::1360) (::1272))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D4BWP7T")
+     (INSTANCE g545)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::1368) (::1260))
+          (IOPATH A2 Z (::1360) (::1272))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "NR2D0BWP7T")
+     (INSTANCE g557)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 ZN (::417) (::180))
+          (IOPATH A2 ZN (::428) (::181))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "NR2D0BWP7T")
+     (INSTANCE g554)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 ZN (::489) (::193))
+          (IOPATH A2 ZN (::489) (::175))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "INR2D0BWP7T")
+     (INSTANCE g561)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT B1 (::0.0))
+          (IOPATH A1 ZN (::536) (::303))
+          (IOPATH B1 ZN (::460) (::215))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "INR2D0BWP7T")
+     (INSTANCE g559)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT B1 (::0.0))
+          (IOPATH A1 ZN (::574) (::276))
+          (IOPATH B1 ZN (::493) (::161))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "INR2D0BWP7T")
+     (INSTANCE g558)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT B1 (::0.0))
+          (IOPATH A1 ZN (::724) (::314))
+          (IOPATH B1 ZN (::643) (::198))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "NR2D0BWP7T")
+     (INSTANCE g563)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 ZN (::642) (::198))
+          (IOPATH A2 ZN (::660) (::204))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "INR2D0BWP7T")
+     (INSTANCE g560)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT B1 (::0.0))
+          (IOPATH A1 ZN (::537) (::303))
+          (IOPATH B1 ZN (::460) (::213))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "NR2D0BWP7T")
+     (INSTANCE g556)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 ZN (::412) (::160))
+          (IOPATH A2 ZN (::437) (::184))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "NR2D0BWP7T")
+     (INSTANCE g555)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 ZN (::403) (::177))
+          (IOPATH A2 ZN (::406) (::154))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "NR2D0BWP7T")
+     (INSTANCE g562)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 ZN (::461) (::216))
+          (IOPATH A2 ZN (::472) (::222))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "INVD0BWP7T")
+     (INSTANCE g565)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I ZN (::231) (::178))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "INVD0BWP7T")
+     (INSTANCE g564)
+     (DELAY
+        (ABSOLUTE
+          (PORT I (::0.0))
+          (IOPATH I ZN (::240) (::167))
+        )
+     )
+  )
+  (CELL
+     (CELLTYPE "CKAN2D1BWP7T")
+     (INSTANCE g2)
+     (DELAY
+        (ABSOLUTE
+          (PORT A1 (::0.0))
+          (PORT A2 (::0.0))
+          (IOPATH A1 Z (::226) (::207))
+          (IOPATH A2 Z (::271) (::235))
+        )
+     )
+  )
+)
