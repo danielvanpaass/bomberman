@@ -74,6 +74,11 @@ else ---must be 11 so wall
 	rgb <= "111";
 	end if;
 end if;	
+new_state <= test_state;
+when test_state =>
+new_state <= display_sprite;
+
+end case;
 end process;
 end behaviour;
 

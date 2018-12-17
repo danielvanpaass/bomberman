@@ -2,8 +2,20 @@ library IEEE;
 use IEEE.std_logic_1164.ALL;
 
 entity sprites is
-   port(victory : in std_logic;
-playground: in  std_logic_vector(241 downto 0);
+   port(clk : in std_logic;
+reset : in std_logic;
+victory : in std_logic;
+playground_y0 : in  std_logic_vector(21 downto 0);
+playground_y1 : in  std_logic_vector(21 downto 0);
+playground_y2 : in  std_logic_vector(21 downto 0);
+playground_y3 : in  std_logic_vector(21 downto 0);
+playground_y4 : in  std_logic_vector(21 downto 0);
+playground_y5 : in  std_logic_vector(21 downto 0);
+playground_y6 : in  std_logic_vector(21 downto 0);
+playground_y7 : in  std_logic_vector(21 downto 0);
+playground_y8 : in  std_logic_vector(21 downto 0);
+playground_y9 : in  std_logic_vector(21 downto 0);
+playground_y10 : in  std_logic_vector(21 downto 0);
         x_p1          : in  std_logic_vector(3 downto 0);
         y_p1          : in  std_logic_vector(3 downto 0);
        x_p2          : in  std_logic_vector(3 downto 0);
