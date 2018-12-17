@@ -27,7 +27,7 @@ architecture structural of hitscan_top is
            		lethaltile_y : OUT std_logic_vector(3 downto 0));
    end component;
 
-	signal read, FF2_read, FF2_reset : std_logic;
+	signal FF2_read, FF2_reset : std_logic;
 
 begin
 
