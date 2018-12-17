@@ -8,11 +8,11 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
  SIGNAL switch_state, new_switch_state : switch_type;
  SIGNAL new_x_player, new_y_player, x_player, y_player : STD_logic_vector (3 DOWNTO 0);
  SIGNAL check_x_player, check_y_player : std_logic_vector (3 DOWNTO 0);
- SIGNAL hitbox_count_players : std_logic_vector (2 DOWNTO 0);
+ SIGNAL hitbox_count_players : std_logic_vector (3 DOWNTO 0);
  SIGNAL begin_counting, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
- SIGNAL count_players, new_count_players : unsigned (2 DOWNTO 0);
- CONSTANT switch_to_p2 : std_logic_vector := "011"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
- CONSTANT switch_to_p1 : std_logic_vector := "111"; --:= "1011111010111100001000"- this equals0.25 seconds, meaning that a full cycle of P1+P2 turn is in 0.25 seconds.
+ SIGNAL count_players, new_count_players : unsigned (3 DOWNTO 0);
+ CONSTANT switch_to_p2 : std_logic_vector := "0111"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
+ CONSTANT switch_to_p1 : std_logic_vector := "1111"; --:= "1011111010111100001000"- this equals0.25 seconds, meaning that a full cycle of P1+P2 turn is in 0.25 seconds.
 --however, for simulation purposes we used much smaller values.
 BEGIN
  PROCESS (clk, reset)

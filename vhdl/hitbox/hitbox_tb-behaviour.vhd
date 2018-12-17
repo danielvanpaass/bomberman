@@ -91,7 +91,7 @@ test: hitbox port map (clk, v_clk,  reset, walls_and_crates, bomb_x_a, bomb_y_a,
  clk <= '1' AFTER 0 ns,
   '0' AFTER 0.04 ms WHEN clk /= '0' ELSE '1' AFTER 0.04 ms;
 v_clk <= '1' after 0 ns,
- '0' AFTER 16.6666 ms WHEN v_clk /= '0' ELSE '1' AFTER 16.6666 ms;
+ '0' AFTER 34 ms WHEN v_clk /= '0' ELSE '1' AFTER 34 ms;
   reset <= '1' AFTER 0 ns,
    '0' AFTER 40 ms;
    walls_and_crates(0) <= '1' after 0 ns;
