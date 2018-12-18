@@ -8,15 +8,20 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
  SIGNAL switch_state, new_switch_state : switch_type;
  SIGNAL new_x_player, new_y_player, x_player, y_player : STD_logic_vector (3 DOWNTO 0);
  SIGNAL check_x_player, check_y_player : std_logic_vector (3 DOWNTO 0);
- SIGNAL hitbox_count_players : std_logic_vector (3 DOWNTO 0);
+ SIGNAL hitbox_count_players : std_logic_vector (2 DOWNTO 0);
  SIGNAL begin_counting, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
- SIGNAL count_players, new_count_players : unsigned (3 DOWNTO 0);
+ SIGNAL count_players, new_count_players : unsigned (2 DOWNTO 0);
 SIGNAL walls_and_crates_inverted : std_logic_vector(0 to 120);
- CONSTANT switch_to_p2 : std_logic_vector := "0111"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
- CONSTANT switch_to_p1 : std_logic_vector := "1111"; --:= "1011111010111100001000"- this equals0.25 seconds, meaning that a full cycle of P1+P2 turn is in 0.25 seconds.
+SIGNAL x_p1_local, y_p1_local, x_p2_local, y_p2_local : std_logic_vector( 3 downto 0);
+ CONSTANT switch_to_p2 : std_logic_vector := "011"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
+ CONSTANT switch_to_p1 : std_logic_vector := "111"; --:= "1011111010111100001000"- this equals0.25 seconds, meaning that a full cycle of P1+P2 turn is in 0.25 seconds.
 --however, for simulation purposes we used much smaller values.
 BEGIN
 walls_and_crates_inverted <= walls_and_crates;
+x_p1<=x_p1_local;
+y_p1<=y_p1_local;
+x_p2<=x_p2_local;
+y_p2<=y_p2_local;
  PROCESS (clk, reset)
  BEGIN
   IF rising_edge (clk) THEN
@@ -65,10 +70,10 @@ BEGIN
     switch_players <= '0';
     x_player <= "0001";
     y_player <= "0001";
-    x_p1 <= "0001";
-    y_p1 <= "0001";
-    x_p2 <= "1001";
-    y_p2 <= "1001";
+    x_p1_local <= "0001";
+    y_p1_local <= "0001";
+    x_p2_local <= "1001";
+    y_p2_local <= "1001";
     new_switch_state <= P1;
     begin_counting <= '0';
     up_player <= '0';
@@ -76,8 +81,8 @@ BEGIN
     right_player <= '0';
     down_player <= '0';
    WHEN P1 =>
-    x_player <= x_p1;
-    y_player <= y_p1;
+    x_player <= x_p1_local;
+    y_player <= y_p1_local;
     begin_counting <= '1';
     up_player <= up_p1;
     left_player <= left_p1;
@@ -85,8 +90,8 @@ BEGIN
     down_player <= down_p1;
     IF ((hitbox_count_players = switch_to_p2)) THEN --P1 ends his turn
      new_switch_state <= P2;
-     x_p1 <= new_x_player; -- output the new location for P1
-     y_p1 <= new_y_player;
+     x_p1_local <= new_x_player; -- output the new location for P1
+     y_p1_local <= new_y_player;
      switch_players <= '1';
     ELSE
      new_switch_state <= P1;
@@ -94,8 +99,8 @@ BEGIN
     END IF;
    WHEN P2 =>
     begin_counting <= '1';
-    x_player <= x_p2;
-    y_player <= y_p2;
+    x_player <= x_p2_local;
+    y_player <= y_p2_local;
     up_player <= up_p2;
     left_player <= left_p2;
     right_player <= right_p2;
@@ -103,8 +108,8 @@ BEGIN
     IF (hitbox_count_players = switch_to_p1) THEN -- should be the above but doubled, for the reset
      begin_counting <= '0';--the reset
      new_switch_state <= P1;
-     x_p2 <= new_x_player; -- output the new location for P2
-     y_p2 <= new_y_player;-- or new_?
+     x_p2_local <= new_x_player; -- output the new location for P2
+     y_p2_local <= new_y_player;-- or new_?
      switch_players <= '1';
     ELSE
      new_switch_state <= P2;
