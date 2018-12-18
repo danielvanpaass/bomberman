@@ -6,7 +6,7 @@ architecture behaviour of sprites is
  signal v_map : std_logic_vector (3 downto 0);
 signal h_map : std_logic_vector (3 downto 0);
 signal coordinates_vector : std_logic_vector (241 downto 0);
-signal P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector : std_logic_vector (0 to 120);
+signal P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector : std_logic_vector (120 downto 0);
 begin
 v_map <= input_v_map(5 downto 2);
 h_map <= input_h_map(4 downto 1);
