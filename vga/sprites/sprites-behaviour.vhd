@@ -5,7 +5,6 @@ use IEEE.numeric_std.ALL;
 architecture behaviour of sprites is
  signal v_map : std_logic_vector (3 downto 0);
 signal h_map : std_logic_vector (3 downto 0);
-signal coordinates_vector : std_logic_vector (241 downto 0);
 signal P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector : std_logic_vector (0 to 120);
 begin
 v_map <= input_v_map(5 downto 2);
@@ -51,15 +50,15 @@ elsif   (x_map = x_bomb_a and y_map = y_bomb_a and bomb_a_enable = '1' ) OR --bo
 	else
 	rgb <= "111";
 	end if;	
-elsif   (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22  + (10-to_integer(unsigned(x_map)))*2 ) = '1' )AND (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22+ (10-to_integer(unsigned(x_map)))*2+1) = '0') then
+elsif   (playground( ( 10-to_integer(unsigned(y_map)) ) *22  + (10-to_integer(unsigned(x_map)))*2 ) = '1' )AND (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22+ (10-to_integer(unsigned(x_map)))*2+1) = '0') then
 	if (crate_vector(to_integer(unsigned(h_map)+to_integer(unsigned(v_map))*11)) = '1') then--crate
 	rgb <= "110";
 	else
 	rgb <= "111";
 	end if;	
-elsif   (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22 + (10-to_integer(unsigned(x_map)))*2)='0')AND (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22+  (10-to_integer(unsigned(x_map)))*2+1) = '1') then--empty 
+elsif   (playground( ( 10-to_integer(unsigned(y_map)) ) *22 + (10-to_integer(unsigned(x_map)))*2)='0')AND (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22+  (10-to_integer(unsigned(x_map)))*2+1) = '1') then--empty 
 	rgb <= "111";
-elsif   (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22+  (10-to_integer(unsigned(x_map)))*2) = '0')AND (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22+  (10-to_integer(unsigned(x_map)))*2+1) = '0') then--explosion 
+elsif   (playground( ( 10-to_integer(unsigned(y_map)) ) *22+  (10-to_integer(unsigned(x_map)))*2) = '0')AND (coordinates_vector( ( 10-to_integer(unsigned(y_map)) ) *22+  (10-to_integer(unsigned(x_map)))*2+1) = '0') then--explosion 
 	if (explosion_vector(to_integer(unsigned(h_map)+to_integer(unsigned(v_map))*11)) = '1') then
 	rgb <= "000";
 	else
