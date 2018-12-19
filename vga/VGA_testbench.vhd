@@ -9,16 +9,16 @@ architecture behaviour of VGA_tb is
    component VGA_controller
       port (clk, reset                        : in std_logic;
             vga_hsync, vga_vsync, clock_60hz  : out std_logic;
-            x_out, y_out                      : out std_logic_vector (2 downto 0);
-            h_out                             : out std_logic_vector (2 downto 0);
-            v_out                             : out std_logic_vector (2 downto 0));        
+            x_out, y_out                      : out std_logic_vector (3 downto 0);
+            h_out                             : out std_logic_vector (4 downto 0);
+            v_out                             : out std_logic_vector (5 downto 0));        
    end component;
 
 signal clk, reset                        : std_logic;
 signal vga_hsync, vga_vsync, clock_60hz  : std_logic;
-signal x_out, y_out                      : std_logic_vector (2 downto 0);
-signal h_out                             : std_logic_vector (2 downto 0);
-signal v_out                             : std_logic_vector (2 downto 0); 
+signal x_out, y_out                      : std_logic_vector (3 downto 0);
+signal h_out                             : std_logic_vector (4 downto 0);
+signal v_out                             : std_logic_vector (5 downto 0); 
 
 begin 
 
