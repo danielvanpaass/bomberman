@@ -5,6 +5,7 @@ architecture behaviour of bomb_process is
 
 component bomb_overall is
    port(clk        : in  std_logic;
+	clk_30	   : in std_logic;
 	reset	   : in  std_logic;
         bombp1     : in  std_logic;
         bombp2     : in  std_logic;
@@ -20,11 +21,11 @@ component hitscan_top is
         res   : IN		std_logic;
 	clk   : IN  std_logic;
 	explode : IN std_logic;
-	read 	: out std_logic;
 	X_p1  : IN  std_logic_vector(3 downto 0);
         Y_p1  : IN  std_logic_vector(3 downto 0);
         X_p2  : IN  std_logic_vector(3 downto 0);
         Y_p2  : IN  std_logic_vector(3 downto 0);
+	lethal_flag : OUT std_logic;
 	victoryv   : OUT std_logic_vector(1 downto 0);
         lethaltile_x : OUT std_logic_vector(3 downto 0);
         lethaltile_y : OUT std_logic_vector(3 downto 0));
@@ -32,8 +33,8 @@ end component;
 			
 begin
 
-BOMB_TIMERS : bomb_overall port map (clk, reset, bombp1, bombp2, b_explosion, explosion_bomb, buff_p1, buff_p2);
-HITSCAN : hitscan_top port map (x_b, Y_b, reset, clk, b_explosion, read, X_p1, Y_p1, X_p2, Y_p2, victoryv, lethaltile_x, lethaltile_y);
+BOMB_TIMERS : bomb_overall port map (clk, clk_30, reset, bombp1, bombp2, b_explosion, explosion_bomb, buff_p1, buff_p2);
+HITSCAN : hitscan_top port map (x_b, Y_b, reset, clk, b_explosion, X_p1, Y_p1, X_p2, Y_p2, lethal_flag, victoryv, lethaltile_x, lethaltile_y);
 
 end behaviour;
 
