@@ -36,8 +36,8 @@ playground: in  std_logic_vector(241 downto 0);
         bomb_h_enable : in  std_logic;
         x_map         : in  std_logic_vector(3 downto 0);
         y_map         : in  std_logic_vector(3 downto 0);
-        input_h_map         : in  std_logic_vector(5 downto 0);
-        input_v_map         : in  std_logic_vector(6 downto 0);
+        input_h_map         : in  std_logic_vector(4 downto 0);--changed from 5 downto 0
+        input_v_map         : in  std_logic_vector(5 downto 0);--changed from 6 downto 0
 	red : out std_logic;
 	green : out std_logic;
 	blue: out std_logic);      
