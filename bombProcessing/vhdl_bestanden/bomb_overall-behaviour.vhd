@@ -17,19 +17,24 @@ component bomb_handling
         bombp2 : in  std_logic;
         explosion1 : out std_logic;
 	explosion2 : out std_logic;
+	explosion3 : out std_logic;
+	explosion4 : out std_logic;
 	explosion5 : out std_logic;
-	explosion6 : out std_logic);	
+	explosion6 : out std_logic;
+	explosion7 : out std_logic;
+	explosion8 : out std_logic);	
 end component;
 		
-signal buff_out1, buff_out2: std_logic;	
+signal explosionb1, explosionb2, explosionb3, explosionb4, explosionb5, explosionb6, explosionb7, explosionb8: std_logic;	
 begin
-BUFF1 : buffer_bomb port map (clk, reset, bombp1, buff_out1);		-- Buffer input player 1
-BUFF2 : buffer_bomb port map (clk, reset, bombp2, buff_out2);  -- Buffer input player 2
+BUFF1 : buffer_bomb port map (clk, reset, bombp1, buff_p1);		-- Buffer input player 1
+BUFF2 : buffer_bomb port map (clk, reset, bombp2, buff_p2);  -- Buffer input player 2
 
 
-MAIN  : bomb_handling port map (clk, reset, buff_out1, buff_out2, explosion1, explosion2, explosion5, explosion6); -- Bomb handling entity
+MAIN  : bomb_handling port map (clk, reset, buff_p1, buff_p2, explosionb1, explosionb2, explosionb3, explosionb4, explosionb5, explosionb6, explosionb7, explosionb8); -- Bomb handling entity
 
-explosion <= explosion1 OR explosion2 OR explosion5 OR explosion6; -- 4 input OR gate
+explosion <= explosionb1 OR explosionb2 OR explosionb3 OR explosionb4 OR explosionb5 OR explosionb6 OR explosionb7 OR explosionb8; -- 4 input OR gate
+explosion_bomb <= explosionb1 & explosionb2 & explosionb3 & explosionb4 & explosionb5 & explosionb6 & explosionb7 & explosionb8;
 
 end behaviour;
 

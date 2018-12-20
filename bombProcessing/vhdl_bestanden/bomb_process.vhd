@@ -6,18 +6,20 @@ entity bomb_process is
 	Y_b   : IN std_logic_vector(3 downto 0);
         reset   : IN		std_logic;
 	clk   : IN  std_logic;
+	clk_30: IN std_logic;
 	X_p1  : IN  std_logic_vector(3 downto 0);
         Y_p1  : IN  std_logic_vector(3 downto 0);
         X_p2  : IN  std_logic_vector(3 downto 0);
         Y_p2  : IN  std_logic_vector(3 downto 0);
+	read  : out std_logic;
 	victoryv   : OUT std_logic_vector(1 downto 0);
         lethaltile_x : OUT std_logic_vector(3 downto 0);
         lethaltile_y : OUT std_logic_vector(3 downto 0);
         bombp1     : IN  std_logic;
         bombp2     : IN  std_logic;
-        explosion1 : OUT std_logic;
-        explosion2 : OUT std_logic;
-        explosion5 : OUT std_logic;
-        explosion6 : OUT  std_logic);
+	b_explosion	 : out std_logic;
+        explosion_bomb : out std_logic_vector(7 downto 0);
+	buff_p1	: OUT std_logic;
+	buff_p2 : OUT std_logic);
 end bomb_process;
 
