@@ -119,14 +119,10 @@ test: toplvl_coor port map (clk, reset, p1_x, p1_y, p2_x, p2_y, p1_b, p2_b, expl
 	"0010" after 50 ns,
 	"0011" after 100 ns,
 	"0010" after 250 ns,
-	"0001" after 300 ns,
-	"0101" after 2050 ns,
-	"0001" after 2100 ns;
+	"0001" after 300 ns;
    p1_y		<= "0001" after 0 ns,
 	"0010" after 350 ns,
-	"0011" after 400 ns,
-	"0101" after 2050 ns,
-	"0001" after 2100 ns;
+	"0011" after 400 ns;
    p2_x		<= "1001" after 0 ns,
 	"1000" after 1050 ns,
 	"0111" after 1100 ns,
@@ -137,18 +133,14 @@ test: toplvl_coor port map (clk, reset, p1_x, p1_y, p2_x, p2_y, p1_b, p2_b, expl
 	"0111" after 1400 ns;
    p1_b <= '0' after 0 ns,
 	'1' after 150 ns,
-	'0' after 200 ns,
-	'1' after 2050 ns,
-	'0' after 2100 ns;
+	'0' after 200 ns;
    p2_b <= '0' after 0 ns,
 	'1' after 1150 ns,
 	'0' after 1200 ns;
    expl_htoa(0) <= '0' after 0 ns,
 	'1' after 450 ns,
 	'0' after 500 ns;
-   expl_htoa(1) <= '0' after 0 ns,
-	'1' after 2150 ns,
-	'0' after 2200 ns;
+   expl_htoa(1) <= '0' after 0 ns;
    expl_htoa(2) <= '0' after 0 ns;
    expl_htoa(3) <= '0' after 0 ns;
    expl_htoa(4) <= '0' after 0 ns,
@@ -170,14 +162,7 @@ test: toplvl_coor port map (clk, reset, p1_x, p1_y, p2_x, p2_y, p1_b, p2_b, expl
 	"0110" after 1700 ns,
 	"0111" after 1750 ns,
 	"1000" after 1800 ns,
-	"1001" after 1850 ns,
-	
-	"0101" after 2250 ns,
-	"0011" after 2450 ns,
-	"0100" after 2500 ns,
-	"0101" after 2550 ns,
-	"0110" after 2600 ns,
-	"0111" after 2650 ns;
+	"1001" after 1850 ns;
 
    lethaltile_y <= "0000" after 0 ns,
 	"0010" after 550 ns,
@@ -186,20 +171,12 @@ test: toplvl_coor port map (clk, reset, p1_x, p1_y, p2_x, p2_y, p1_b, p2_b, expl
 
 	"0111" after 1550 ns,
 	"1000" after 1600 ns,
-	"1001" after 1650 ns,
-
-	"0011" after 2250 ns,
-	"0100" after 2300 ns,
-	"0110" after 2350 ns,
-	"0111" after 2400 ns,
-	"0101" after 2450 ns;
+	"1001" after 1650 ns;
 	
    lethal_flag <= '0' after 0 ns,
 	'1' after 550 ns,
 	'0' after 900 ns,
 	'1' after 1550 ns,
-	'0' after 1900 ns,
-	'1' after 2250 ns,
-	'0' after 2700 ns;
+	'0' after 1900 ns;
 end behaviour;
 

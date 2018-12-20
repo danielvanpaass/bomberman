@@ -83,18 +83,18 @@ bombcookh: bombcook port map(bombnop2(3), expl_htoa(7), p2_x, p2_y, reset, clk, 
 --MAP MECHANICS
 mapmech: playground port map(clk, reset, lethaltile_x, lethaltile_y, lethal_flag, y0i, y1i, y2i, y3i, y4i, y5i, y6i, y7i, y8i, y9i, y10i);
 lblrenderedmap: renderedmap <= y0i & y1i & y2i & y3i & y4i & y5i & y6i & y7i & y8i & y9i & y10i;
-lblmaptoVGA: maptoVGA <= renderedmap;
--- row0: y0 <= y0i;
--- row1: y1 <= y1i;
--- row2: y2 <= y2i;
--- row3: y3 <= y3i;
--- row4: y4 <= y4i;
--- row5: y5 <= y5i;
--- row6: y6 <= y6i;
--- row7: y7 <= y7i;
--- row8: y8 <= y8i;
--- row9: y9 <= y9i;
--- row10: y10 <= y10i;
+-- lblmaptoVGA: maptoVGA <= renderedmap;
+row0: y0 <= y0i;
+row1: y1 <= y1i;
+row2: y2 <= y2i;
+row3: y3 <= y3i;
+row4: y4 <= y4i;
+row5: y5 <= y5i;
+row6: y6 <= y6i;
+row7: y7 <= y7i;
+row8: y8 <= y8i;
+row9: y9 <= y9i;
+row10: y10 <= y10i;
 
 --OBSTACLE GRID RENDERING
 lblobst: obstacle_map port map(renderedmap, obstacle_grid);
