@@ -3,9 +3,12 @@ use IEEE.std_logic_1164.ALL;
 
 architecture behaviour of sprites_tb is
    component sprites
-      port(victory : in std_logic;
-   playground: in  std_logic_vector(241 downto 0);
-           x_p1          : in  std_logic_vector(3 downto 0);
+      port(
+	clk: in std_logic;
+	reset: in std_logic;
+	victory : in std_logic;
+  	playground: in  std_logic_vector(241 downto 0);
+            x_p1          : in  std_logic_vector(3 downto 0);
            y_p1          : in  std_logic_vector(3 downto 0);
           x_p2          : in  std_logic_vector(3 downto 0);
           y_p2          : in  std_logic_vector(3 downto 0);
@@ -35,10 +38,12 @@ architecture behaviour of sprites_tb is
            bomb_h_enable : in  std_logic;
            x_map         : in  std_logic_vector(3 downto 0);
            y_map         : in  std_logic_vector(3 downto 0);
-           input_h_map         : in  std_logic_vector(4 downto 0);
-           input_v_map         : in  std_logic_vector(5 downto 0);
+           input_h_map         : in  std_logic_vector(5 downto 0);
+           input_v_map         : in  std_logic_vector(6 downto 0);
            rgb           : out std_logic_vector(2 downto 0));
    end component;
+   signal clk: std_logic;
+   signal reset: std_logic;
    signal victory : std_logic;
    signal playground: std_logic_vector(241 downto 0);
    signal x_p1          : std_logic_vector(3 downto 0);
@@ -71,12 +76,16 @@ architecture behaviour of sprites_tb is
    signal bomb_h_enable : std_logic;
    signal x_map         : std_logic_vector(3 downto 0);
    signal y_map         : std_logic_vector(3 downto 0);
-   signal input_h_map         : std_logic_vector(4 downto 0);
-   signal input_v_map         : std_logic_vector(5 downto 0);
+   signal input_h_map         : std_logic_vector(5 downto 0);
+   signal input_v_map         : std_logic_vector(6 downto 0);
    signal rgb           : std_logic_vector(2 downto 0);
 begin
-test: sprites port map (victory, playground, x_p1, y_p1, x_p2, y_p2, x_bomb_a, y_bomb_a, bomb_a_enable, x_bomb_b, y_bomb_b, bomb_b_enable, x_bomb_c, y_bomb_c, bomb_c_enable, x_bomb_d, y_bomb_d, bomb_d_enable, x_bomb_e, y_bomb_e, bomb_e_enable, x_bomb_f, y_bomb_f, bomb_f_enable, x_bomb_g, y_bomb_g, bomb_g_enable, x_bomb_h, y_bomb_h, bomb_h_enable, x_map, y_map, input_h_map, input_v_map, rgb);
-   victory <= '0' after 0 ns;
+test: sprites port map (clk, reset, victory, playground, x_p1, y_p1, x_p2, y_p2, x_bomb_a, y_bomb_a, bomb_a_enable, x_bomb_b, y_bomb_b, bomb_b_enable, x_bomb_c, y_bomb_c, bomb_c_enable, x_bomb_d, y_bomb_d, bomb_d_enable, x_bomb_e, y_bomb_e, bomb_e_enable, x_bomb_f, y_bomb_f, bomb_f_enable, x_bomb_g, y_bomb_g, bomb_g_enable, x_bomb_h, y_bomb_h, bomb_h_enable, x_map, y_map, input_h_map, input_v_map, rgb);
+   clk <= '1' after 0 ns,
+      '0' after 1 ns when clk /= '0' else '1' after 1 ns;
+   reset <= '1' after 0 ns,
+'0' after 3 ns;   
+victory <= '0' after 0 ns;
    playground(0) <= '1' after 0 ns;
    playground(1) <= '1' after 0 ns;
    playground(2) <= '1' after 0 ns;
@@ -297,49 +306,49 @@ test: sprites port map (victory, playground, x_p1, y_p1, x_p2, y_p2, x_bomb_a, y
    playground(217) <= '0' after 0 ns;
    playground(218) <= '0' after 0 ns;
    playground(219) <= '0' after 0 ns;
-   playground(220) <= '0' after 0 ns;
-   playground(221) <= '0' after 0 ns;
-   playground(222) <= '0' after 0 ns;
-   playground(223) <= '0' after 0 ns;
-   playground(224) <= '0' after 0 ns;
-   playground(225) <= '0' after 0 ns;
-   playground(226) <= '0' after 0 ns;
-   playground(227) <= '0' after 0 ns;
-   playground(228) <= '0' after 0 ns;
-   playground(229) <= '0' after 0 ns;
-   playground(230) <= '0' after 0 ns;
-   playground(231) <= '0' after 0 ns;
-   playground(232) <= '0' after 0 ns;
-   playground(233) <= '0' after 0 ns;
-   playground(234) <= '0' after 0 ns;
-   playground(235) <= '0' after 0 ns;
-   playground(236) <= '0' after 0 ns;
-   playground(237) <= '0' after 0 ns;
-   playground(238) <= '0' after 0 ns;
-   playground(239) <= '0' after 0 ns;
+   playground(220) <= '1' after 0 ns;
+   playground(221) <= '1' after 0 ns;
+   playground(222) <= '1' after 0 ns;
+   playground(223) <= '1' after 0 ns;
+   playground(224) <= '1' after 0 ns;
+   playground(225) <= '1' after 0 ns;
+   playground(226) <= '1' after 0 ns;
+   playground(227) <= '1' after 0 ns;
+   playground(228) <= '1' after 0 ns;
+   playground(229) <= '1' after 0 ns;
+   playground(230) <= '1' after 0 ns;
+   playground(231) <= '1' after 0 ns;
+   playground(232) <= '1' after 0 ns;
+   playground(233) <= '1' after 0 ns;
+   playground(234) <= '1' after 0 ns;
+   playground(235) <= '1' after 0 ns;
+   playground(236) <= '1' after 0 ns;
+   playground(237) <= '1' after 0 ns;
+   playground(238) <= '1' after 0 ns;
+   playground(239) <= '1' after 0 ns;
    playground(240) <= '0' after 0 ns;
    playground(241) <= '0' after 0 ns;
    x_p1(0) <= '0' after 0 ns;
    x_p1(1) <= '0' after 0 ns;
-   x_p1(2) <= '1' after 0 ns;
+   x_p1(2) <= '0' after 0 ns;
    x_p1(3) <= '0' after 0 ns;
    y_p1(0) <= '0' after 0 ns;
    y_p1(1) <= '0' after 0 ns;
-   y_p1(2) <= '1' after 0 ns;
+   y_p1(2) <= '0' after 0 ns;
    y_p1(3) <= '0' after 0 ns;
-   x_p2(0) <= '0' after 0 ns;
-   x_p2(1) <= '0' after 0 ns;
-   x_p2(2) <= '0' after 0 ns;
-   x_p2(3) <= '0' after 0 ns;
-   y_p2(0) <= '0' after 0 ns;
-   y_p2(1) <= '0' after 0 ns;
-   y_p2(2) <= '0' after 0 ns;
-   y_p2(3) <= '0' after 0 ns;
+   x_p2(0) <= '1' after 0 ns;
+   x_p2(1) <= '1' after 0 ns;
+   x_p2(2) <= '1' after 0 ns;
+   x_p2(3) <= '1' after 0 ns;
+   y_p2(0) <= '1' after 0 ns;
+   y_p2(1) <= '1' after 0 ns;
+   y_p2(2) <= '1' after 0 ns;
+   y_p2(3) <= '1' after 0 ns;
    x_bomb_a(0) <= '0' after 0 ns;
    x_bomb_a(1) <= '0' after 0 ns;
    x_bomb_a(2) <= '0' after 0 ns;
    x_bomb_a(3) <= '0' after 0 ns;
-   y_bomb_a(0) <= '1' after 0 ns;
+   y_bomb_a(0) <= '0' after 0 ns;
    y_bomb_a(1) <= '0' after 0 ns;
    y_bomb_a(2) <= '0' after 0 ns;
    y_bomb_a(3) <= '0' after 0 ns;
@@ -407,44 +416,47 @@ test: sprites port map (victory, playground, x_p1, y_p1, x_p2, y_p2, x_bomb_a, y
    y_bomb_h(2) <= '0' after 0 ns;
    y_bomb_h(3) <= '0' after 0 ns;
    bomb_h_enable <= '0' after 0 ns;
-   x_map <= "0000" after 0 ns,
-	"0001" after 9600 ns,
-	"0010" after 19200 ns;
-   y_map(0) <= '0' after 0 ns;
+   x_map <= "0000" after 0 ns;
+   y_map <= "0000" after 0 ns;
+	--"0001" after 9600 ns,
+	--"0010" after 19200 ns;
+
    y_map(1) <= '0' after 0 ns;
    y_map(2) <= '0' after 0 ns;
    y_map(3) <= '0' after 0 ns;
   input_h_map(0) <= '0' after 0 ns,
-      '1' after 300 ns when  input_h_map(0)/= '1' else '0' after 300 ns;
+      '1' after 10 ns when  input_h_map(0)/= '1' else '0' after 10 ns;
 
    input_h_map(1) <= '0' after 0 ns,
-      '1' after 600 ns when input_h_map(1) /= '1' else '0' after 600 ns;
+      '1' after 20 ns when input_h_map(1) /= '1' else '0' after 20 ns;
 
    input_h_map(2) <= '0' after 0 ns,
-      '1' after 1200 ns when input_h_map(2) /= '1' else '0' after 1200 ns;
+      '1' after 40 ns when input_h_map(2) /= '1' else '0' after 40 ns;
 
    input_h_map(3) <= '0' after 0 ns,
-      '1' after 2400 ns when input_h_map(3) /= '1' else '0' after 2400 ns;
+      '1' after 80 ns when input_h_map(3) /= '1' else '0' after 80 ns;
 
    input_h_map(4) <= '0' after 0 ns,
-      '1' after 4800 ns when input_h_map(4) /= '1' else '0' after 4800 ns;
+      '1' after 160 ns when input_h_map(4) /= '1' else '0' after 160 ns;
+input_h_map(5) <= '0' after 0 ns;
 
    input_v_map(0) <= '0' after 0 ns,
-      '1' after 9600 ns when input_v_map(0) /= '1' else '0' after 9600 ns;
+      '1' after 320 ns when input_v_map(0) /= '1' else '0' after 320 ns;
 
    input_v_map(1) <= '0' after 0 ns,
-	'1' after 19200 ns when input_v_map(1) /= '1' else '0' after 19200 ns;
+	'1' after 640 ns when input_v_map(1) /= '1' else '0' after 640 ns;
 
    input_v_map(2) <= '0' after 0 ns,
-	'1' after 38400 ns when input_v_map(2) /= '1' else '0' after 38400 ns;
+	'1' after 1280 ns when input_v_map(2) /= '1' else '0' after 1280 ns;
 
    input_v_map(3) <= '0' after 0 ns,
-	'1' after 76800 ns when input_v_map(3) /= '1' else '0' after 76800 ns;
+	'1' after 2560 ns when input_v_map(3) /= '1' else '0' after 2560 ns;
 
    input_v_map(4) <= '0' after 0 ns,
-	'1' after 153600 ns when input_v_map(4) /= '1' else '0' after 153600 ns;
+	'1' after 5120 ns when input_v_map(4) /= '1' else '0' after 5120 ns;
 
    input_v_map(5) <= '0' after 0 ns,
-	'1' after 307200 ns when input_v_map(5) /= '1' else '0' after 307200 ns; 
+	'1' after 10240 ns when input_v_map(5) /= '1' else '0' after 10240 ns; 
+input_v_map(6)<= '0' after 0 ns;
 end behaviour;
 
