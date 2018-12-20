@@ -7,7 +7,8 @@ architecture behaviour of sprites is
 signal h_map : std_logic_vector (3 downto 0);
 signal P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector : std_logic_vector (0 to 120);
 signal check_1, check_2: std_logic;
-signal spritebit : integer;
+signal spritebit : integer range 0 to 120;
+signal rgb : std_logic_vector(2 downto 0);
 begin
 v_map <= input_v_map(5 downto 2);
 h_map <= input_h_map(4 downto 1);
@@ -31,6 +32,9 @@ BEGIN
  IF rising_edge (clk) THEN
    IF reset = '1' THEN -- reset the whole system
  	rgb <= "000";
+	red <= rgb(2);
+	green <= rgb(1);
+	blue <= rgb(0);
    ELSE
 if victory = '1' then
 	rgb <= "000";
@@ -79,6 +83,9 @@ elsif   (check_1 = '1')AND (check_2 = '1') then---must be 11 so wall
 	else
 	rgb <= "111";
 	end if;
+red <= rgb(2);
+green <= rgb(1);
+blue <= rgb(0);
 end if;	
 
    END IF;
