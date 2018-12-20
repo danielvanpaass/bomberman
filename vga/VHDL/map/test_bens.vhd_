@@ -1,0 +1,12 @@
+library IEEE;
+use IEEE.std_logic_1164.ALL;
+
+entity test_bens is
+   port(dikkevector  : out std_logic_vector(241 downto 0)
+   dunnevector1 : out std_logic_vector(7 downto 0),
+   dunnevector2 : out std_logic_vector(7 downto 0),
+   suicidalevector : out std_logic_vector(7 downto 0),
+   suicidalevectorleven : out std_logic
+);
+end test_bens;
+
