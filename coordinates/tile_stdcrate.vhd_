@@ -1,7 +1,0 @@
-library IEEE;
-use IEEE.std_logic_1164.ALL;
-
-entity tile_stdcrate is
-   port(xlethal : in  std_logic);
-end tile_stdcrate;
-
