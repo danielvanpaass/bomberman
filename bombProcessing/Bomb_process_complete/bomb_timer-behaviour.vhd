@@ -3,12 +3,12 @@ use IEEE.std_logic_1164.ALL;
 use IEEE.numeric_std.ALL;
 
 architecture behaviour_bomb_timer of bomb_timer is
-signal count, new_count	: unsigned (6 downto 0);
+signal count, new_count	: unsigned (5 downto 0);
 
 begin
-	process (clk)
+	process (clk_30)
 	begin
-		if (rising_edge (clk)) then						-- Check whether counter should be on or off
+		if (rising_edge (clk_30)) then						-- Check whether counter should be on or off
 			if (count_reset = '1') then
 				count <= (others => '0');
 			else

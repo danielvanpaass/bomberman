@@ -7,6 +7,7 @@ architecture behaviour_bomb_handling of bomb_handling is
 
 component bomb_timer_main is
    port(clk        : in  std_logic;
+	clk_30	   : in  std_logic;
 	timer1	   : in  std_logic;
 	reset 	   : in std_logic;
 	count_reset: out std_logic;
@@ -133,6 +134,7 @@ begin
 		if dflag = '1' then
 			new_state <= TIMER5;
 		else
+
 			new_state <= BOMB_WAIT;
 		end if;
 
@@ -312,14 +314,14 @@ begin
 	end case;
 	end process;
 	
-	TM1 :  bomb_timer_main port map(clk,timer_start1,reset,count_r1,explosion1);			-- Timer main for timer 1
-	TM2 :  bomb_timer_main port map(clk,timer_start2,reset,count_r2,explosion2);			-- Timer main for timer 2
-	TM3 :  bomb_timer_main port map(clk,timer_start3,reset,count_r3,explosion3);			-- Timer main for timer 1
-	TM4 :  bomb_timer_main port map(clk,timer_start4,reset,count_r4,explosion4);			-- Timer main for timer 1
-	TM5 :  bomb_timer_main port map(clk,timer_start5,reset,count_r5,explosion5);   -- Timer main for timer 5
-	TM6 :  bomb_timer_main port map(clk,timer_start6,reset,count_r6,explosion6);   -- Timer main for timer 6
-	TM7 :  bomb_timer_main port map(clk,timer_start7,reset,count_r7,explosion7);			-- Timer main for timer 1
-	TM8 :  bomb_timer_main port map(clk,timer_start8,reset,count_r8,explosion8);			-- Timer main for timer 1
+	TM1 :  bomb_timer_main port map(clk,clk_30,timer_start1,reset,count_r1,explosion1);			-- Timer main for timer 1
+	TM2 :  bomb_timer_main port map(clk,clk_30,timer_start2,reset,count_r2,explosion2);			-- Timer main for timer 2
+	TM3 :  bomb_timer_main port map(clk,clk_30,timer_start3,reset,count_r3,explosion3);			-- Timer main for timer 1
+	TM4 :  bomb_timer_main port map(clk,clk_30,timer_start4,reset,count_r4,explosion4);			-- Timer main for timer 1
+	TM5 :  bomb_timer_main port map(clk,clk_30,timer_start5,reset,count_r5,explosion5);   -- Timer main for timer 5
+	TM6 :  bomb_timer_main port map(clk,clk_30,timer_start6,reset,count_r6,explosion6);   -- Timer main for timer 6
+	TM7 :  bomb_timer_main port map(clk,clk_30,timer_start7,reset,count_r7,explosion7);			-- Timer main for timer 1
+	TM8 :  bomb_timer_main port map(clk,clk_30,timer_start8,reset,count_r8,explosion8);			-- Timer main for timer 1
 
 end architecture behaviour_bomb_handling;
 
