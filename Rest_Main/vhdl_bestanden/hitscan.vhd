@@ -13,6 +13,7 @@ entity hitscan is
         X_p2  : IN  std_logic_vector(3 downto 0);
         Y_p2  : IN  std_logic_vector(3 downto 0);
 	victoryv   : OUT std_logic_vector(1 downto 0);
+	lethal_flag : OUT std_logic;
 	read  : OUT std_logic;
 	FF2_reset : OUT std_logic;
         lethaltile_x : OUT std_logic_vector(3 downto 0);

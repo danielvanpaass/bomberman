@@ -21,7 +21,7 @@ begin
 		end if;
 	end process;
 
-	lbl2: process (Y_b, X_b, X_p1, Y_p1, X_p2, Y_p2, explode, state)
+	lbl2: process (Y_b, X_b, X_p1, Y_p1, X_p2, Y_p2, explode,FF2_read, state)
 	begin
 		case state is
 -- Everything needs to be reset in the rest state and checked if a bomb is exploding
@@ -29,6 +29,7 @@ begin
 				FF1 <= '0';
 				FF2_reset <= '1';
 				read <= '0';
+				lethal_flag <= '0';
 				victoryv <= "00";
 				lethaltile_x <= "0000";
 				lethaltile_y <= "0000";
@@ -66,14 +67,16 @@ begin
 			when vert_wait =>
 				FF2_reset <= '0';
 				read <= '0';
+				lethal_flag <= '0';
 				new_state <= vert_out;
 -- If a player is hit, the victory state will be taken. If a wall is met or it has checked enough tiles and needs to be a plus form, the FSM will go to horizontal. If it is not a plusform, the FSM will go to rest state. Otherwise it will go back to the wait state
 			when vert_out =>
 				coor_signed <= coor_signed + "00001";
+				read <= '1';
 				if coor_signed(4) = '0' then
 					lethaltile_y <= std_logic_vector(coor_signed(3 downto 0));
-					read <= '1';
 					coor_unsigned <= unsigned(coor_signed(3 downto 0));
+					lethal_flag <= '1';
 					if (coor_unsigned_b_x = coor_unsigned_p1_x AND coor_unsigned_p1_y = coor_unsigned) then
 						new_state <= victory_2;
 					elsif (coor_unsigned_b_x = coor_unsigned_p2_x AND coor_unsigned_p2_y = coor_unsigned) then
@@ -93,6 +96,7 @@ begin
 -- If a player is hit, the victory state will be taken. If it checked enough tiles or has met a border wall, it will go to the rest state. Otherwise, it will go to the wait sate
 			when horizontal =>
 				read <= '0';
+				lethal_flag <= '0';
 				FF2_reset <= '1';
 				lethaltile_y <= std_logic_vector(coor_unsigned_b_y);
 				coor_signed <= "0" & signed(coor_unsigned_b_x) - "00010";
@@ -100,13 +104,15 @@ begin
 			when hori_wait =>
 				FF2_reset <= '0';
 				read <= '0';
+				lethal_flag <= '0';
 				new_state <= hori_out;
 			when hori_out =>
 				coor_signed <= coor_signed + "00001";
+				read <= '1';
 				if coor_signed(4) = '0' then
 					lethaltile_x <= std_logic_vector(coor_signed(3 downto 0));
-					read <= '1';
 					coor_unsigned <= unsigned(coor_signed(3 downto 0));
+					lethal_flag <= '1';
 					if (coor_unsigned_b_y  = coor_unsigned_p1_y AND coor_unsigned_p1_y = coor_unsigned) then
 						new_state <= victory_2;
 					elsif (coor_unsigned_b_y = coor_unsigned_p2_y AND coor_unsigned_p2_x = coor_unsigned) then
