@@ -114,7 +114,7 @@ BEGIN
 		END IF;
 	END PROCESS;
 
-	PROCESS (Blocks, h_count, v, x, y, h)
+	PROCESS (Blocks, h_count)
 	BEGIN
 
 		CASE Blocks IS
@@ -244,3 +244,4 @@ BEGIN
 	vga_vsync <= v_sync;
 END behaviour;
 -----------------------------------------------------------------------------------------------------------------------------
+
