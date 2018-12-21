@@ -28,9 +28,7 @@ begin
 	   '0' after 40 ns  when clk /= '0' else '1' after 40 ns;
 
    reset <= '1' after  0 ns,
-            '0' after 100 ns,
-            '1' after  2410 ns,
-            '0' after  2510 ns; 
+            '0' after 100 ns;
 
 end architecture behaviour;
 

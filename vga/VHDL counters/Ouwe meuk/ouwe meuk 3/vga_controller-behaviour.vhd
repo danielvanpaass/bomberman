@@ -82,6 +82,9 @@ elsif(rising_edge(clk)) then					--non reset state
 		blue_out   <= '0'; 	
 	end if;
 
+
+
+
 	if(h_count > 335 and h_count < 433) then -- generating horizontal sync pulse
 		h_sync <= '0';
 	else
@@ -94,6 +97,8 @@ elsif(rising_edge(clk)) then					--non reset state
 		v_sync <= '1';
 	end if;
 	
+
+
 	-- generating the rgb signal
 	
 	c(1) := lay0(241-(2*x + 22*y));							-- assigning the correct two bits to the corresponding vector
