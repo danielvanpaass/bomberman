@@ -5,13 +5,17 @@ USE IEEE.numeric_std.ALL;
 ARCHITECTURE behaviour OF sprites IS
 	SIGNAL v_map : std_logic_vector (3 DOWNTO 0);
 	SIGNAL h_map : std_logic_vector (3 DOWNTO 0);
-	SIGNAL P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector : std_logic_vector (0 TO 120);
+	SIGNAL P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector , victory_vector_right, victory_vector_1_left, victory_vector_2_left: std_logic_vector (0 TO 120);
 	SIGNAL check_1, check_2 : std_logic;
 	SIGNAL spritebit : INTEGER RANGE 0 TO 120;
+	SIGNAL spritebit_victory : INTEGER RANGE 0 TO 241;
 	SIGNAL rgb : std_logic_vector(2 DOWNTO 0);
 BEGIN
 	v_map <= input_v_map(5 DOWNTO 2);
 	h_map <= input_h_map(4 DOWNTO 1);
+	--victory_vector_1_left <= "";
+	--victory_vector_2_left <= "";
+ 	--victory_vector_right <= "";
 	P_vector <= "0011111110000111111100011000001100110101011000101010100011111111101111111111111111111111111110111110001101100000111011100";
 	bomb_vector <= "0000001100000000100101000001000100001111000000111111000011110011000111110010001111111100011111111000011111100000011110000";
 	crate_vector <=	"1111111111111100000111111100011111011101110110011111001100011100011001111100110111011101111100011111110000011111000000011";
@@ -20,7 +24,6 @@ BEGIN
 	check_1 <= playground((10 - to_integer(unsigned(y_map))) * 22 + (10 - to_integer(unsigned(x_map))) * 2);
 	check_2 <= playground((10 - to_integer(unsigned(y_map))) * 22 + ((10 - to_integer(unsigned(x_map))) * 2) + 1);
 	spritebit <= (((to_integer(unsigned(h_map))) + (to_integer(unsigned(v_map)) * 11)));
-
 						
 	PROCESS (clk, reset, victory, playground, x_p1, y_p1, x_bomb_a, y_bomb_a, bomb_a_enable, x_bomb_b, y_bomb_b, bomb_b_enable, x_bomb_c, y_bomb_c, bomb_c_enable, x_bomb_d, y_bomb_d, bomb_d_enable, x_bomb_e, y_bomb_e, bomb_e_enable, x_bomb_f, y_bomb_f, bomb_f_enable, x_bomb_g, y_bomb_g, bomb_g_enable, x_bomb_h, y_bomb_h, bomb_h_enable, x_map, y_map, h_map, v_map, input_h_map, input_v_map)
 	BEGIN
@@ -31,8 +34,46 @@ BEGIN
 				green <= rgb(1);
 				blue <= rgb(0);
 			ELSE
-				IF victory = '1' THEN
-					rgb <= "000";
+				IF victory(1) = '1' THEN
+					IF(victory(0) = '1') THEN
+						IF (x_map = "0100"  AND y_map = "0101") THEN
+							IF (victory_vector_1_left(spritebit) = '1') THEN
+								rgb <= "001";
+							ELSE 
+								rgb <= "000";
+							END IF;
+						ELSIF (x_map = "0101" AND y_map = "0101") THEN
+							IF (victory_vector_right(spritebit) = '1') THEN
+								rgb <= "001";
+							ELSE 
+								rgb <= "000";
+							END IF;
+						ELSE
+							rgb <= "000";
+						END IF;
+					ELSE 		
+						IF (x_map = "0101"  AND y_map = "0101") THEN
+							IF (victory_vector_2_left(spritebit) = '1') THEN
+								rgb <= "100";
+							ELSE 
+								rgb <= "000";
+							END IF;
+						ELSIF (x_map = "0101" AND y_map = "0101") THEN
+							IF (victory_vector_right(spritebit) = '1') THEN
+								rgb <= "100";
+							ELSE 
+								rgb <= "000";
+							END IF;
+						ELSE
+							rgb <= "000";
+						END IF;
+					END IF;
+				ELSIF (check_1 = '0') AND (check_2 = '0') THEN--explosion
+					IF (explosion_vector(spritebit) = '1') THEN
+						rgb <= "000";
+					ELSE
+						rgb <= "010";
+					END IF; 
 				ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN
 					IF (P_vector(spritebit) = '1') THEN
 						rgb <= "001";
@@ -66,12 +107,7 @@ BEGIN
 					END IF; 
 				ELSIF (check_1 = '0') AND (check_2 = '1') THEN--empty
 					rgb <= "111";
-				ELSIF (check_1 = '0') AND (check_2 = '0') THEN--explosion
-					IF (explosion_vector(spritebit) = '1') THEN
-						rgb <= "000";
-					ELSE
-						rgb <= "010";
-					END IF; 
+				
 				ELSIF (check_1 = '1') AND (check_2 = '1') THEN---must be 11 so wall
 					IF (wall_vector(spritebit) = '1') THEN
 						rgb <= "000";
