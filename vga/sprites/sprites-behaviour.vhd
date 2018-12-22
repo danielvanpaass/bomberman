@@ -34,91 +34,94 @@ BEGIN
 				green <= rgb(1);
 				blue <= rgb(0);
 			ELSE
-				IF victory(1) = '1' THEN
-					IF(victory(0) = '1') THEN
-						IF (x_map = "0100"  AND y_map = "0101") THEN
-							IF (victory_vector_1_left(spritebit) = '1') THEN
-								rgb <= "001";
-							ELSE 
+				IF (video_on = '0') THEN
+					rgb <= "000";
+				ELSE
+					IF victory(1) = '1' THEN	
+						IF(victory(0) = '1') THEN
+							IF (x_map = "0100"  AND y_map = "0101") THEN
+								IF (victory_vector_1_left(spritebit) = '1') THEN
+									rgb <= "001";
+								ELSE 
+									rgb <= "000";
+								END IF;
+							ELSIF (x_map = "0101" AND y_map = "0101") THEN
+								IF (victory_vector_right(spritebit) = '1') THEN
+									rgb <= "001";
+								ELSE 
+									rgb <= "000";
+								END IF;
+							ELSE
 								rgb <= "000";
 							END IF;
-						ELSIF (x_map = "0101" AND y_map = "0101") THEN
-							IF (victory_vector_right(spritebit) = '1') THEN
-								rgb <= "001";
-							ELSE 
-								rgb <= "000";
-							END IF;
-						ELSE
+						ELSE 		
+							IF (x_map = "0101"  AND y_map = "0101") THEN
+								IF (victory_vector_2_left(spritebit) = '1') THEN
+									rgb <= "100";
+								ELSE 
+									rgb <= "000";
+								END IF;
+							ELSIF (x_map = "0101" AND y_map = "0101") THEN
+								IF (victory_vector_right(spritebit) = '1') THEN
+									rgb <= "100";
+								ELSE 
+									rgb <= "000";
+								END IF;
+							ELSE
 							rgb <= "000";
+							END IF;
 						END IF;
-					ELSE 		
-						IF (x_map = "0101"  AND y_map = "0101") THEN
-							IF (victory_vector_2_left(spritebit) = '1') THEN
-								rgb <= "100";
-							ELSE 
-								rgb <= "000";
-							END IF;
-						ELSIF (x_map = "0101" AND y_map = "0101") THEN
-							IF (victory_vector_right(spritebit) = '1') THEN
-								rgb <= "100";
-							ELSE 
-								rgb <= "000";
-							END IF;
-						ELSE
+					ELSIF (check_1 = '0') AND (check_2 = '0') THEN--explosion
+						IF (explosion_vector(spritebit) = '1') THEN
 							rgb <= "000";
+						ELSE
+							rgb <= "010";
+						END IF; 
+					ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN
+						IF (P_vector(spritebit) = '1') THEN
+							rgb <= "001";
+						ELSE
+							rgb <= "111";
 						END IF;
-					END IF;
-				ELSIF (check_1 = '0') AND (check_2 = '0') THEN--explosion
-					IF (explosion_vector(spritebit) = '1') THEN
-						rgb <= "000";
-					ELSE
-						rgb <= "010";
-					END IF; 
-				ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN
-					IF (P_vector(spritebit) = '1') THEN
-						rgb <= "001";
-					ELSE
+					ELSIF (y_map = y_p2) AND (x_map = x_p2) THEN
+						IF (P_vector(spritebit) = '1') THEN
+							rgb <= "100";
+						ELSE
+							rgb <= "111";
+						END IF;
+					ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
+						(x_map = x_bomb_b AND y_map = y_bomb_b AND bomb_b_enable = '1') OR
+						(x_map = x_bomb_c AND y_map = y_bomb_c AND bomb_c_enable = '1') OR
+						(x_map = x_bomb_d AND y_map = y_bomb_d AND bomb_d_enable = '1') OR
+						(x_map = x_bomb_e AND y_map = y_bomb_e AND bomb_e_enable = '1') OR
+						(x_map = x_bomb_f AND y_map = y_bomb_f AND bomb_f_enable = '1') OR
+						(x_map = x_bomb_g AND y_map = y_bomb_g AND bomb_g_enable = '1') OR
+						(x_map = x_bomb_h AND y_map = y_bomb_h AND bomb_h_enable = '1') THEN
+						IF (bomb_vector(spritebit) = '1') THEN
+							rgb <= "000";
+						ELSE
+							rgb <= "111";
+						END IF; 
+					ELSIF (check_1 = '1') AND (check_2 = '0') THEN
+						IF (crate_vector(spritebit) = '1') THEN--crate
+							rgb <= "110";
+						ELSE
+							rgb <= "111";
+						END IF; 	
+					ELSIF (check_1 = '0') AND (check_2 = '1') THEN--empty
 						rgb <= "111";
-					END IF;
-				ELSIF (y_map = y_p2) AND (x_map = x_p2) THEN
-					IF (P_vector(spritebit) = '1') THEN
-						rgb <= "100";
-					ELSE
-						rgb <= "111";
-					END IF;
-				ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
-					(x_map = x_bomb_b AND y_map = y_bomb_b AND bomb_b_enable = '1') OR
-					(x_map = x_bomb_c AND y_map = y_bomb_c AND bomb_c_enable = '1') OR
-					(x_map = x_bomb_d AND y_map = y_bomb_d AND bomb_d_enable = '1') OR
-					(x_map = x_bomb_e AND y_map = y_bomb_e AND bomb_e_enable = '1') OR
-					(x_map = x_bomb_f AND y_map = y_bomb_f AND bomb_f_enable = '1') OR
-					(x_map = x_bomb_g AND y_map = y_bomb_g AND bomb_g_enable = '1') OR
-					(x_map = x_bomb_h AND y_map = y_bomb_h AND bomb_h_enable = '1') THEN
-					IF (bomb_vector(spritebit) = '1') THEN
-						rgb <= "000";
-					ELSE
-						rgb <= "111";
-					END IF; 
-				ELSIF (check_1 = '1') AND (check_2 = '0') THEN
-					IF (crate_vector(spritebit) = '1') THEN--crate
-						rgb <= "110";
-					ELSE
-						rgb <= "111";
-					END IF; 
-				ELSIF (check_1 = '0') AND (check_2 = '1') THEN--empty
-					rgb <= "111";
-				
-				ELSIF (check_1 = '1') AND (check_2 = '1') THEN---must be 11 so wall
-					IF (wall_vector(spritebit) = '1') THEN
-						rgb <= "000";
-					ELSE
-						rgb <= "111";
+					
+					ELSIF (check_1 = '1') AND (check_2 = '1') THEN---must be 11 so wall
+						IF (wall_vector(spritebit) = '1') THEN
+							rgb <= "000";
+						ELSE
+							rgb <= "111";
+						END IF;
 					END IF;
 				END IF;
 				red <= rgb(2);
 				green <= rgb(1);
 				blue <= rgb(0); 
-
 			END IF;
 		END IF;
 	END PROCESS;
