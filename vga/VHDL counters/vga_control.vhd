@@ -41,9 +41,16 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count)
 begin
-if (h_count > "000100111") AND (h_count < "100011000") then--- AND v_count > porch waarde v_count AND v_count < rechterporch waarde v_count;--v_count
+if (h_count > "000100110") AND (h_count < "100011001") then--- AND v_count > porch waarde v_count AND v_count < rechterporch waarde v_count;--v_count
 video_on <= '1';
+else 
+video_on <= '0';
 end if;
+--if x="0000" and h="00000" then
+--	video_on <= '0';
+--else
+--	video_on <= '1';
+--end if;
 end process;
 
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -156,7 +163,7 @@ end process;
 			new_y <= y;
 			new_h <= h;
 			new_v <= v;
-				IF (h_count < "000100111") OR (h_count > "100011000") THEN --39 or 280, should there also be a v_count ?
+				IF (h_count < "000100111") OR (h_count > "100011000") THEN --39 or 280("100011000"), should there also be a v_count ?
 					new_blocks <= H_reg;
 				ELSIF h = "10101" and (x<"1010") THEN -- 22, h_count was h added =
 					new_blocks <= x_adder;
