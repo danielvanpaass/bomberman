@@ -21,7 +21,7 @@ process (clk, reset)
    end if;
 end process;
 
-process (state, flag_htoa, bomb_a_x, bomb_a_y, bomb_b_x, bomb_b_y, bomb_c_x, bomb_c_y, bomb_d_x, bomb_d_y, bomb_e_x, bomb_e_y, bomb_f_x, bomb_f_y, bomb_g_x, bomb_g_y, bomb_h_x, bomb_h_y, bombxsample, bombysample)
+process (state, flag_htoa)
 
 	begin
 	case state is
