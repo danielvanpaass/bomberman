@@ -6,7 +6,7 @@ architecture behaviour_buffer of buffer_bomb is
 	type buff_state is (BUFF_RESET, BUFF1, BUFF2, BUFF_WAIT);
 	signal state, new_state: buff_state;
 begin
-	lbl1: process (clk)
+	lbl1: process (clk, reset)
 	begin
 	if (clk'event and clk = '1') then
 		if reset = '1' then
