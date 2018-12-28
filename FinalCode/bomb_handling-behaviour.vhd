@@ -17,7 +17,7 @@ end component;
 	signal state, new_state: handling_state;
 	signal count_r1, count_r2, count_r3, count_r4, count_r5, count_r6, count_r7, count_r8, timer_start1, timer_start2, timer_start3, timer_start4, timer_start5, timer_start6, timer_start7, timer_start8, dflag, new_dflag: std_logic;
 begin
-	lbl1: process (clk)
+	lbl1: process (clk, reset)
 	begin
 	if (clk'event and clk = '1') then
 		if reset = '1' then
