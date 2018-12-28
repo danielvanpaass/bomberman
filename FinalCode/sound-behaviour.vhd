@@ -26,7 +26,7 @@ end component;
 	signal note, new_note: std_logic_vector(2 downto 0);
 begin
 
-	lb11: process (clk)
+	lb11: process (clk, reset)
 	begin
 	if (clk'event and clk = '1') then
 		if reset = '1' then
@@ -46,7 +46,7 @@ begin
 	end if;
 	end process;
 
-	lb12: process (state, H,victory, bomb_placed, bomb_exploded, v_flag, bp_flag, be_flag, count, length)
+	lb12: process (state, victory, bomb_placed, bomb_exploded, H, length, note, count, v_flag, bp_flag, be_flag)
 	begin
 	case state is
 		when RESET_STATE =>
