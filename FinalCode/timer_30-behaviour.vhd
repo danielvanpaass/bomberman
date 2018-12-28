@@ -6,7 +6,7 @@ architecture behaviour_timer30 of timer_30 is
 signal count, new_count : unsigned (4 downto 0);
 
 begin
-	process(clk_30)
+	process(clk_30, timer_r30)
 	begin
 	if (rising_edge (clk_30)) then
 		if timer_r30 = '0' then
