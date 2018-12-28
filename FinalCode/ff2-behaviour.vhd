@@ -5,7 +5,7 @@ use IEEE.numeric_std.ALL;
 architecture behaviour of ff2 is
 	signal FF2, new_FF2: unsigned(2 downto 0);
 begin
-	lbl1: process(clk)
+	lbl1: process(clk, FF2_reset)
 	begin
 -- If the reset becomes 1 the FF2 counter needs to be reset. If it is not, than it is able to count
 		if (clk'event and clk = '1') then
