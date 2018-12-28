@@ -29,7 +29,7 @@ BEGIN
  END PROCESS;
 
 --- counter clock
-PROCESS (v_clk, reset, begin_counting)
+PROCESS (v_clk, begin_counting)
 BEGIN
  IF rising_edge (v_clk) THEN
 	IF (begin_counting = '0') THEN --so reset should be longer than v_clk cycle
@@ -46,7 +46,7 @@ BEGIN
  END PROCESS;
  hitbox_count_players <= std_logic_vector (count_players);
  --------- decides which player is to play
- PROCESS (switch_state, hitbox_count_players, x_p1, y_p1, up_p1, left_p1, right_p1, down_p1, new_x_player, new_y_player, x_p2, y_p2, up_p2, left_p2, right_p2, down_p2)
+ PROCESS (switch_state, hitbox_count_players)
  BEGIN
   CASE switch_state IS
    WHEN begin_state =>
@@ -109,7 +109,7 @@ BEGIN
   END CASE;
  END PROCESS;
  --------------
- PROCESS (right_player, left_player, up_player, down_player, dir_state, y_player, x_player, hitbox_count_players, move_player, switch_players)
+ PROCESS (right_player, left_player, up_player, down_player, dir_state, hitbox_count_players, move_player, switch_players)
  BEGIN
   CASE dir_state IS
    WHEN begin_state =>
@@ -235,7 +235,7 @@ BEGIN
   END CASE;
  END PROCESS;
  ------------- Check if there's an obstacle module for P1 (might be a problem that this doesnt update on clock)
- PROCESS (v_clk, walls_and_crates, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active)
+ PROCESS ( walls_and_crates, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active)
  BEGIN
   IF (
    (walls_and_crates(to_integer(unsigned(check_x_player)) + to_integer(unsigned(check_y_player)) * 11) = '0')
