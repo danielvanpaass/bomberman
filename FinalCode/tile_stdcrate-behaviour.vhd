@@ -8,7 +8,7 @@ signal state, new_state: tile_stdcrate_states;
 
 begin
 
-process (clk)
+process (clk, reset)
   begin
    if (rising_edge (clk)) then
      if (reset = '1') then
