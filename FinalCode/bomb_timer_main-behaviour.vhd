@@ -16,7 +16,7 @@ end component;
 	signal count_out: std_logic_vector(5 downto 0);
 	signal count_reset_signal : std_logic;
 begin
-	lbl1: process (clk)
+	lbl1: process (clk, reset)
 	begin
 	if (clk'event and clk = '1') then
 		if reset = '1' then
