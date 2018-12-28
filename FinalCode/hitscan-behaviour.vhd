@@ -10,7 +10,7 @@ architecture behaviour of hitscan is
 	signal coor_unsigned_p1_x, coor_unsigned_p1_y, coor_unsigned_p2_x, coor_unsigned_p2_y: unsigned(3 downto 0);
 	signal coor_unsigned_b_x, coor_unsigned_b_y, coor_unsigned: unsigned(3 downto 0);
 begin
-	lbl1: process(clk)
+	lbl1: process(clk, res)
 	begin
 		if (clk'event and clk = '1') then
 			if res = '1' then
@@ -21,7 +21,7 @@ begin
 		end if;
 	end process;
 
-	lbl2: process (Y_b, X_b, X_p1, Y_p1, X_p2, Y_p2, explode,FF2_read, state, coor_unsigned_p1_x, coor_unsigned_p1_y, coor_unsigned_p2_x, coor_unsigned_p2_y, coor_unsigned_b_x, coor_unsigned_b_y, coor_unsigned)
+	lbl2: process (state, eplode X_b, coor_unsigned_b_y, coor_signed, coor_unsigned_b_x, coor_unsigned_p1_y, coor_unsigned_p2_y, coor_unsigned, FF1, FF2_read, coor_unsigned_b_y, coor_unsigned_p2_x)--all inputs by order of occurence in code
 	begin
 		case state is
 -- Everything needs to be reset in the rest state and checked if a bomb is exploding
@@ -73,7 +73,7 @@ begin
 			when vert_out =>
 				coor_signed <= coor_signed + "00001";
 				read <= '1';
-				if coor_signed(4) = '0' then
+				if coor_signed(4) = '0' then--the fact that coor_signed is updated and checked in same state creates errors
 					lethaltile_y <= std_logic_vector(coor_signed(3 downto 0));
 					coor_unsigned <= unsigned(coor_signed(3 downto 0));
 					lethal_flag <= '1';
