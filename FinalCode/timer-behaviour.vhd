@@ -6,7 +6,7 @@ architecture behaviour_timer of timer is
 signal count, new_count : unsigned (15 downto 0);
 
 begin
-	process(clk)
+	process(clk, timer_r)
 	begin
 		if (rising_edge (clk)) then
 			if timer_r = '0' then
