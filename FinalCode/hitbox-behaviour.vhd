@@ -11,10 +11,17 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
  SIGNAL hitbox_count_players : std_logic_vector (2 DOWNTO 0);
  SIGNAL begin_counting, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
  SIGNAL count_players, new_count_players : unsigned (2 DOWNTO 0);
+SIGNAL walls_and_crates_inverted : std_logic_vector(0 to 120);
+SIGNAL x_p1_local, y_p1_local, x_p2_local, y_p2_local : std_logic_vector( 3 downto 0);
  CONSTANT switch_to_p2 : std_logic_vector := "011"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
  CONSTANT switch_to_p1 : std_logic_vector := "111"; --:= "1011111010111100001000"- this equals0.25 seconds, meaning that a full cycle of P1+P2 turn is in 0.25 seconds.
 --however, for simulation purposes we used much smaller values.
 BEGIN
+walls_and_crates_inverted <= walls_and_crates;
+x_p1<=x_p1_local;
+y_p1<=y_p1_local;
+x_p2<=x_p2_local;
+y_p2<=y_p2_local;
  PROCESS (v_clk, reset)
  BEGIN
   IF rising_edge (v_clk) THEN
@@ -53,10 +60,10 @@ BEGIN
     switch_players <= '0';
     x_player <= "0001";
     y_player <= "0001";
-    x_p1 <= "0001";
-    y_p1 <= "0001";
-    x_p2 <= "1001";
-    y_p2 <= "1001";
+    x_p1_local <= "0001";
+    y_p1_local <= "0001";
+    x_p2_local <= "1001";
+    y_p2_local <= "1001";
     new_switch_state <= P1;
     begin_counting <= '0';
     up_player <= '0';
@@ -64,8 +71,8 @@ BEGIN
     right_player <= '0';
     down_player <= '0';
    WHEN P1 =>
-    x_player <= x_p1;
-    y_player <= y_p1;
+    x_player <= x_p1_local;
+    y_player <= y_p1_local;
     begin_counting <= '1';
     up_player <= up_p1;
     left_player <= left_p1;
@@ -78,16 +85,16 @@ BEGIN
      switch_players <= '0';
     END IF;
    WHEN fromP1toP2 =>
-    x_p1 <= new_x_player;
-    y_p1 <= new_y_player;
+    x_p1_local <= new_x_player;
+    y_p1_local <= new_y_player;
     switch_players <= '1';
     new_switch_state <= P2;
     x_player <= new_x_player;--just to not have outputs undefined, the value of x_player shouldnt matter
     y_player <= new_y_player;
    WHEN P2 =>
     begin_counting <= '1';
-    x_player <= x_p2;
-    y_player <= y_p2;
+    x_player <= x_p2_local;
+    y_player <= y_p2_local;
     up_player <= up_p2;
     left_player <= left_p2;
     right_player <= right_p2;
@@ -101,8 +108,8 @@ BEGIN
    WHEN fromP2toP1 =>
     new_switch_state <= P1;
     begin_counting <= '0';
-    x_p2 <= new_x_player; -- output the new location for P2
-    y_p2 <= new_y_player;-- or new_?
+    x_p2_local <= new_x_player; -- output the new location for P2
+    y_p2_local <= new_y_player;-- or new_?
     switch_players <= '1';
     x_player <= new_x_player;--just to not have outputs undefined, the value of x_player shouldnt matter
     y_player <= new_y_player;
@@ -235,10 +242,10 @@ BEGIN
   END CASE;
  END PROCESS;
  ------------- Check if there's an obstacle module for P1 (might be a problem that this doesnt update on clock)
- PROCESS ( walls_and_crates, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active)
+ PROCESS ( walls_and_crates_inverted, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active)
  BEGIN
   IF (
-   (walls_and_crates(to_integer(unsigned(check_x_player)) + to_integer(unsigned(check_y_player)) * 11) = '0')
+   (walls_and_crates_inverted(to_integer(unsigned(check_x_player)) + to_integer(unsigned(check_y_player)) * 11) = '0')
    AND (bomb_x_a /= std_logic_vector(check_x_player) OR (bomb_y_a /= std_logic_vector(check_y_player)) OR (bomb_a_active = '0'))
    AND (bomb_x_b /= std_logic_vector(check_x_player) OR (bomb_y_b /= std_logic_vector(check_y_player)) OR(bomb_b_active = '0'))
    AND (bomb_x_c /= std_logic_vector(check_x_player) OR (bomb_y_c /= std_logic_vector(check_y_player)) OR(bomb_c_active = '0'))
