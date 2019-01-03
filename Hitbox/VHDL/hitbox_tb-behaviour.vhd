@@ -1,313 +1,265 @@
-library IEEE;
-use IEEE.std_logic_1164.ALL;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+ARCHITECTURE hitbox_behaviour OF hitbox IS
+ TYPE state_type IS (begin_state, which_direction, attempt_to_right, attempt_to_left, attempt_to_up, attempt_to_down, right_output, left_output, up_output, down_output, stay_output);
+ TYPE switch_type IS (begin_state, P1, P2);
+ SIGNAL dir_state, new_state : state_type;
+ SIGNAL switch_state, new_switch_state : switch_type;
+ SIGNAL new_x_player, new_y_player, x_player, y_player : STD_logic_vector (3 DOWNTO 0);
+ SIGNAL check_x_player, check_y_player : std_logic_vector (3 DOWNTO 0);
+ SIGNAL hitbox_count_players : std_logic_vector (3 DOWNTO 0);
+ SIGNAL begin_counting, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
+ SIGNAL count_players, new_count_players : unsigned (3 DOWNTO 0);
+SIGNAL walls_and_crates_inverted : std_logic_vector(0 to 120);
+SIGNAL x_p1_local, y_p1_local, x_p2_local, y_p2_local : std_logic_vector( 3 downto 0);
+ CONSTANT switch_to_p2 : std_logic_vector := "0111"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
+ CONSTANT switch_to_p1 : std_logic_vector := "1111"; --:= "1011111010111100001000"- this equals0.25 seconds, meaning that a full cycle of P1+P2 turn is in 0.25 seconds.
+--however, for simulation purposes we used much smaller values.
+BEGIN
+walls_and_crates_inverted <= walls_and_crates;
+x_p1<=x_p1_local;
+y_p1<=y_p1_local;
+x_p2<=x_p2_local;
+y_p2<=y_p2_local;
+ PROCESS (clk, reset)
+ BEGIN
+  IF rising_edge (clk) THEN
+   IF reset = '1' THEN -- reset the whole system
+    dir_state <= begin_state;
+    switch_state <= begin_state;
+   ELSE
+    dir_state <= new_state;
+    switch_state <= new_switch_state;
+   END IF;
+  END IF;
+ END PROCESS;
+--  PROCESS (clk, begin_counting, reset)
+--BEGIN
+--    IF rising_edge (clk) THEN
+--      IF ((begin_counting = '0') OR (reset = '1')) THEN -- reset the whole system
+--    count_players <= (OTHERS => '0');
+--      ELSE
+--       count_players <= new_count_players;
+--    END IF;
+--  END IF;
+--END PROCESS;
 
-architecture behaviour of hitbox_tb is
-   component hitbox
-    PORT (
-     v_clk		   : IN std_logic;
-     reset            : IN std_logic;
-     walls_and_crates : IN std_logic_vector(120 DOWNTO 0);
-     bomb_x_a         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_y_a         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_x_b         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_y_b         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_x_c         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_y_c         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_x_d         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_y_d         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_x_e         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_y_e         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_x_f         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_y_f         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_x_g         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_y_g         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_x_h         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_y_h         : IN std_logic_vector(3 DOWNTO 0);
-     bomb_a_active    : IN std_logic;
-     bomb_b_active    : IN std_logic;
-     bomb_c_active    : IN std_logic;
-     bomb_d_active    : IN std_logic;
-     bomb_e_active    : IN std_logic;
-     bomb_f_active    : IN std_logic;
-     bomb_g_active    : IN std_logic;
-     bomb_h_active    : IN std_logic;
-     up_p1            : IN std_logic;
-     right_p1         : IN std_logic;
-     down_p1          : IN std_logic;
-     left_p1          : IN std_logic;
-     up_p2            : IN std_logic;
-     right_p2         : IN std_logic;
-     down_p2          : IN std_logic;
-     left_p2          : IN std_logic;
-     x_p1             : OUT std_logic_vector(3 DOWNTO 0);
-     y_p1             : OUT std_logic_vector(3 DOWNTO 0);
-     x_p2             : OUT std_logic_vector(3 DOWNTO 0);
-     y_p2             : OUT std_logic_vector(3 DOWNTO 0)
-    );
-   end component;
-   signal v_clk		   : std_logic;
-   signal reset            : std_logic;
-   signal walls_and_crates : std_logic_vector(120 DOWNTO 0);
-   signal bomb_x_a         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_y_a         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_x_b         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_y_b         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_x_c         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_y_c         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_x_d         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_y_d         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_x_e         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_y_e         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_x_f         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_y_f         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_x_g         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_y_g         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_x_h         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_y_h         : std_logic_vector(3 DOWNTO 0);
-   signal bomb_a_active    : std_logic;
-   signal bomb_b_active    : std_logic;
-   signal bomb_c_active    : std_logic;
-   signal bomb_d_active    : std_logic;
-   signal bomb_e_active    : std_logic;
-   signal bomb_f_active    : std_logic;
-   signal bomb_g_active    : std_logic;
-   signal bomb_h_active    : std_logic;
-   signal up_p1            : std_logic;
-   signal right_p1         : std_logic;
-   signal down_p1          : std_logic;
-   signal left_p1          : std_logic;
-   signal up_p2            : std_logic;
-   signal right_p2         : std_logic;
-   signal down_p2          : std_logic;
-   signal left_p2          : std_logic;
-   signal x_p1             : std_logic_vector(3 DOWNTO 0);
-   signal y_p1             : std_logic_vector(3 DOWNTO 0);
-   signal x_p2             : std_logic_vector(3 DOWNTO 0);
-   signal y_p2             : std_logic_vector(3 DOWNTO 0);
-begin
-test: hitbox port map (v_clk, reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_x_b, bomb_y_b, bomb_x_c, bomb_y_c, bomb_x_d, bomb_y_d, bomb_x_e, bomb_y_e, bomb_x_f, bomb_y_f, bomb_x_g, bomb_y_g, bomb_x_h, bomb_y_h, bomb_a_active, bomb_b_active, bomb_c_active, bomb_d_active, bomb_e_active, bomb_f_active, bomb_g_active, bomb_h_active, up_p1, right_p1, down_p1, left_p1, up_p2, right_p2, down_p2, left_p2, x_p1, y_p1, x_p2, y_p2);
--- clk <= '1' after 0 ns,
---      '0' after 100 ns when clk /= '0' else '1' after 100 ns;
-v_clk <= '1' after 0 ns,
- '0' AFTER 16.6666 ms WHEN v_clk /= '0' ELSE '1' AFTER 16.6666 ms;
-  reset <= '1' AFTER 0 ns,
-   '0' AFTER 40 ms; 
-   walls_and_crates(0) <= '1' after 0 ns;
-   walls_and_crates(1) <= '0' after 0 ns;
-   walls_and_crates(2) <= '0' after 0 ns;
-   walls_and_crates(3) <= '0' after 0 ns;
-   walls_and_crates(4) <= '0' after 0 ns;
-   walls_and_crates(5) <= '0' after 0 ns;
-   walls_and_crates(6) <= '0' after 0 ns;
-   walls_and_crates(7) <= '0' after 0 ns;
-   walls_and_crates(8) <= '0' after 0 ns;
-   walls_and_crates(9) <= '0' after 0 ns;
-   walls_and_crates(10) <= '0' after 0 ns;
-   walls_and_crates(11) <= '0' after 0 ns;
-   walls_and_crates(12) <= '0' after 0 ns;
-   walls_and_crates(13) <= '0' after 0 ns;
-   walls_and_crates(14) <= '0' after 0 ns;
-   walls_and_crates(15) <= '0' after 0 ns;
-   walls_and_crates(16) <= '0' after 0 ns;
-   walls_and_crates(17) <= '0' after 0 ns;
-   walls_and_crates(18) <= '0' after 0 ns;
-   walls_and_crates(19) <= '0' after 0 ns;
-   walls_and_crates(20) <= '0' after 0 ns;
-   walls_and_crates(21) <= '0' after 0 ns;
-   walls_and_crates(22) <= '0' after 0 ns;
-   walls_and_crates(23) <= '0' after 0 ns;
-   walls_and_crates(24) <= '0' after 0 ns;
-   walls_and_crates(25) <= '0' after 0 ns;
-   walls_and_crates(26) <= '0' after 0 ns;
-   walls_and_crates(27) <= '0' after 0 ns;
-   walls_and_crates(28) <= '0' after 0 ns;
-   walls_and_crates(29) <= '0' after 0 ns;
-   walls_and_crates(30) <= '0' after 0 ns;
-   walls_and_crates(31) <= '0' after 0 ns;
-   walls_and_crates(32) <= '0' after 0 ns;
-   walls_and_crates(33) <= '0' after 0 ns;
-   walls_and_crates(34) <= '0' after 0 ns;
-   walls_and_crates(35) <= '0' after 0 ns;
-   walls_and_crates(36) <= '0' after 0 ns;
-   walls_and_crates(37) <= '0' after 0 ns;
-   walls_and_crates(38) <= '0' after 0 ns;
-   walls_and_crates(39) <= '0' after 0 ns;
-   walls_and_crates(40) <= '0' after 0 ns;
-   walls_and_crates(41) <= '0' after 0 ns;
-   walls_and_crates(42) <= '0' after 0 ns;
-   walls_and_crates(43) <= '0' after 0 ns;
-   walls_and_crates(44) <= '0' after 0 ns;
-   walls_and_crates(45) <= '0' after 0 ns;
-   walls_and_crates(46) <= '0' after 0 ns;
-   walls_and_crates(47) <= '0' after 0 ns;
-   walls_and_crates(48) <= '0' after 0 ns;
-   walls_and_crates(49) <= '0' after 0 ns;
-   walls_and_crates(50) <= '0' after 0 ns;
-   walls_and_crates(51) <= '0' after 0 ns;
-   walls_and_crates(52) <= '0' after 0 ns;
-   walls_and_crates(53) <= '0' after 0 ns;
-   walls_and_crates(54) <= '0' after 0 ns;
-   walls_and_crates(55) <= '0' after 0 ns;
-   walls_and_crates(56) <= '0' after 0 ns;
-   walls_and_crates(57) <= '0' after 0 ns;
-   walls_and_crates(58) <= '0' after 0 ns;
-   walls_and_crates(59) <= '0' after 0 ns;
-   walls_and_crates(60) <= '0' after 0 ns;
-   walls_and_crates(61) <= '0' after 0 ns;
-   walls_and_crates(62) <= '0' after 0 ns;
-   walls_and_crates(63) <= '0' after 0 ns;
-   walls_and_crates(64) <= '0' after 0 ns;
-   walls_and_crates(65) <= '0' after 0 ns;
-   walls_and_crates(66) <= '0' after 0 ns;
-   walls_and_crates(67) <= '0' after 0 ns;
-   walls_and_crates(68) <= '0' after 0 ns;
-   walls_and_crates(69) <= '0' after 0 ns;
-   walls_and_crates(70) <= '0' after 0 ns;
-   walls_and_crates(71) <= '0' after 0 ns;
-   walls_and_crates(72) <= '0' after 0 ns;
-   walls_and_crates(73) <= '0' after 0 ns;
-   walls_and_crates(74) <= '0' after 0 ns;
-   walls_and_crates(75) <= '0' after 0 ns;
-   walls_and_crates(76) <= '0' after 0 ns;
-   walls_and_crates(77) <= '0' after 0 ns;
-   walls_and_crates(78) <= '0' after 0 ns;
-   walls_and_crates(79) <= '0' after 0 ns;
-   walls_and_crates(80) <= '0' after 0 ns;
-   walls_and_crates(81) <= '0' after 0 ns;
-   walls_and_crates(82) <= '0' after 0 ns;
-   walls_and_crates(83) <= '0' after 0 ns;
-   walls_and_crates(84) <= '0' after 0 ns;
-   walls_and_crates(85) <= '0' after 0 ns;
-   walls_and_crates(86) <= '0' after 0 ns;
-   walls_and_crates(87) <= '0' after 0 ns;
-   walls_and_crates(88) <= '0' after 0 ns;
-   walls_and_crates(89) <= '0' after 0 ns;
-   walls_and_crates(90) <= '0' after 0 ns;
-   walls_and_crates(91) <= '0' after 0 ns;
-   walls_and_crates(92) <= '0' after 0 ns;
-   walls_and_crates(93) <= '0' after 0 ns;
-   walls_and_crates(94) <= '0' after 0 ns;
-   walls_and_crates(95) <= '0' after 0 ns;
-   walls_and_crates(96) <= '0' after 0 ns;
-   walls_and_crates(97) <= '0' after 0 ns;
-   walls_and_crates(98) <= '0' after 0 ns;
-   walls_and_crates(99) <= '0' after 0 ns;
-   walls_and_crates(100) <= '0' after 0 ns;
-   walls_and_crates(101) <= '0' after 0 ns;
-   walls_and_crates(102) <= '0' after 0 ns;
-   walls_and_crates(103) <= '0' after 0 ns;
-   walls_and_crates(104) <= '0' after 0 ns;
-   walls_and_crates(105) <= '0' after 0 ns;
-   walls_and_crates(106) <= '0' after 0 ns;
-   walls_and_crates(107) <= '0' after 0 ns;
-   walls_and_crates(108) <= '0' after 0 ns;
-   walls_and_crates(109) <= '0' after 0 ns;
-   walls_and_crates(110) <= '0' after 0 ns;
-   walls_and_crates(111) <= '0' after 0 ns;
-   walls_and_crates(112) <= '0' after 0 ns;
-   walls_and_crates(113) <= '0' after 0 ns;
-   walls_and_crates(114) <= '0' after 0 ns;
-   walls_and_crates(115) <= '0' after 0 ns;
-   walls_and_crates(116) <= '0' after 0 ns;
-   walls_and_crates(117) <= '0' after 0 ns;
-   walls_and_crates(118) <= '0' after 0 ns;
-   walls_and_crates(119) <= '0' after 0 ns;
-   walls_and_crates(120) <= '1' after 0 ns;
-   bomb_x_a(0) <= '0' after 0 ns;
-   bomb_x_a(1) <= '1' after 0 ns;
-   bomb_x_a(2) <= '0' after 0 ns;
-   bomb_x_a(3) <= '1' after 0 ns;
-   bomb_y_a(0) <= '0' after 0 ns;
-   bomb_y_a(1) <= '0' after 0 ns;
-   bomb_y_a(2) <= '0' after 0 ns;
-   bomb_y_a(3) <= '0' after 0 ns;
-   bomb_x_b(0) <= '0' after 0 ns;
-   bomb_x_b(1) <= '0' after 0 ns;
-   bomb_x_b(2) <= '0' after 0 ns;
-   bomb_x_b(3) <= '0' after 0 ns;
-   bomb_y_b(0) <= '0' after 0 ns;
-   bomb_y_b(1) <= '0' after 0 ns;
-   bomb_y_b(2) <= '0' after 0 ns;
-   bomb_y_b(3) <= '0' after 0 ns;
-   bomb_x_c(0) <= '0' after 0 ns;
-   bomb_x_c(1) <= '0' after 0 ns;
-   bomb_x_c(2) <= '0' after 0 ns;
-   bomb_x_c(3) <= '0' after 0 ns;
-   bomb_y_c(0) <= '0' after 0 ns;
-   bomb_y_c(1) <= '0' after 0 ns;
-   bomb_y_c(2) <= '0' after 0 ns;
-   bomb_y_c(3) <= '0' after 0 ns;
-   bomb_x_d(0) <= '0' after 0 ns;
-   bomb_x_d(1) <= '0' after 0 ns;
-   bomb_x_d(2) <= '0' after 0 ns;
-   bomb_x_d(3) <= '0' after 0 ns;
-   bomb_y_d(0) <= '0' after 0 ns;
-   bomb_y_d(1) <= '0' after 0 ns;
-   bomb_y_d(2) <= '0' after 0 ns;
-   bomb_y_d(3) <= '0' after 0 ns;
-   bomb_x_e(0) <= '0' after 0 ns;
-   bomb_x_e(1) <= '0' after 0 ns;
-   bomb_x_e(2) <= '0' after 0 ns;
-   bomb_x_e(3) <= '0' after 0 ns;
-   bomb_y_e(0) <= '0' after 0 ns;
-   bomb_y_e(1) <= '0' after 0 ns;
-   bomb_y_e(2) <= '0' after 0 ns;
-   bomb_y_e(3) <= '0' after 0 ns;
-   bomb_x_f(0) <= '0' after 0 ns;
-   bomb_x_f(1) <= '0' after 0 ns;
-   bomb_x_f(2) <= '0' after 0 ns;
-   bomb_x_f(3) <= '0' after 0 ns;
-   bomb_y_f(0) <= '0' after 0 ns;
-   bomb_y_f(1) <= '0' after 0 ns;
-   bomb_y_f(2) <= '0' after 0 ns;
-   bomb_y_f(3) <= '0' after 0 ns;
-   bomb_x_g(0) <= '0' after 0 ns;
-   bomb_x_g(1) <= '0' after 0 ns;
-   bomb_x_g(2) <= '0' after 0 ns;
-   bomb_x_g(3) <= '0' after 0 ns;
-   bomb_y_g(0) <= '0' after 0 ns;
-   bomb_y_g(1) <= '0' after 0 ns;
-   bomb_y_g(2) <= '0' after 0 ns;
-   bomb_y_g(3) <= '0' after 0 ns;
-   bomb_x_h(0) <= '0' after 0 ns;
-   bomb_x_h(1) <= '0' after 0 ns;
-   bomb_x_h(2) <= '0' after 0 ns;
-   bomb_x_h(3) <= '0' after 0 ns;
-   bomb_y_h(0) <= '0' after 0 ns;
-   bomb_y_h(1) <= '0' after 0 ns;
-   bomb_y_h(2) <= '0' after 0 ns;
-   bomb_y_h(3) <= '0' after 0 ns;
-   bomb_a_active <= '0' after 0 ns;
-   bomb_b_active <= '0' after 0 ns;
-   bomb_c_active <= '0' after 0 ns;
-   bomb_d_active <= '0' after 0 ns;
-   bomb_e_active <= '0' after 0 ns;
-   bomb_f_active <= '0' after 0 ns;
-   bomb_g_active <= '0' after 0 ns;
-   bomb_h_active <= '0' after 0 ns;
-   up_p1 <= '0' after 0 ns;
-   right_p1 <= '0' after 0 ns;
-   down_p1 <= '1' after 0 ns;
-   left_p1 <= '0' after 0 ns;
-   up_p2 <= '0' after 0 ns;
-   right_p2 <= '0' after 0 ns;
-   down_p2 <= '1' after 0 ns;
-   left_p2 <= '0' after 0 ns;
-   x_p1(0) <= '0' after 0 ns;
-   x_p1(1) <= '0' after 0 ns;
-   x_p1(2) <= '0' after 0 ns;
-   x_p1(3) <= '0' after 0 ns;
-   y_p1(0) <= '0' after 0 ns;
-   y_p1(1) <= '0' after 0 ns;
-   y_p1(2) <= '0' after 0 ns;
-   y_p1(3) <= '0' after 0 ns;
-   x_p2(0) <= '0' after 0 ns;
-   x_p2(1) <= '0' after 0 ns;
-   x_p2(2) <= '0' after 0 ns;
-   x_p2(3) <= '0' after 0 ns;
-   y_p2(0) <= '0' after 0 ns;
-   y_p2(1) <= '0' after 0 ns;
-   y_p2(2) <= '0' after 0 ns;
-   y_p2(3) <= '0' after 0 ns;
-end behaviour;
+--- slow clock: v_clk
+PROCESS (v_clk, reset, begin_counting)
+BEGIN
+ IF rising_edge (v_clk) THEN
+	IF (begin_counting = '0') THEN --so reset should be longer than v_clk cycle
+	count_players <= (OTHERS => '0');
+	ELSE 
+	      count_players <= new_count_players;
+	END IF;
+  END IF;
+ END PROCESS;
+ -- counter for P1 and P2 playtime
+ PROCESS (count_players)
+ BEGIN
+  new_count_players <= count_players + 1;
+ END PROCESS;
+ hitbox_count_players <= std_logic_vector (count_players);
+ --------- decides which player is to play
+ PROCESS (switch_state, hitbox_count_players)
+ BEGIN
+  CASE switch_state IS
+   WHEN begin_state =>
+    switch_players <= '0';
+    x_player <= "0001";
+    y_player <= "0001";
+    x_p1_local <= "0001";
+    y_p1_local <= "0001";
+    x_p2_local <= "1001";
+    y_p2_local <= "1001";
+    new_switch_state <= P1;
+    begin_counting <= '0';
+    up_player <= '0';
+    left_player <= '0';
+    right_player <= '0';
+    down_player <= '0';
+   WHEN P1 =>
+    x_player <= x_p1_local;
+    y_player <= y_p1_local;
+    begin_counting <= '1';
+    up_player <= up_p1;
+    left_player <= left_p1;
+    right_player <= right_p1;
+    down_player <= down_p1;
+    IF ((hitbox_count_players = switch_to_p2)) THEN --P1 ends his turn
+     new_switch_state <= P2;
+     x_p1_local <= new_x_player; -- output the new location for P1
+     y_p1_local <= new_y_player;
+     switch_players <= '1';
+    ELSE
+     new_switch_state <= P1;
+     switch_players <= '0';
+    END IF;
+   WHEN P2 =>
+    begin_counting <= '1';
+    x_player <= x_p2_local;
+    y_player <= y_p2_local;
+    up_player <= up_p2;
+    left_player <= left_p2;
+    right_player <= right_p2;
+    down_player <= down_p2;
+    IF (hitbox_count_players = switch_to_p1) THEN -- should be the above but doubled, for the reset
+     begin_counting <= '0';--the reset
+     new_switch_state <= P1;
+     x_p2_local <= new_x_player; -- output the new location for P2
+     y_p2_local <= new_y_player;-- or new_?
+     switch_players <= '1';
+    ELSE
+     new_switch_state <= P2;
+     switch_players <= '0';
+    END IF;
+  END CASE;
+ END PROCESS;
+ --------------
+ PROCESS (right_player, left_player, up_player, down_player, dir_state, y_player, x_player, hitbox_count_players, move_player, switch_players)
+ BEGIN
+  CASE dir_state IS
+   WHEN begin_state =>
+    new_state <= which_direction;
+    new_x_player <= x_player;--- could these be removed? the output of this isnt important at this state
+    new_y_player <= y_player;--- could these be removed? the output of this isnt important at this state
+    check_x_player <= "0000";--- could these be removed? the output of this isnt important at this state
+    check_y_player <= "0000";--- could these be removed? the output of this isnt important at this state
 
+   WHEN which_direction =>
+    check_x_player <= "0000";
+    check_y_player <= "0000";
+    IF (switch_players = '1') THEN--- so dont go to attempt state if new player is inserted in fsm
+     new_state <= which_direction;
+    ELSE
+     IF (right_player = '1') THEN ---maybe change this back to priority case
+      new_state <= attempt_to_right;
+     ELSIF (left_player = '1') THEN
+      new_state <= attempt_to_left;
+     ELSIF (up_player = '1') THEN
+      new_state <= attempt_to_up;
+     ELSIF (down_player = '1') THEN
+      new_state <= attempt_to_down;
+     ELSE
+      new_state <= stay_output;
+      new_x_player <= x_player;
+      new_y_player <= y_player;
+     END IF;
+    END IF;
+    --attempt states
+
+   WHEN attempt_to_right =>
+    new_x_player <= x_player;
+    new_y_player <= y_player;
+    check_x_player <= std_logic_vector(unsigned(x_player) + "0001");
+    check_y_player <= (y_player);
+    IF (move_player = '1') THEN
+     new_state <= right_output;
+    ELSE
+     new_state <= stay_output;
+    END IF;
+   WHEN attempt_to_left =>
+    new_x_player <= x_player;
+    new_y_player <= y_player;
+    check_x_player <= std_logic_vector(unsigned(x_player) - 1);
+    check_y_player <= (y_player);
+    IF (move_player = '1') THEN
+     new_state <= left_output;
+    ELSE
+     new_state <= stay_output;
+    END IF;
+   WHEN attempt_to_up =>
+    new_x_player <= x_player;
+    new_y_player <= y_player;
+    check_x_player <= (x_player);
+    check_y_player <= std_logic_vector(unsigned(y_player) - 1);
+    IF (move_player = '1') THEN
+     new_state <= up_output;
+    ELSE
+     new_state <= stay_output;
+    END IF;
+   WHEN attempt_to_down =>
+    new_x_player <= x_player;
+    new_y_player <= y_player;
+    check_x_player <= (x_player);
+    check_y_player <= std_logic_vector(unsigned(y_player) + 1);
+    IF (move_player = '1') THEN
+     new_state <= down_output;
+    ELSE
+     new_state <= stay_output;
+    END IF;
+    --- output states
+   WHEN right_output =>
+    new_x_player <= std_logic_vector(unsigned(x_player) + "0001");
+    new_y_player <= y_player;
+    check_x_player <= "0000";
+    check_y_player <= "0000";
+    IF (switch_players = '1') THEN --
+     new_state <= which_direction;
+    ELSE
+     new_state <= right_output;
+    END IF;
+   WHEN left_output =>
+    new_x_player <= std_logic_vector(unsigned(x_player) - "0001");
+    new_y_player <= y_player;
+    check_x_player <= "0000";
+    check_y_player <= "0000";
+    IF (switch_players = '1') THEN --
+     new_state <= which_direction;
+    ELSE
+     new_state <= left_output;
+    END IF;
+   WHEN up_output =>
+    new_x_player <= x_player;
+    new_y_player <= std_logic_vector(unsigned(y_player) - "0001");
+    check_x_player <= "0000";
+    check_y_player <= "0000";
+    IF (switch_players = '1') THEN --
+     new_state <= which_direction;
+    ELSE
+     new_state <= up_output;
+    END IF;
+   WHEN down_output =>
+    new_x_player <= x_player;
+    new_y_player <= std_logic_vector(unsigned(y_player) + "0001");
+    check_x_player <= "0000";
+    check_y_player <= "0000";
+    IF (switch_players = '1') THEN -- this signal changes when P2 goes to one or reversed
+     new_state <= which_direction;
+    ELSE
+     new_state <= down_output;
+    END IF;
+   WHEN stay_output =>
+    new_x_player <= x_player;
+    new_y_player <= y_player;
+    check_x_player <= "0000";
+    check_y_player <= "0000";
+   IF (switch_players = '1') THEN -- this signal changes when P2 goes to one or reversed
+     new_state <= which_direction;
+    ELSE
+     new_state <= stay_output;
+    END IF;
+  END CASE;
+ END PROCESS;
+ ------------- Check if there's an obstacle module for P1 (might be a problem that this doesnt update on clock)
+ PROCESS (clk, walls_and_crates_inverted, check_x_player, check_y_player, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active)
+ BEGIN
+  IF (
+   (walls_and_crates_inverted(to_integer(unsigned(check_x_player)) + to_integer(unsigned(check_y_player)) * 11) = '0')
+   AND (bomb_x_a /= std_logic_vector(check_x_player) OR (bomb_y_a /= std_logic_vector(check_y_player)) OR (bomb_a_active = '0'))
+   AND (bomb_x_b /= std_logic_vector(check_x_player) OR (bomb_y_b /= std_logic_vector(check_y_player)) OR(bomb_b_active = '0'))
+   AND (bomb_x_c /= std_logic_vector(check_x_player) OR (bomb_y_c /= std_logic_vector(check_y_player)) OR(bomb_c_active = '0'))
+   AND (bomb_x_d /= std_logic_vector(check_x_player) OR (bomb_y_d /= std_logic_vector(check_y_player)) OR(bomb_d_active = '0'))
+   AND (bomb_x_e /= std_logic_vector(check_x_player) OR (bomb_y_e /= std_logic_vector(check_y_player)) OR(bomb_e_active = '0'))
+   AND (bomb_x_f /= std_logic_vector(check_x_player) OR (bomb_y_f /= std_logic_vector(check_y_player)) OR(bomb_f_active = '0'))
+   AND (bomb_x_g /= std_logic_vector(check_x_player) OR (bomb_y_g /= std_logic_vector(check_y_player)) OR(bomb_g_active = '0'))
+   AND (bomb_x_h /= std_logic_vector(check_x_player) OR (bomb_y_h /= std_logic_vector(check_y_player)) OR(bomb_h_active = '0'))
+   ) THEN
+   move_player <= '1';
+  ELSE
+   move_player <= '0';
+  END IF;
+ END PROCESS;
+END hitbox_behaviour;
