@@ -2,10 +2,9 @@ LIBRARY IEEE;
 USE IEEE.std_logic_1164.ALL;
 ENTITY hitbox IS
  PORT (
-  clk              : IN std_logic;
-  v_clk		   : IN std_logic;-- gaat 60hz
+  v_clk		   : IN std_logic;
   reset            : IN std_logic;
-  walls_and_crates : IN std_logic_vector(120 DOWNTO 0);
+  walls_and_crates : IN std_logic_vector(0 TO 120);
   bomb_x_a         : IN std_logic_vector(3 DOWNTO 0);
   bomb_y_a         : IN std_logic_vector(3 DOWNTO 0);
   bomb_x_b         : IN std_logic_vector(3 DOWNTO 0);
@@ -44,4 +43,5 @@ ENTITY hitbox IS
   y_p2             : OUT std_logic_vector(3 DOWNTO 0)
  );
 END hitbox;
+
 

@@ -3,6 +3,7 @@ use IEEE.std_logic_1164.ALL;
 
 entity hitbox_top_lvl is
 PORT (
+  clk		   : IN std_logic;
   v_clk		   : IN std_logic;
   reset            : IN std_logic;
   walls_and_crates : IN std_logic_vector(120 DOWNTO 0);
@@ -44,4 +45,6 @@ PORT (
   y_p2             : OUT std_logic_vector(3 DOWNTO 0)
  );  
 end hitbox_top_lvl;
+
+
 

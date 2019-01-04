@@ -1,12 +1,13 @@
 library IEEE;
 use IEEE.std_logic_1164.ALL;
 
-architecture behaviour of hitbox_tb is
-   component hitbox
-    PORT (
+architecture behaviour of hitbox_top_lvl_tb is
+   component hitbox_top_lvl
+   PORT (
+     clk		   : IN std_logic;
      v_clk		   : IN std_logic;
      reset            : IN std_logic;
-     walls_and_crates : IN std_logic_vector(0 TO 120);
+     walls_and_crates : IN std_logic_vector(120 DOWNTO 0);
      bomb_x_a         : IN std_logic_vector(3 DOWNTO 0);
      bomb_y_a         : IN std_logic_vector(3 DOWNTO 0);
      bomb_x_b         : IN std_logic_vector(3 DOWNTO 0);
@@ -43,11 +44,12 @@ architecture behaviour of hitbox_tb is
      y_p1             : OUT std_logic_vector(3 DOWNTO 0);
      x_p2             : OUT std_logic_vector(3 DOWNTO 0);
      y_p2             : OUT std_logic_vector(3 DOWNTO 0)
-    );
+    );  
    end component;
+   signal clk		   : std_logic;
    signal v_clk		   : std_logic;
    signal reset            : std_logic;
-   signal walls_and_crates : std_logic_vector(0 TO 120);
+   signal walls_and_crates : std_logic_vector(120 DOWNTO 0);
    signal bomb_x_a         : std_logic_vector(3 DOWNTO 0);
    signal bomb_y_a         : std_logic_vector(3 DOWNTO 0);
    signal bomb_x_b         : std_logic_vector(3 DOWNTO 0);
@@ -85,9 +87,11 @@ architecture behaviour of hitbox_tb is
    signal x_p2             : std_logic_vector(3 DOWNTO 0);
    signal y_p2             : std_logic_vector(3 DOWNTO 0);
 begin
-test: hitbox port map (v_clk, reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_x_b, bomb_y_b, bomb_x_c, bomb_y_c, bomb_x_d, bomb_y_d, bomb_x_e, bomb_y_e, bomb_x_f, bomb_y_f, bomb_x_g, bomb_y_g, bomb_x_h, bomb_y_h, bomb_a_active, bomb_b_active, bomb_c_active, bomb_d_active, bomb_e_active, bomb_f_active, bomb_g_active, bomb_h_active, up_p1, right_p1, down_p1, left_p1, up_p2, right_p2, down_p2, left_p2, x_p1, y_p1, x_p2, y_p2);
+test: hitbox_top_lvl port map (clk, v_clk, reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_x_b, bomb_y_b, bomb_x_c, bomb_y_c, bomb_x_d, bomb_y_d, bomb_x_e, bomb_y_e, bomb_x_f, bomb_y_f, bomb_x_g, bomb_y_g, bomb_x_h, bomb_y_h, bomb_a_active, bomb_b_active, bomb_c_active, bomb_d_active, bomb_e_active, bomb_f_active, bomb_g_active, bomb_h_active, up_p1, right_p1, down_p1, left_p1, up_p2, right_p2, down_p2, left_p2, x_p1, y_p1, x_p2, y_p2);
 -- clk <= '1' after 0 ns,
 --      '0' after 100 ns when clk /= '0' else '1' after 100 ns;
+   clk <= '1' after 0 ns,
+	'0' after 0.04 ns when clk /= '0' else '1' after 0.04 ns;
    v_clk <= '1' after 0 ns,
 	'0' after 8000 ns when v_clk /= '0' else '1' after 8000 ns;
    reset <= '1' after 0 ns,
@@ -293,6 +297,5 @@ test: hitbox port map (v_clk, reset, walls_and_crates, bomb_x_a, bomb_y_a, bomb_
    right_p2 <= '0' after 0 ns;
    down_p2 <= '0' after 0 ns;
    left_p2 <= '0' after 0 ns;
-   
 end behaviour;
 
