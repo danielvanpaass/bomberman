@@ -7,3 +7,4 @@ entity reg is
         clk   : in  std_logic;
         reset : in  std_logic);
 end reg;
+

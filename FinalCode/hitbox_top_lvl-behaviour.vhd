@@ -72,3 +72,5 @@ direction_buff1: buff port map (up_p1 , right_p1, down_p1 ,left_p1 , up_p2 ,righ
 hitbox1: hitbox port map (v_clk,  reset , walls_and_crates, bomb_x_a ,bomb_y_a , bomb_x_b ,bomb_y_b ,bomb_x_c ,bomb_y_c,bomb_x_d,bomb_y_d, bomb_x_e ,bomb_y_e , bomb_x_f,bomb_y_f , bomb_x_g, bomb_y_g , bomb_x_h , bomb_y_h , bomb_a_active ,bomb_b_active , bomb_c_active, bomb_d_active, bomb_e_active , bomb_f_active ,  bomb_g_active , bomb_h_active  , buff_up_p1  , buff_right_p1 ,   buff_down_p1 ,  buff_left_p1 ,   buff_up_p2 , buff_right_p2 , buff_down_p2 , buff_left_p2  , x_p1 ,  y_p1 , x_p2 ,  y_p2);
 end behaviour;
 
+
+

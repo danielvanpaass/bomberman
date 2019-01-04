@@ -17,13 +17,30 @@ BEGIN
  first_buffer : reg PORT MAP(d_in => input_data_in, clk => clk, reset => reset, d_out => input_data_intermediate);
  second_buffer : reg PORT MAP(d_in => input_data_intermediate, clk => clk, reset => reset, d_out => input_data_out);
 
-buff_up_p1<= input_data_out(7);
-buff_right_p1<= input_data_out(6);
-buff_down_p1<= input_data_out(5);
-buff_left_p1<= input_data_out(4);
-buff_up_p2<= input_data_out(3);
-buff_right_p2<= input_data_out(2);
-buff_down_p2<= input_data_out(1);
-buff_left_p2<= input_data_out(0);
+PROCESS(clk, reset, up_p1, right_p1, down_p1, left_p1, up_p2, right_p2, down_p2, left_p2)
+BEGIN
+  IF rising_edge(clk) THEN -- only on clock rising edge
+   IF reset = '1' THEN
+    	buff_up_p1<= '0';
+	buff_right_p1<= '0';
+	buff_down_p1<= '0';
+	buff_left_p1<= '0';
+	buff_up_p2<= '0';
+	buff_right_p2<= '0';
+	buff_down_p2<= '0';
+	buff_left_p2<= '0';
+   ELSE
+    	buff_up_p1<= input_data_out(7);
+	buff_right_p1<= input_data_out(6);
+	buff_down_p1<= input_data_out(5);
+	buff_left_p1<= input_data_out(4);
+	buff_up_p2<= input_data_out(3);
+	buff_right_p2<= input_data_out(2);
+	buff_down_p2<= input_data_out(1);
+	buff_left_p2<= input_data_out(0);
+   END IF;
+  END IF;
+END PROCESS;
 end behaviour;
+
 
