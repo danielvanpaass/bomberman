@@ -40,7 +40,11 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count, v_count)
 begin
+<<<<<<< HEAD
 if (h_count > "000010011") AND (h_count < "0100011000") AND (v_count < "011110000") then
+=======
+if (h_count > "000100110") AND (h_count < "100011001") AND (v_count < "111100001") then--- waarom 38 en 281?
+>>>>>>> parent of 2e0d1b9... h_count gehalveerd
 	video_on <= '1';
 else
 	video_on <= '0';
@@ -90,7 +94,7 @@ end process;
 				output_clock <= '0';
 				new_h_count <= h_count;
 				new_v_count <= v_count;
-				IF h_count = "011101111" THEN --479/2
+				IF h_count = "111011111" THEN --479
 					New_Position <= V_hold;
 				ELSE
 					New_Position <= H_adder;
@@ -106,7 +110,11 @@ end process;
 				output_clock <= '0';
 				new_h_count <= h_count;
 				new_v_count <= v_count;
+<<<<<<< HEAD
 				IF v_count = "1000001100" AND (h_count="011101111") THEN --524 and 479/2
+=======
+				IF v_count = "1000001100" AND (h_count="111011111") THEN 
+>>>>>>> parent of 2e0d1b9... h_count gehalveerd
 					New_Position <= Clock;
 				ELSE
 					New_Position <= H_reset;
@@ -163,7 +171,7 @@ end process;
 			new_y <= y;
 			new_h <= h;
 			new_v <= v;
-				IF (h_count < "000010011") OR (h_count > "010001100") THEN --39 or 280("100011000")??, should there also be a v_count ?volgens mij niet
+				IF (h_count < "000100111") OR (h_count > "100011000") THEN --39 or 280("100011000")??, should there also be a v_count ?volgens mij niet
 					new_blocks <= H_reg;
 				ELSIF h = "10101" and (x<"1010") THEN -- 21 and 10, h_count was h added =
 					new_blocks <= x_adder;
@@ -238,7 +246,7 @@ end process;
 		CASE Hor IS
 			WHEN H_High =>
 				h_sync <= '1'; --- h_count>433 zou niet voor moeten komen, Waarom niet?
-				IF (h_count < "010100111") OR (h_count >"011011000") THEN --335 or 433 
+				IF (h_count < "101001111") OR (h_count >"110110001") THEN --335 or 433 
 					new_hor <= H_High;
 				ELSE
 					new_hor <= H_Low;
@@ -246,7 +254,7 @@ end process;
 
 			WHEN H_Low =>
 				h_sync <= '0';
-				IF h_count <= "011011000" THEN --433??
+				IF h_count <= "110110001" THEN --433??
 					new_hor <= H_Low;
 				ELSE
 					new_hor <= H_High;
