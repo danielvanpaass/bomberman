@@ -11,6 +11,7 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
  SIGNAL hitbox_count_players : std_logic_vector (2 DOWNTO 0);
  SIGNAL begin_counting, move_player, up_player, down_player, right_player, left_player, switch_players : std_logic;
  SIGNAL count_players, new_count_players : unsigned (2 DOWNTO 0);
+SIGNAL x_local_new, y_local_new:std_logic_vector( 3 downto 0);
 SIGNAL walls_and_crates_inverted : std_logic_vector(0 to 120);
 SIGNAL x_p1_local, y_p1_local, x_p2_local, y_p2_local : std_logic_vector( 3 downto 0);
  CONSTANT switch_to_p2 : std_logic_vector := "011"; ---"0101111101011110000100"--this equalshalf switch_to_p1,
@@ -46,14 +47,16 @@ BEGIN
 	END IF;
   END IF;
  END PROCESS;
+
  -- counter for P1 and P2 playtime
  PROCESS (count_players)
  BEGIN
   new_count_players <= count_players + 1;
  END PROCESS;
  hitbox_count_players <= std_logic_vector (count_players);
+
  --------- decides which player is to play
- PROCESS (switch_state, hitbox_count_players, x_p1_local, y_p1_local, x_p2_local, y_p2_local, up_p1, right_p1, left_p1, down_p1, up_p2, right_p2, left_p2, down_p2, new_x_player, new_y_player)
+ PROCESS (switch_state, hitbox_count_players, x_p1_local, y_p1_local, x_p2_local, y_p2_local, up_p1, right_p1, left_p1, down_p1, up_p2, right_p2, left_p2, down_p2,new_x_player, new_y_player, x_local_new, y_local_new)--, 
  BEGIN
   CASE switch_state IS
    WHEN begin_state =>
@@ -70,7 +73,11 @@ BEGIN
     left_player <= '0';
     right_player <= '0';
     down_player <= '0';
+   x_local_new <= "1001";-- for the first time when P1 starts, to have a defined value for x_p2_local
+   y_local_new <= "1001";
    WHEN P1 =>
+     x_p2_local<=x_local_new;-- because the new x_p2 has been calculated in fromP2toP1
+    y_p2_local<=y_local_new;
     x_player <= x_p1_local;
     y_player <= y_p1_local;
     begin_counting <= '1';
@@ -85,13 +92,19 @@ BEGIN
      switch_players <= '0';
     END IF;
    WHEN fromP1toP2 =>
-    x_p1_local <= new_x_player;
-    y_p1_local <= new_y_player;
+    x_local_new <= new_x_player;
+    y_local_new <= new_y_player;
     switch_players <= '1';
     new_switch_state <= P2;
-    x_player <= new_x_player;--just to not have outputs undefined, the value of x_player shouldnt matter
-    y_player <= new_y_player;
+    x_player <= x_p1_local;--the values that the direction state module has to look for in e.g. " right_output" 
+    y_player <= y_p1_local;
+    up_player <= up_p1;
+    left_player <= left_p1;
+    right_player <= right_p1;
+    down_player <= down_p1;
    WHEN P2 =>
+    x_p1_local<=x_local_new;-- because the new x_p1 has been calculated in fromP!toP2
+    y_p1_local<=y_local_new;
     begin_counting <= '1';
     x_player <= x_p2_local;
     y_player <= y_p2_local;
@@ -106,13 +119,19 @@ BEGIN
      switch_players <= '0';
     END IF;
    WHEN fromP2toP1 =>
+    x_local_new <= new_x_player;
+    y_local_new <= new_y_player;
     new_switch_state <= P1;
     begin_counting <= '0';
     x_p2_local <= new_x_player; -- output the new location for P2
     y_p2_local <= new_y_player;-- or new_?
     switch_players <= '1';
-    x_player <= new_x_player;--just to not have outputs undefined, the value of x_player shouldnt matter
-    y_player <= new_y_player;
+    x_player <= x_p2_local;--just to not have outputs undefined, the value of x_player shouldnt matter
+    y_player <= y_p2_local;
+    up_player <= up_p2;
+    left_player <= left_p2;
+    right_player <= right_p2;
+    down_player <= down_p2;
   END CASE;
  END PROCESS;
  --------------
@@ -261,6 +280,4 @@ BEGIN
   END IF;
  END PROCESS;
 END hitbox_behaviour;
-
-
 
