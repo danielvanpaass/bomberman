@@ -40,8 +40,10 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count)
 begin
-if (h_count > "000100110") AND (h_count < "100011001") AND (v_count > "111101001") AND (v_count < "111101101") then--- waarom 38 en 281?
-video_on <= '0';
+if (h_count > "000100110") AND (h_count < "100011001") AND (v_count < "111100001") then--- waarom 38 en 281?
+	video_on <= '1';
+else
+	video_on <= '0';
 end if;
 --if x="0000" and h="00000" then
 --	video_on <= '0';
