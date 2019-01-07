@@ -246,7 +246,7 @@ end process;
 
 			WHEN H_Low =>
 				h_sync <= '0';
-				IF h_count <= "011011000" THEN --433??
+				IF h_count <= "0110110001" THEN --433??
 					new_hor <= H_Low;
 				ELSE
 					new_hor <= H_High;
