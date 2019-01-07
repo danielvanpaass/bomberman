@@ -31,11 +31,14 @@ component hitscan_top is
         lethaltile_x : OUT std_logic_vector(3 downto 0);
         lethaltile_y : OUT std_logic_vector(3 downto 0));
 end component;
+
+signal explosion_inbetween : std_logic;
 			
 begin
 
-BOMB_TIMERS : bomb_overall port map (clk, clk_30, reset, bombp1, bombp2, b_placed, b_explosion, explosion_bomb, buff_p1, buff_p2);
-HITSCAN : hitscan_top port map (x_b, Y_b, reset, clk, b_explosion, X_p1, Y_p1, X_p2, Y_p2, lethal_flag, victoryv, lethaltile_x, lethaltile_y);
+b_explosion <= explosion_inbetween;
+BOMB_TIMERS : bomb_overall port map (clk, clk_30, reset, bombp1, bombp2, b_placed, explosion_inbetween, explosion_bomb, buff_p1, buff_p2);
+HITSCAN : hitscan_top port map (x_b, Y_b, reset, clk, explosion_inbetween, X_p1, Y_p1, X_p2, Y_p2, lethal_flag, victoryv, lethaltile_x, lethaltile_y);
 
 end behaviour;
 
