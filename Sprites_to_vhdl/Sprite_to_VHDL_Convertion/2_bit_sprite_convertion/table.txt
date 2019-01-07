@@ -1,0 +1,5 @@
+Color	        2_Bit
+White	        “00”
+Yellow/Green	“01”
+Blue/Red	”10”
+Black	        “11”

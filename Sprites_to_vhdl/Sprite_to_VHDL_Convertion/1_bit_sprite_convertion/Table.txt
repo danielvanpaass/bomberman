@@ -1,0 +1,3 @@
+Color	Bit
+White	‘0’
+Rest	‘1’
