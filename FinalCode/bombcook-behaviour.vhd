@@ -21,7 +21,7 @@ process (clk, reset)
    end if;
 end process;
 
-process (state, bombinit, expl)
+process (state, bombinit, expl,bombxsample,playerx,playery)
 
 	begin
 	case state is
