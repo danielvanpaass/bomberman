@@ -40,7 +40,7 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count)
 begin
-if (h_count > "000100110") AND (h_count < "100011001") AND (v_count < "111100001") then--- waarom 38 en 281?
+if (h_count > "000100110") AND (h_count < "100011001") AND (v_count < "111100001") then
 	video_on <= '1';
 else
 	video_on <= '0';
@@ -192,7 +192,7 @@ end process;
 
 			WHEN v_adder =>
 			new_y <= y;
-			--new_h <= "00000";-- new h should also be reset right? nee is al gedaan in x_adder
+			new_h <= "00000";
 			new_v <= v + 1;
 			new_x <= "0000";
 			new_blocks <= H_reg;
@@ -207,8 +207,8 @@ end process;
 
 			WHEN y_adder =>
 			new_x <= "0000";
-			--new_h <= "00000";
-			--new_v <= "000000";
+			new_h <= "00000";
+			new_v <= "000000";
 			new_y <= y + 1;
 			new_blocks <= H_reg; 
 
@@ -235,7 +235,7 @@ end process;
 
 		CASE Hor IS
 			WHEN H_High =>
-				h_sync <= '1'; --- h_count>433 zou niet voor moeten komen, Waarom niet?
+				h_sync <= '1';
 				IF (h_count < "101001111") OR (h_count >"110110001") THEN --335 or 433 
 					new_hor <= H_High;
 				ELSE
@@ -244,7 +244,7 @@ end process;
 
 			WHEN H_Low =>
 				h_sync <= '0';
-				IF h_count <= "110110001" THEN --433??
+				IF h_count <= "110110001" THEN --433
 					new_hor <= H_Low;
 				ELSE
 					new_hor <= H_High;
