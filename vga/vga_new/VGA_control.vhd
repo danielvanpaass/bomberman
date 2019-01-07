@@ -41,10 +41,14 @@ BEGIN
 PROCESS (h_count, v_count)
 begin
 <<<<<<< HEAD
+<<<<<<< HEAD
 if (h_count > "000010011") AND (h_count < "0100011000") AND (v_count < "011110000") then
 =======
 if (h_count > "000100110") AND (h_count < "100011001") AND (v_count < "111100001") then--- waarom 38 en 281?
 >>>>>>> parent of 2e0d1b9... h_count gehalveerd
+=======
+if (h_count > "000100110") AND (h_count < "100011001") AND (v_count < "111100001") then--- waarom 38 en 281?
+>>>>>>> parent of 7a90568... Update VGA_control.vhd
 	video_on <= '1';
 else
 	video_on <= '0';
@@ -111,10 +115,14 @@ end process;
 				new_h_count <= h_count;
 				new_v_count <= v_count;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				IF v_count = "1000001100" AND (h_count="011101111") THEN --524 and 479/2
 =======
 				IF v_count = "1000001100" AND (h_count="111011111") THEN 
 >>>>>>> parent of 2e0d1b9... h_count gehalveerd
+=======
+				IF v_count = "1000001100" AND (h_count="111011111") THEN 
+>>>>>>> parent of 7a90568... Update VGA_control.vhd
 					New_Position <= Clock;
 				ELSE
 					New_Position <= H_reset;
@@ -173,13 +181,17 @@ end process;
 			new_v <= v;
 				IF (h_count < "000100111") OR (h_count > "100011000") THEN --39 or 280("100011000")??, should there also be a v_count ?volgens mij niet
 					new_blocks <= H_reg;
-				ELSIF h = "10101" and (x<"1010") THEN -- 21 and 10, h_count was h added =
+				ELSIF h = "10101" and (x<"1010") THEN -- 22, h_count was h added =
 					new_blocks <= x_adder;
+<<<<<<< HEAD
 				elsif h="10101" and x="1010" and v<"101011" then--21 and 10 and 43 ----if last pixel of block and not last row of block, add row
+=======
+				elsif h="10101" and x="1010" and v<"101011" then--if last pixel of block and not last row of block, add row
+>>>>>>> parent of 7a90568... Update VGA_control.vhd
 					new_blocks <= v_adder;
-				elsif h = "10101" and (v="101011") and (x="1010")and (y<"1010") THEN --21 and 43 and 10 and 10--at x11 have to reset x and add y
+				elsif h = "10101" and (v="101011") and (x="1010")and (y<"1010") THEN --at x11 have to reset x and add y
 					new_blocks <= y_adder;
-				elsif h = "10101" and (v="101011") and (x="1010") and (y="1010") then--21 and 43 and 10 and 10 
+				elsif h = "10101" and (v="101011") and (x="1010") and (y="1010") then
 					new_blocks <= reset_bl;
 				ELSE
 					new_blocks <= H_adder;
