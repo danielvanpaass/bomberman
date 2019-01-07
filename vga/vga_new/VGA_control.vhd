@@ -40,8 +40,6 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count, v_count)
 begin
-<<<<<<< HEAD
-<<<<<<< HEAD
 if (h_count > "000100110") AND (h_count < "100011001") AND (v_count < "111100001") then
 	video_on <= '1';
 else
@@ -243,7 +241,7 @@ end process;
 		CASE Hor IS
 			WHEN H_High =>
 				h_sync <= '1'; --- h_count>433 zou niet voor moeten komen, Waarom niet?
-				IF (h_count < "101001111") OR (h_count >"110110001") THEN --335 or 433 
+				IF (h_count < "0101001110") OR (h_count >"011011000") THEN --335 or 433 
 					new_hor <= H_High;
 				ELSE
 					new_hor <= H_Low;
@@ -251,7 +249,7 @@ end process;
 
 			WHEN H_Low =>
 				h_sync <= '0';
-				IF h_count <= "110110001" THEN --433??
+				IF h_count <= "011011000" THEN --433??
 					new_hor <= H_Low;
 				ELSE
 					new_hor <= H_High;
