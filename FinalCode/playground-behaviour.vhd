@@ -52,7 +52,7 @@ signal  xo1, xo2, xo3, xo4, xo5, xo6, xo7, xo8, xo9,   yo1, yo2, yo3, yo4, yo5, 
 
 begin
 --xy conversion to call seperate fsms
-xyconv: xy_convert port map(lethalx, lethaly, xo0, xo1, xo2, xo3, xo4, xo5, xo6, xo7, xo8, xo9, xo10, yo0, yo1, yo2, yo3, yo4, yo5, yo6, yo7, yo8, yo9, yo10);
+xyconv: xy_convert port map(lethalx, lethaly,  xo1, xo2, xo3, xo4, xo5, xo6, xo7, xo8, xo9,  yo1, yo2, yo3, yo4, yo5, yo6, yo7, yo8, yo9,);
 
 --t1 to t11, for y1, "1111111111111111111111", all walls
 t1to11: y0 <= "1111111111111111111111";
