@@ -40,7 +40,7 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count, v_count)
 begin
-if (h_count > "000010011") AND (h_count < "0100011000") AND (v_count < "011110000") then--- waarom 38 en 281?
+if (h_count > "000010011") AND (h_count < "0100011000") AND (v_count < "011110000") then
 	video_on <= '1';
 else
 	video_on <= '0';
@@ -106,7 +106,7 @@ end process;
 				output_clock <= '0';
 				new_h_count <= h_count;
 				new_v_count <= v_count;
-				IF v_count = "1000001100" AND (h_count="011101111") THEN 
+				IF v_count = "1000001100" AND (h_count="011101111") THEN --524 and 479/2
 					New_Position <= Clock;
 				ELSE
 					New_Position <= H_reset;
@@ -165,13 +165,13 @@ end process;
 			new_v <= v;
 				IF (h_count < "000010011") OR (h_count > "010001100") THEN --39 or 280("100011000")??, should there also be a v_count ?volgens mij niet
 					new_blocks <= H_reg;
-				ELSIF h = "10101" and (x<"1010") THEN -- 22, h_count was h added =
+				ELSIF h = "10101" and (x<"1010") THEN -- 21 and 10, h_count was h added =
 					new_blocks <= x_adder;
-				elsif h="10101" and x="1010" and v<"101011" then--if last pixel of block and not last row of block, add row
+				elsif h="10101" and x="1010" and v<"101011" then--21 and 10 and 43 ----if last pixel of block and not last row of block, add row
 					new_blocks <= v_adder;
-				elsif h = "10101" and (v="101011") and (x="1010")and (y<"1010") THEN --at x11 have to reset x and add y
+				elsif h = "10101" and (v="101011") and (x="1010")and (y<"1010") THEN --21 and 43 and 10 and 10--at x11 have to reset x and add y
 					new_blocks <= y_adder;
-				elsif h = "10101" and (v="101011") and (x="1010") and (y="1010") then
+				elsif h = "10101" and (v="101011") and (x="1010") and (y="1010") then--21 and 43 and 10 and 10 
 					new_blocks <= reset_bl;
 				ELSE
 					new_blocks <= H_adder;
@@ -246,7 +246,7 @@ end process;
 
 			WHEN H_Low =>
 				h_sync <= '0';
-				IF h_count <= "0110110001" THEN --433??
+				IF h_count <= "011011000" THEN --433??
 					new_hor <= H_Low;
 				ELSE
 					new_hor <= H_High;
