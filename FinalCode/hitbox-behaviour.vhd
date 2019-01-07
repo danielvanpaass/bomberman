@@ -53,7 +53,7 @@ BEGIN
  END PROCESS;
  hitbox_count_players <= std_logic_vector (count_players);
  --------- decides which player is to play
- PROCESS (switch_state, hitbox_count_players)
+ PROCESS (switch_state, hitbox_count_players, x_p1_local, y_p1_local, x_p2_local, y_p2_local, up_p1, right_p1, left_p1, down_p1, up_p2, right_p2, left_p2, down_p2, new_x_player, new_y_player)
  BEGIN
   CASE switch_state IS
    WHEN begin_state =>
@@ -116,7 +116,7 @@ BEGIN
   END CASE;
  END PROCESS;
  --------------
- PROCESS (right_player, left_player, up_player, down_player, dir_state, hitbox_count_players, move_player, switch_players)
+ PROCESS (right_player, left_player, up_player, down_player, dir_state, hitbox_count_players, move_player, switch_players, x_player, y_player)
  BEGIN
   CASE dir_state IS
    WHEN begin_state =>
