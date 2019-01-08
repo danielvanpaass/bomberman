@@ -21,7 +21,7 @@ END VGA_controller;
 ARCHITECTURE behaviour OF VGA_controller IS
 	-- type states   
 	TYPE Position_states IS ( H_adder, H_reset, Reset_vga);
-	TYPE Block_states IS (H_reg, h_adder, x_adder, v_adder, y_adder, Reset_bl, wait_for_next_v);
+	TYPE Block_states IS (H_reg, h_adder, x_adder, v_adder, y_adder, Reset_bl, wait_for_next_v_count);
 	TYPE Hor_sync_states IS (H_High, H_Low);
 	TYPE Ver_sync_states IS (V_High, V_Low);
 
@@ -42,7 +42,7 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count, v_count)
 begin
-if h_count > begin_video AND h_count < end_video AND ( v_count < "011101101" )  then --at this v_count value the last pixel of x10 y10 has been painted
+if h_count > begin_video AND h_count < end_video AND ( v_count < "0111011001" )  then --at this v_count value the last pixel of x10 y10 has been painted
 	video_on <= '1';
 else
 	video_on <= '0';
@@ -153,7 +153,7 @@ end process;
 		
 		CASE Blocks IS
 			WHen wait_for_next_v_count =>-- and reset values
-				If v_count = "011101101" THEN
+				If v_count = "0111011010" THEN
 					new_blocks <= H_reg;
 				ELSE
 					new_blocks <= wait_for_next_v_count;
@@ -175,7 +175,7 @@ end process;
 			new_v <= v;
 				
 			
-				ELSIF (h_count > begin_video) AND (h_count < end_video) AND  ( v_count < "011101101" )  THEN --same values as video_on
+				IF (h_count > begin_video) AND (h_count < end_video) AND  ( v_count < "0111011010" )  THEN --same values as video_on
 					new_blocks <=  H_adder;
 				ELSE 
 					new_blocks <= H_reg;
