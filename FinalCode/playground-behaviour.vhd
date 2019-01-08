@@ -48,11 +48,11 @@ component xy_convert is
 	y10 : out std_logic);
 end component;
 
-signal xo0, xo1, xo2, xo3, xo4, xo5, xo6, xo7, xo8, xo9,xo10,yo0, yo1, yo2, yo3, yo4, yo5, yo6, yo7, yo8, yo9,yo10: std_logic;
+signal  xo1, xo2, xo3, xo4, xo5, xo6, xo7, xo8, xo9, yo1, yo2, yo3, yo4, yo5, yo6, yo7, yo8, yo9: std_logic;
 
 begin
 --xy conversion to call seperate fsms
-xyconv: xy_convert port map(lethalx, lethaly,xo0, xo1, xo2, xo3, xo4, xo5, xo6, xo7, xo8, xo9,xo10,yo0, yo1, yo2, yo3, yo4, yo5, yo6, yo7, yo8, yo9,yo10);
+xyconv: xy_convert port map(lethalx, lethaly, xo1, xo2, xo3, xo4, xo5, xo6, xo7, xo8, xo9, yo1, yo2, yo3, yo4, yo5, yo6, yo7, yo8, yo9);
 
 --this was made to solve a warning with quartus
 xo0<='1';
