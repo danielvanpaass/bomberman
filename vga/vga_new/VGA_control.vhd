@@ -182,6 +182,7 @@ end process;
 --					new_blocks <= H_adder;
 				END IF;
 
+				
 			WHEN H_adder =>
 			new_x <= x;
 			new_y <= y;
