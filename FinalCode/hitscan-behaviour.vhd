@@ -45,7 +45,7 @@ begin
 		end if;
 	end process;
 
-	lbl2: process (Y_b, X_b, X_p1, Y_p1, X_p2, Y_p2, explode,FF2_read, state)
+	lbl2: process (Y_b, X_b, X_p1, Y_p1, X_p2, Y_p2, explode,FF2_read, state, FF1, coor_unsigned_p1_x, coor_unsigned_p1_y, coor_unsigned_p2_x, coor_unsigned_p2_y, coor_unsigned_b_x, coor_unsigned_b_y, lethaltile_x, lethaltile_y, coor_signed, coor_unsigned)
 	begin
 		case state is
 -- Everything needs to be reset in the rest state and checked if a bomb is exploding
@@ -97,7 +97,7 @@ begin
 -- It has been decided that a plus form needs to be generated and FF1 stores that.
 			when plusform =>
 				FF2_reset <= '0';
-				read <= '0';
+				read <= '0';				new_FF1 <= FF1;
 				lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_x <= "0000";
@@ -152,7 +152,7 @@ begin
 				lethal_flag <= '0';
 				new_state <= vert_out;
 -- If a player is hit, the victory state will be taken. If a wall is met or it has checked enough tiles and needs to be a plus form, the FSM will go to horizontal. If it is not a plusform, the FSM will go to rest state. Otherwise it will go back to the wait state
-			when vert_out =>
+			when vert_out =>new_coor_unsigned 
 				new_FF1 <= FF1;
 				FF2_reset <= '0';
 				victoryv <= "00";
@@ -186,6 +186,7 @@ begin
 					new_state <= vert_wait;
 					new_lethaltile_y <= lethaltile_y;
 					lethal_flag <= '0';
+					new_coor_unsigned <= coor_unsigned;
 				end if;
 -- If a player is hit, the victory state will be taken. If it checked enough tiles or has met a border wall, it will go to the rest state. Otherwise, it will go to the wait sate
 			when horizontal =>
