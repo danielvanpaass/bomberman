@@ -37,12 +37,12 @@ ARCHITECTURE behaviour OF VGA_controller IS
 	SIGNAL h_count, new_h_count                      : std_logic_vector(8 DOWNTO 0);
 	SIGNAL v_count ,   new_v_count                     : std_logic_vector(9 DOWNTO 0);
 	SIGNAL h_sync, v_sync, output_clock : std_logic;
-	CONSTANT begin_video : std_logic_vector(8 downto 0):= "000011001";
-	CONSTANT end_video  : std_logic_vector(8 downto 0):= "100001100";
+	CONSTANT begin_video : std_logic_vector(8 downto 0):= "000000000";
+	CONSTANT end_video  : std_logic_vector(8 downto 0):= "101000000";--320
 BEGIN
 PROCESS (h_count, v_count)
 begin
-if h_count > begin_video AND h_count < end_video AND ( v_count > "0111101101" OR v_count < "0111100100")  then --at this v_count value the last pixel of x10 y10 has been painted
+if h_count > begin_video AND h_count < end_video AND v_count < "111011000"  then --at this v_count value the last pixel of x10 y10 has been painted
 	video_on <= '1';
 else
 	video_on <= '0';
@@ -92,9 +92,9 @@ end process;
 				output_clock <= '0';
 				new_v_count <= v_count;
 				new_h_count      <= std_logic_vector(unsigned(h_count) + to_unsigned(1,6));
-				IF h_count = "111011111" AND v_count = "1000001100" THEN --479
+				IF h_count = "110001111" AND v_count = "1000001100" THEN --399 524
 					New_Position <= Reset_vga;
-				ELSIF	h_count = "111011111"  THEN
+				ELSIF	h_count = "110001111"  THEN--399
 					New_Position <= H_reset;
 				ELSE				
 					New_Position <= H_adder;
@@ -163,7 +163,7 @@ end process;
 			new_y <= y;
 			new_h <= h;
 			new_v <= v;
-				IF (h_count > begin_video) AND (h_count < end_video) AND ( (v_count > "0111101101") OR (v_count < "0111100100")  ) THEN --same values as video_on
+				IF (h_count > begin_video) AND (h_count < end_video) AND  (v_count < "111011000")  THEN --same values as video_on
 					new_blocks <=  H_adder;
 				ELSE 
 					new_blocks <= H_reg;
@@ -186,11 +186,11 @@ end process;
 			new_h <= std_logic_vector(unsigned(h) + 1);
 			IF h = "10100" and (x<"1010") THEN -- 22, h_count was h added =
 				new_blocks <= x_adder;	
-			elsif h="10100" and x="1010" and v<"101011" then--21 and 10 and 43 ----if last pixel of block and not last row of block, add row
+			elsif h="10100" and x="1010" and v<"101010" then--21 and 10 and 43 ----if last pixel of block and not last row of block, add row
 				new_blocks <= v_adder;
-			elsif h = "10100" and (v="101011") and (x="1010")and (y<"1010") THEN --at x11 have to reset x and add y
+			elsif h = "10100" and (v="101010") and (x="1010")and (y<"1010") THEN --at x11 have to reset x and add y
 				new_blocks <= y_adder;
-			elsif h = "10100" and (v="101011") and (x="1010") and (y="1010") then
+			elsif h = "10100" and (v="101010") and (x="1010") and (y="1010") then
 				new_blocks <= reset_bl;
 			ELSE
 				new_blocks <= H_adder;
@@ -248,18 +248,18 @@ end process;
 		CASE Hor IS
 			WHEN H_High =>
 				h_sync <= '1'; --- h_count>433 zou niet voor moeten komen, Waarom niet?
-				IF (h_count < "101001111") OR (h_count >"110110001") THEN --335 or 433 
-					new_hor <= H_High;
-				ELSE
+				IF (h_count = "101001001") THEN --329 
 					new_hor <= H_Low;
+				ELSE
+					new_hor <= H_High;
 				END IF;
 
 			WHEN H_Low =>
 				h_sync <= '0';
-				IF h_count <= "110110001" THEN --433??
-					new_hor <= H_Low;
-				ELSE
+				IF h_count = "101111001" THEN --377
 					new_hor <= H_High;
+				ELSE
+					new_hor <= H_Low;
 				END IF;
 
 		END CASE;
@@ -282,17 +282,17 @@ end process;
 		CASE Ver IS
 			WHEN V_High =>
 				v_sync <= '1';
-				IF ((v_count < "0111101000"  ) or (v_count>"0111101100" )) THEN --488 or 492 added =
-					new_ver <= V_High;
-				ELSE
+				IF (v_count = "0111101100" )THEN --492
 					new_ver <= V_Low;
+				ELSE
+					new_ver <= V_High;
 				END IF;
 			WHEN V_Low =>
 				v_sync <= '0';
-				IF v_count <="0111101100" THEN --492
-					new_ver <= V_Low;
-				ELSE
+				IF v_count ="0111101110" THEN --494
 					new_ver <= V_High;
+				ELSE
+					new_ver <= V_Low;
 				END IF;
 		END CASE;
 	END PROCESS;
