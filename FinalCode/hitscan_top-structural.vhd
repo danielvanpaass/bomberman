@@ -24,8 +24,8 @@ architecture structural of hitscan_top is
 		lethal_flag : OUT std_logic;
    		read  : OUT std_logic;
    		FF2_reset : OUT std_logic;
-           		lethaltile_x : OUT std_logic_vector(3 downto 0);
-           		lethaltile_y : OUT std_logic_vector(3 downto 0));
+           		lethaltile_x_out : OUT std_logic_vector(3 downto 0);
+           		lethaltile_y_out : OUT std_logic_vector(3 downto 0));
    end component;
 
 	signal read, FF2_read, FF2_reset : std_logic;
