@@ -16,7 +16,7 @@ entity hitscan is
 	lethal_flag : OUT std_logic;
 	read  : OUT std_logic;
 	FF2_reset : OUT std_logic;
-        lethaltile_x : OUT std_logic_vector(3 downto 0);
-        lethaltile_y : OUT std_logic_vector(3 downto 0));
+        lethaltile_x_out : OUT std_logic_vector(3 downto 0);
+        lethaltile_y_out : OUT std_logic_vector(3 downto 0));
 end hitscan;
 
