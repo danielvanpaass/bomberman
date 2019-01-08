@@ -152,6 +152,7 @@ end process;
 	BEGIN
 
 		CASE Blocks IS
+			
 			WHEN Reset_bl =>
 				new_blocks <= H_reg;
 				new_h          <= "00000";
@@ -165,8 +166,7 @@ end process;
 			new_v <= v;
 				
 
-				if h = "10100" and (v="101010") and (x="1010") and (y="1010") then
-				new_blocks <= reset_bl;
+			
 				ELSIF (h_count > begin_video) AND (h_count < end_video) AND  ( v_count < "011101101" )  THEN --same values as video_on
 					new_blocks <=  H_adder;
 				ELSE 
@@ -196,7 +196,7 @@ end process;
 			elsif h = "10100" and (v="101010") and (x="1010")and (y<"1010") THEN --at x11 have to reset x and add y
 				new_blocks <= y_adder;
 				elsif h = "10100" and (v="101010") and (x="1010") and (y="1010") then
-				new_blocks <= h_reg;
+				new_blocks <= wait_for_next_v_count;
 			ELSE
 				new_blocks <= H_adder;
 			end if;
