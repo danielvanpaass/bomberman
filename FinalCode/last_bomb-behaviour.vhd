@@ -6,7 +6,7 @@ architecture behaviour of last_bomb is
 type last_bomb_states is (hold, sample_a, sample_b, sample_c, sample_d, sample_e, sample_f, sample_g, sample_h);
 
 signal state, new_state: last_bomb_states;
-signal bombxsample, bombysample : std_logic_vector(3 downto 0);
+signal bombxsample, bombysample, new_bombxsample, new_bombysample : std_logic_vector(3 downto 0);
 
 begin
 
@@ -17,6 +17,8 @@ process (clk, reset)
        state <= hold;
      else
        state <= new_state;
+		 bombxsample <= new_bombxsample;
+		 bombysample <= new_bombysample;
      end if;
    end if;
 end process;
@@ -26,6 +28,8 @@ process (state, flag_htoa,bombxsample,bombysample,bomb_a_x,bomb_a_y,bomb_b_x,bom
 	begin
 	case state is
 		when hold =>
+		new_bombxsample <= bombxsample;
+		new_bombysample <= bombysample;
 		expl_x <= bombxsample;
 		expl_y <= bombysample;
 		if (flag_htoa(7) = '1') then
@@ -49,57 +53,57 @@ process (state, flag_htoa,bombxsample,bombysample,bomb_a_x,bomb_a_y,bomb_b_x,bom
 		end if;
 
 		when sample_a =>
-		bombxsample <= bomb_a_x;
-		bombysample <= bomb_a_y;
+		new_bombxsample <= bomb_a_x;
+		new_bombysample <= bomb_a_y;
 		expl_x <= bomb_a_x;
 		expl_y <= bomb_a_y;
 		new_state <= hold;
 
 		when sample_b =>
-		bombxsample <= bomb_b_x;
-		bombysample <= bomb_b_y;
+		new_bombxsample <= bomb_b_x;
+		new_bombysample <= bomb_b_y;
 		expl_x <= bomb_b_x;
 		expl_y <= bomb_b_y;
 		new_state <= hold;
 
 		when sample_c =>
-		bombxsample <= bomb_c_x;
-		bombysample <= bomb_c_y;
+		new_bombxsample <= bomb_c_x;
+		new_bombysample <= bomb_c_y;
 		expl_x <= bomb_c_x;
 		expl_y <= bomb_c_y;
 		new_state <= hold;
 
 		when sample_d =>
-		bombxsample <= bomb_d_x;
-		bombysample <= bomb_d_y;
+		new_bombxsample <= bomb_d_x;
+		new_bombysample <= bomb_d_y;
 		expl_x <= bomb_d_x;
 		expl_y <= bomb_d_y;
 		new_state <= hold;
 		
 		when sample_e =>
-		bombxsample <= bomb_e_x;
-		bombysample <= bomb_e_y;
+		new_bombxsample <= bomb_e_x;
+		new_bombysample <= bomb_e_y;
 		expl_x <= bomb_e_x;
 		expl_y <= bomb_e_y;
 		new_state <= hold;
 
 		when sample_f =>
-		bombxsample <= bomb_f_x;
-		bombysample <= bomb_f_y;
+		new_bombxsample <= bomb_f_x;
+		new_bombysample <= bomb_f_y;
 		expl_x <= bomb_f_x;
 		expl_y <= bomb_f_y;
 		new_state <= hold;
 
 		when sample_g =>
-		bombxsample <= bomb_g_x;
-		bombysample <= bomb_g_y;
+		new_bombxsample <= bomb_g_x;
+		new_bombysample <= bomb_g_y;
 		expl_x <= bomb_g_x;
 		expl_y <= bomb_g_y;
 		new_state <= hold;
 
 		when sample_h =>
-		bombxsample <= bomb_h_x;
-		bombysample <= bomb_h_y;
+		new_bombxsample <= bomb_h_x;
+		new_bombysample <= bomb_h_y;
 		expl_x <= bomb_h_x;
 		expl_y <= bomb_h_y;
 		new_state <= hold;
