@@ -39,9 +39,9 @@ playground: in  std_logic_vector(241 downto 0);
         input_h_map         : in  std_logic_vector(4 downto 0);--changed from 5 downto 0
         input_v_map         : in  std_logic_vector(5 downto 0);--changed from 6 downto 0
 	video_on : in std_logic;
-	red : out std_logic;
-	green : out std_logic;
-	blue: out std_logic);      
+	r : out std_logic_vector(3 downto 0);
+	g : out std_logic_vector(3 downto 0);
+	b: out std_logic_vector(3 downto 0));      
 end sprites;
 
 

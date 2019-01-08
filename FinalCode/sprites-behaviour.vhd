@@ -9,7 +9,7 @@ ARCHITECTURE behaviour OF sprites IS
 	SIGNAL check_1, check_2 : std_logic;
 	SIGNAL spritebit : INTEGER RANGE 0 TO 120;
 	SIGNAL spritebit_victory : INTEGER RANGE 0 TO 241;
-	SIGNAL rgb : std_logic_vector(2 DOWNTO 0);
+	SIGNAL rgb : std_logic_vector(11 DOWNTO 0);
 BEGIN
 	v_map <= input_v_map(5 DOWNTO 2);
 	h_map <= input_h_map(4 DOWNTO 1);
@@ -29,65 +29,98 @@ BEGIN
 	BEGIN
 		IF rising_edge (clk) THEN
 			IF reset = '1' THEN -- reset the whole system
-				rgb <= "000";
-				red <= rgb(2);
-				green <= rgb(1);
-				blue <= rgb(0);
+				r <= "0000";
+				g <= "0000";
+				b <= "0000";
 			ELSE
 				IF (video_on = '0') THEN
-					rgb <= "000";
+					r <= "0000";
+					g <= "0000";
+					b <= "0000";
 				ELSE
 					IF victory(1) = '1' THEN	
 						IF(victory(0) = '1') THEN
 							IF (x_map = "0100"  AND y_map = "0101") THEN
 								IF (victory_vector_1_left(spritebit) = '1') THEN
-									rgb <= "001";
+									r <= "0000";
+									g <= "0000";
+									b <= "0000";
 								ELSE 
-									rgb <= "000";
+									r <= "0000";
+									g <= "0000";
+									b <= "0000";
 								END IF;
 							ELSIF (x_map = "0101" AND y_map = "0101") THEN
 								IF (victory_vector_right(spritebit) = '1') THEN
-									rgb <= "001";
+									r <= "0000";
+									g <= "0000";
+									b <= "0000";
 								ELSE 
-									rgb <= "000";
+									r <= "0000";
+									g <= "0000";
+									b <= "0000";
 								END IF;
 							ELSE
-								rgb <= "000";
+								r <= "0000";
+								g <= "0000";
+								b <= "0000";
 							END IF;
 						ELSE 		
 							IF (x_map = "0101"  AND y_map = "0101") THEN
 								IF (victory_vector_2_left(spritebit) = '1') THEN
-									rgb <= "100";
+									r <= "0000";
+									g <= "0000";
+									b <= "0000";
 								ELSE 
-									rgb <= "000";
+									r <= "0000";
+									g <= "0000";
+									b <= "0000";
 								END IF;
 							ELSIF (x_map = "0101" AND y_map = "0101") THEN
 								IF (victory_vector_right(spritebit) = '1') THEN
-									rgb <= "100";
+									r <= "0000";
+									g <= "0000";
+									b <= "0000";
 								ELSE 
-									rgb <= "000";
+									r <= "0000";
+									g <= "0000";
+									b <= "0000";
 								END IF;
 							ELSE
-							rgb <= "000";
+								r <= "0000";
+								g <= "0000";
+								b <= "0000";
 							END IF;
 						END IF;
 					ELSIF (check_1 = '0') AND (check_2 = '0') THEN--explosion
 						IF (explosion_vector(spritebit) = '1') THEN
-							rgb <= "000";
+							r <= "1111";
+							g <= "1100";
+							b <= "0000";
 						ELSE
-							rgb <= "010";
+							r <= "0000";
+							g <= "1001";
+							b <= "0000";
 						END IF; 
 					ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN
 						IF (P_vector(spritebit) = '1') THEN
-							rgb <= "001";
+							r <= "1111";
+							g <= "0000";
+							b <= "0000";
 						ELSE
-							rgb <= "111";
+							r <= "0000";
+							g <= "1001";
+							b <= "0000";
 						END IF;
 					ELSIF (y_map = y_p2) AND (x_map = x_p2) THEN
 						IF (P_vector(spritebit) = '1') THEN
-							rgb <= "100";
+							r <= "0000";
+							g <= "0000";
+							b <= "1111";
 						ELSE
-							rgb <= "111";
+							r <= "0000";
+							g <= "1001";
+							b <= "0000";
 						END IF;
 					ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
 						(x_map = x_bomb_b AND y_map = y_bomb_b AND bomb_b_enable = '1') OR
@@ -98,30 +131,42 @@ BEGIN
 						(x_map = x_bomb_g AND y_map = y_bomb_g AND bomb_g_enable = '1') OR
 						(x_map = x_bomb_h AND y_map = y_bomb_h AND bomb_h_enable = '1') THEN
 						IF (bomb_vector(spritebit) = '1') THEN
-							rgb <= "000";
+							r <= "0000";
+							g <= "0000";
+							b <= "0000";
 						ELSE
-							rgb <= "111";
+							r <= "0000";
+							g <= "1001";
+							b <= "0000";
 						END IF; 
 					ELSIF (check_1 = '1') AND (check_2 = '0') THEN
 						IF (crate_vector(spritebit) = '1') THEN--crate
-							rgb <= "110";
+							r <= "1001";
+							g <= "1100";
+							b <= "1100";
 						ELSE
-							rgb <= "111";
+							r <= "0000";
+							g <= "1001";
+							b <= "0000";
 						END IF; 	
 					ELSIF (check_1 = '0') AND (check_2 = '1') THEN--empty
-						rgb <= "111";
+							r <= "0000";
+							g <= "1001";
+							b <= "0000";
 					
 					ELSIF (check_1 = '1') AND (check_2 = '1') THEN---must be 11 so wall
 						IF (wall_vector(spritebit) = '1') THEN
-							rgb <= "000";
+							r <= "1100";
+							g <= "0000";
+							b <= "0000";
+							
 						ELSE
-							rgb <= "111";
+							r <= "1110";
+							g <= "1110";
+							b <= "1110";
 						END IF;
 					END IF;
 				END IF;
-				red <= rgb(2);
-				green <= rgb(1);
-				blue <= rgb(0); 
 			END IF;
 		END IF;
 	END PROCESS;
