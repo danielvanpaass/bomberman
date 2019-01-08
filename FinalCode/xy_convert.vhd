@@ -21,6 +21,6 @@ entity xy_convert is
 	y6 : out std_logic;
 	y7 : out std_logic;
 	y8 : out std_logic;
-	y9 : out std_logic;);
+	y9 : out std_logic);
 end xy_convert;
 
