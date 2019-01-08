@@ -60,10 +60,10 @@ architecture behaviour of hitbox_top_lvl is
      right_p2         : IN std_logic;
      down_p2          : IN std_logic;
      left_p2          : IN std_logic;
-     x_p1             : OUT std_logic_vector(3 DOWNTO 0);
-     y_p1             : OUT std_logic_vector(3 DOWNTO 0);
-     x_p2             : OUT std_logic_vector(3 DOWNTO 0);
-     y_p2             : OUT std_logic_vector(3 DOWNTO 0)
+     x_p1_out         : OUT std_logic_vector(3 DOWNTO 0);
+     y_p1_out         : OUT std_logic_vector(3 DOWNTO 0);
+     x_p2_out         : OUT std_logic_vector(3 DOWNTO 0);
+     y_p2_out         : OUT std_logic_vector(3 DOWNTO 0)
     );
    end component;
 signal buff_up_p1, buff_right_p1 , buff_down_p1, buff_left_p1, buff_up_p2,  buff_right_p2 ,           buff_down_p2 ,        buff_left_p2 : std_logic;
