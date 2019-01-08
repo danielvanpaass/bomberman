@@ -42,7 +42,7 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count, v_count)
 begin
-if h_count > begin_video AND h_count < end_video AND v_count < "111011000"  then --at this v_count value the last pixel of x10 y10 has been painted
+if h_count > begin_video AND h_count < end_video AND v_count < "011101100"  then --at this v_count value the last pixel of x10 y10 has been painted
 	video_on <= '1';
 else
 	video_on <= '0';
@@ -163,7 +163,7 @@ end process;
 			new_y <= y;
 			new_h <= h;
 			new_v <= v;
-				IF (h_count > begin_video) AND (h_count < end_video) AND  (v_count < "111011000")  THEN --same values as video_on
+				IF (h_count > begin_video) AND (h_count < end_video) AND  (v_count < "011101100")  THEN --same values as video_on
 					new_blocks <=  H_adder;
 				ELSE 
 					new_blocks <= H_reg;
@@ -300,3 +300,4 @@ end process;
 	vga_hsync <= h_sync;
 	vga_vsync <= v_sync;
 END behaviour;
+
