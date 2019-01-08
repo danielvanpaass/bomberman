@@ -21,7 +21,7 @@ END VGA_controller;
 ARCHITECTURE behaviour OF VGA_controller IS
 	-- type states   
 	TYPE Position_states IS ( H_adder, H_reset, Reset_vga);
-	TYPE Block_states IS (H_reg, h_adder, x_adder, v_adder, y_adder, Reset_bl);
+	TYPE Block_states IS (H_reg, h_adder, x_adder, v_adder, y_adder, Reset_bl, wait_for_next_v);
 	TYPE Hor_sync_states IS (H_High, H_Low);
 	TYPE Ver_sync_states IS (V_High, V_Low);
 
@@ -165,7 +165,6 @@ end process;
 			new_h <= h;
 			new_v <= v;
 				
-
 			
 				ELSIF (h_count > begin_video) AND (h_count < end_video) AND  ( v_count < "011101101" )  THEN --same values as video_on
 					new_blocks <=  H_adder;
