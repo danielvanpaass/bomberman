@@ -9,7 +9,7 @@ architecture behaviour of hitscan is
 	signal coor_signed, new_coor_signed: signed(4 downto 0);
 	signal coor_unsigned_p1_x, coor_unsigned_p1_y, coor_unsigned_p2_x, coor_unsigned_p2_y, coor_unsigned_b_x, coor_unsigned_b_y, coor_unsigned, new_coor_unsigned: unsigned(3 downto 0);
 	signal new_coor_unsigned_p1_x, new_coor_unsigned_p1_y, new_coor_unsigned_p2_x, new_coor_unsigned_p2_y, new_coor_unsigned_b_x, new_coor_unsigned_b_y: unsigned(3 downto 0);
-	signal new_lethaltile_x, new_lethaltile_y: std_logic_vector(3 downto 0);
+	signal new_lethaltile_x, new_lethaltile_y, lethaltile_x, lethaltile_y: std_logic_vector(3 downto 0);
 
 begin
 	lbl1: process(clk)
@@ -292,4 +292,7 @@ begin
 				new_state <= victory_2;
 		end case;
 	end process;
+	
+	lethaltile_x_out <= lethaltile_x;
+	lethaltile_y_out <= lethaltile_y;
 end behaviour;
