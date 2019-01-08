@@ -5,9 +5,8 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
 	TYPE state_type IS (begin_state, which_direction, attempt_to_right, attempt_to_left, attempt_to_up, attempt_to_down, right_output, left_output, up_output, down_output, stay_output, no_attempt, cooldown_state);
 	SIGNAL dir_p1_state, new_state_p1                : state_type;
 	SIGNAL dir_p2_state, new_state_p2                : state_type;
-	SIGNAL check_x_p1, check_y_p1, new_x_p1, new_y_p1 : std_logic_vector (3 DOWNTO 0);
-	SIGNAL check_x_p2, check_y_p2, new_x_p2, new_y_p2 : std_logic_vector (3 DOWNTO 0);
-	SIGNAL hitbox_count_players                      : std_logic_vector (2 DOWNTO 0);
+	SIGNAL check_x_p1, check_y_p1, new_x_p1, new_y_p1, x_p1, y_p1 : std_logic_vector (3 DOWNTO 0);
+	SIGNAL check_x_p2, check_y_p2, new_x_p2, new_y_p2, x_p2, y_p2 : std_logic_vector (3 DOWNTO 0);
 	SIGNAL begin_counting, move_p1, move_p2                            : std_logic; ---!!!
 	SIGNAL count_players, new_count_players          : unsigned (2 DOWNTO 0);
 	SIGNAL walls_and_crates_inverted                 : std_logic_vector(0 TO 120);
@@ -47,16 +46,19 @@ BEGIN
 					count_players <= new_count_players;
 				END IF;
 			END IF;
-		END PROCESS;
+		END PROCESS;					
 
 		-- counter for P1 and P2 playtime
 	PROCESS (count_players)
 		BEGIN
 			new_count_players <= count_players + 1;
 		END PROCESS;
-		hitbox_count_players <= std_logic_vector (count_players);
-
-	PROCESS (right_p1, left_p1, up_p1, down_p1, dir_p1_state, hitbox_count_players, new_x_p1, new_y_p1)
+		x_p1_out <= x_p1;
+		x_p2_out <= x_p2;
+		y_p1_out <= y_p1;
+		y_p2_out <= y_p2;
+		
+	PROCESS (right_p1, left_p1, up_p1, down_p1, dir_p1_state, new_x_p1, new_y_p1, x_p1, y_p1, move_p1, count_players)
 		BEGIN
 			CASE dir_p1_state IS
 				WHEN begin_state => 
@@ -235,11 +237,10 @@ BEGIN
 				END IF;
 			END IF;
 		END PROCESS;
-PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, new_x_p2, new_y_p2)
+PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_p2, y_p2, move_p2, count_players)
 		BEGIN
 			CASE dir_p2_state IS
 				WHEN begin_state => 
-					begin_counting <= '0';
 					new_state_p2  <= which_direction;
 					check_x_p2 <= "0000";--- could these be removed? the output of this isnt important at this state
 					check_y_p2 <= "0000";--- could these be removed? the output of this isnt important at this state
@@ -247,7 +248,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_y_p2   <= y_p2;
 
 				WHEN which_direction => 
-					begin_counting <= '0';
 					check_x_p2 <= "0000";
 					check_y_p2 <= "0000";
 					new_x_p2   <= x_p2;
@@ -266,7 +266,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					--attempt states
 
 				WHEN attempt_to_right => 
-					begin_counting <= '0';
 					new_x_p2   <= x_p2;
 					new_y_p2   <= y_p2;
 					check_x_p2 <= std_logic_vector(unsigned(x_p2) + "0001");
@@ -275,7 +274,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 
 
 				WHEN attempt_to_left => 
-					begin_counting <= '0';
 					new_x_p2   <= x_p2;
 					new_y_p2   <= y_p2;
 					check_x_p2 <= std_logic_vector(unsigned(x_p2) - "0001");
@@ -283,7 +281,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_state_p2 <= left_output;
 
 				WHEN attempt_to_up => 
-					begin_counting <= '0';
 					new_x_p2   <= x_p2;
 					new_y_p2   <= y_p2;
 					check_x_p2 <= x_p2;
@@ -291,7 +288,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_state_p2 <= up_output;
 
 				WHEN attempt_to_down => 
-					begin_counting <= '0';
 					new_x_p2   <= x_p2;
 					new_y_p2   <= y_p2;
 					check_x_p2 <= (x_p2);
@@ -299,7 +295,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_state_p2 	<= down_output;
 					
 				WHEN no_attempt =>
-					begin_counting <= '0';
 					new_x_p2   <= x_p2;
 					new_y_p2   <= y_p2;
 					check_x_p2 <= x_p2;
@@ -309,7 +304,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 --- output states
 
 				WHEN right_output => 
-					begin_counting <= '0';
 					check_x_p2 <= "0000";
 					check_y_p2 <= "0000";
 					IF (move_p2 = '1') THEN
@@ -322,7 +316,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_state_p2 <= cooldown_state;
 
 				WHEN left_output => 
-					begin_counting <= '0';
 					check_x_p2 <= "0000";
 					check_y_p2 <= "0000";
 					IF (move_p2 = '1') THEN
@@ -335,7 +328,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_state_p2 <= cooldown_state;
 					
 				WHEN up_output => 
-					begin_counting <= '0';
 					check_x_p2 <= "0000";
 					check_y_p2 <= "0000";
 					IF (move_p2 = '1') THEN
@@ -348,7 +340,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_state_p2 <= cooldown_state;						
 
 				WHEN down_output => 
-					begin_counting <= '0';
 					check_x_p2 <= "0000";
 					check_y_p2 <= "0000";
 					IF (move_p2 = '1') THEN
@@ -361,7 +352,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_state_p2 <= cooldown_state;									
 
 				WHEN stay_output => 
-					begin_counting <= '0';
 					check_x_p2 <= "0000";
 					check_y_p2 <= "0000";
 					IF (move_p2 = '1') THEN
@@ -374,7 +364,6 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, hitbox_count_players, 
 					new_state_p2 <= cooldown_state;	
 				
 				WHEN cooldown_state =>
-					begin_counting <= '1';
 					new_x_p2   <= x_p2;
 					new_y_p2   <= y_p2;
 					check_x_p2 <= "0000";
