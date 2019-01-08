@@ -37,10 +37,10 @@ ENTITY hitbox IS
   right_p2         : IN std_logic;
   down_p2          : IN std_logic;
   left_p2          : IN std_logic;
-  x_p1             : OUT std_logic_vector(3 DOWNTO 0);
-  y_p1             : OUT std_logic_vector(3 DOWNTO 0);
-  x_p2             : OUT std_logic_vector(3 DOWNTO 0);
-  y_p2             : OUT std_logic_vector(3 DOWNTO 0)
+  x_p1_out         : OUT std_logic_vector(3 DOWNTO 0);
+  y_p1_out         : OUT std_logic_vector(3 DOWNTO 0);
+  x_p2_out         : OUT std_logic_vector(3 DOWNTO 0);
+  y_p2_out         : OUT std_logic_vector(3 DOWNTO 0)
  );
 END hitbox;
 
