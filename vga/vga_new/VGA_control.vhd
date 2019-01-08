@@ -150,9 +150,18 @@ end process;
 			
 	PROCESS (Blocks, h_count, v_count, x,h,y,v)
 	BEGIN
-
+		
 		CASE Blocks IS
-			
+			WHen wait_for_next_v_count =>-- and reset values
+				If v_count = "011101101" THEN
+					new_blocks <= H_reg;
+				ELSE
+					new_blocks <= wait_for_next_v_count;
+				END IF;
+				new_h          <= "00000";
+				new_v          <= "000000";
+				new_x          <= "0000";
+				new_y          <= "0000";
 			WHEN Reset_bl =>
 				new_blocks <= H_reg;
 				new_h          <= "00000";
