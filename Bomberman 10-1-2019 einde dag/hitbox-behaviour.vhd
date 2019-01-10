@@ -21,7 +21,7 @@ BEGIN
 			IF reset = '1' THEN -- reset the whole system
 				dir_p1_state <= begin_state;
 				dir_p2_state <= begin_state;
-				x_p1			 <= "0001";
+				x_p1			 <= "0001";--starting positions of the players
 				y_p1			 <= "0001";
 				x_p2			 <= "1001";
 				y_p2			 <= "1001";
@@ -36,7 +36,7 @@ BEGIN
 		END IF;
 	END PROCESS;
 
-	--- counter clock
+	--- counter cooldown clock for P1
 	PROCESS (clk, begin_counting_p1)
 		BEGIN
 			IF rising_edge (clk) THEN
@@ -48,15 +48,16 @@ BEGIN
 			END IF;
 		END PROCESS;					
 
-		-- counter for P1 and P2 playtime
+		-- counter  P1
 	PROCESS (count_players_p1)
 		BEGIN
 			new_count_players_p1 <= count_players_p1 + 1;
 		END PROCESS;
+	--- counter cooldown clock for P1
 	PROCESS (clk, begin_counting_p2)
 		BEGIN
 			IF rising_edge (clk) THEN
-				IF (begin_counting_p2 = '0') THEN --so reset should be longer than clk cycle
+				IF (begin_counting_p2 = '0') THEN 
 					count_players_p2 <= (OTHERS => '0');
 				ELSE
 					count_players_p2 <= new_count_players_p2;
@@ -64,34 +65,34 @@ BEGIN
 			END IF;
 		END PROCESS;					
 
-		-- counter for P1 and P2 playtime
+		-- counter P2 
 	PROCESS (count_players_p2)
 		BEGIN
 			new_count_players_p2 <= count_players_p2 + 1;
 		END PROCESS;
-		x_p1_out <= x_p1;
+		x_p1_out <= x_p1;--these will be the output of the system
 		x_p2_out <= x_p2;
 		y_p1_out <= y_p1;
 		y_p2_out <= y_p2;
-		
+	---- Player movement is determined here
 	PROCESS (right_p1, left_p1, up_p1, down_p1, dir_p1_state, new_x_p1, new_y_p1, x_p1, y_p1, move_p1, count_players_p1)
 		BEGIN
 			CASE dir_p1_state IS
 				WHEN begin_state => 
 					begin_counting_p1 <= '0';
 					new_state_p1  <= which_direction;
-					check_x_p1 <= "0000";--- could these be removed? the output of this isnt important at this state
-					check_y_p1 <= "0000";--- could these be removed? the output of this isnt important at this state
+					check_x_p1 <= "0000";--the value of check_x and y are irrelevant as check_x will not be use right now
+					check_y_p1 <= "0000";
 					new_x_p1   <= "0001";
 					new_y_p1   <= "0001";
 
-				WHEN which_direction => 
+				WHEN which_direction => --the intended direction of the player is determined
 					begin_counting_p1 <= '0';
 					check_x_p1 <= "0000";
 					check_y_p1 <= "0000";
 					new_x_p1   <= x_p1;
 					new_y_p1   <= y_p1;
-					IF ((down_p1 = '0') AND (up_p1 = '0') AND (left_p1 = '0') AND (right_p1 = '1')) THEN ---maybe change this back to priority case
+					IF ((down_p1 = '0') AND (up_p1 = '0') AND (left_p1 = '0') AND (right_p1 = '1')) THEN
 						new_state_p1 <= attempt_to_right;
 					ELSIF ((down_p1 = '0') AND (up_p1 = '0') AND (left_p1 = '1') AND (right_p1 = '0')) THEN
 						new_state_p1 <= attempt_to_left;
@@ -102,7 +103,7 @@ BEGIN
 					ELSE
 						new_state_p1 <= which_direction;
 					END IF;
-					--attempt states
+					--attempt states: assign the tile where te players wants to go to check, so that it will be checked for obstacles
 
 				WHEN attempt_to_right => 
 					begin_counting_p1 <= '0';
@@ -145,17 +146,17 @@ BEGIN
 					check_y_p1 <= y_p1;
 					new_state_p1 <= stay_output;
 
---- output states
+				--- output states: here the intermediate signal is  given the new value of the player
 
 				WHEN right_output => 
 					begin_counting_p1 <= '0';
 					check_x_p1 <= "0000";
 					check_y_p1 <= "0000";
-					IF (move_p1 = '1') THEN
+					IF (move_p1 = '1') THEN --the collision scanner has cleared the tile so the x coordinate is one bit higher now
 						new_x_p1   <= std_logic_vector(unsigned(x_p1) + "0001");
 						new_y_p1   <= y_p1;
 					ELSE
-						new_x_p1			<= x_p1;
+						new_x_p1 <= x_p1; --else the players stays were he was
 						new_y_p1   <= y_p1;
 					END IF;
 					new_state_p1 <= cooldown_state;
@@ -211,7 +212,7 @@ BEGIN
 						new_y_p1   <= y_p1;
 					END IF;
 					new_state_p1 <= cooldown_state;	
-				
+				--cooldown state: here the player will remain on the same spot until the cooldown has passed
 				WHEN cooldown_state =>
 					begin_counting_p1 <= '1';
 					new_x_p1   <= x_p1;
@@ -227,7 +228,7 @@ BEGIN
 				END CASE;	
 					
 			END PROCESS;
-				------------- Check if there's an obstacle module for P1 (might be a problem that this doesnt update on clock)
+		-----Collision scanner: this looks for obstacles at the tile of check_x and y of P1.
 		PROCESS (walls_and_crates_inverted, check_x_p1, check_y_p1, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active, clk, reset)
 			
 		BEGIN
@@ -246,21 +247,22 @@ BEGIN
 						AND (bomb_x_g /= std_logic_vector(check_x_p1) OR (bomb_y_g /= std_logic_vector(check_y_p1)) OR(bomb_g_active = '0'))
 						AND (bomb_x_h /= std_logic_vector(check_x_p1) OR (bomb_y_h /= std_logic_vector(check_y_p1)) OR(bomb_h_active = '0'))
 						) THEN
-						move_p1 <= '1';
+						move_p1 <= '1';--player may move
 					ELSE
-						move_p1 <= '0';
+						move_p1 <= '0';--player can't move
 					END IF;
 				END IF;
 			END IF;
 		END PROCESS;
+--this process is the same as  before but for P2
 PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_p2, y_p2, move_p2, count_players_p2)
 		BEGIN
 			CASE dir_p2_state IS
 				WHEN begin_state =>
 					begin_counting_p2 <= '0'; 
 					new_state_p2  <= which_direction;
-					check_x_p2 <= "0000";--- could these be removed? the output of this isnt important at this state
-					check_y_p2 <= "0000";--- could these be removed? the output of this isnt important at this state
+					check_x_p2 <= "0000";
+					check_y_p2 <= "0000";
 					new_x_p2   <= "1001";
 					new_y_p2   <= "1001";
 
@@ -390,7 +392,7 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 						new_y_p2   <= y_p2;
 					END IF;
 					new_state_p2 <= cooldown_state;	
-				
+			--cooldown state	
 				WHEN cooldown_state =>
 					begin_counting_p2 <= '1'; 
 					new_x_p2   <= x_p2;
@@ -406,9 +408,8 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 				END CASE;	
 					
 			END PROCESS;
-				------------- Check if there's an obstacle module for p2 (might be a problem that this doesnt update on clock)
-		PROCESS (walls_and_crates_inverted, check_x_p2, check_y_p2, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active, clk, reset)
-			
+		------------- Check if there's an obstacle for p2
+		PROCESS (walls_and_crates_inverted, check_x_p2, check_y_p2, bomb_x_a, bomb_y_a, bomb_a_active, bomb_x_b, bomb_y_b, bomb_b_active, bomb_x_c, bomb_y_c, bomb_c_active, bomb_x_d, bomb_y_d, bomb_d_active, bomb_x_e, bomb_y_e, bomb_e_active, bomb_x_f, bomb_y_f, bomb_f_active, bomb_x_g, bomb_y_g, bomb_g_active, bomb_x_h, bomb_y_h, bomb_h_active, clk, reset)	
 		BEGIN
 			IF rising_edge (clk) THEN
 				IF reset = '1' THEN -- reset the whole system
