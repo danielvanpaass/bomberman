@@ -42,28 +42,28 @@ BEGIN
 						IF(victory(0) = '1') THEN
 							IF (x_map = "0100"  AND y_map = "0101") THEN
 								IF (victory_vector_1_left(spritebit) = '1') THEN
-									r <= "0000";
-									g <= "0000";
-									b <= "0000";
+									r <= "1111";
+									g <= "1111";
+									b <= "1111";
 								ELSE 
-									r <= "0000";
-									g <= "0000";
-									b <= "0000";
+									r <= "1111";
+									g <= "1111";
+									b <= "1111";
 								END IF;
 							ELSIF (x_map = "0101" AND y_map = "0101") THEN
 								IF (victory_vector_right(spritebit) = '1') THEN
-									r <= "0000";
-									g <= "0000";
-									b <= "0000";
+									r <= "1111";
+									g <= "1111";
+									b <= "1111";
 								ELSE 
-									r <= "0000";
-									g <= "0000";
-									b <= "0000";
+									r <= "1111";
+									g <= "1111";
+									b <= "1111";
 								END IF;
 							ELSE
-								r <= "0000";
-								g <= "0000";
-								b <= "0000";
+								r <= "1111";
+								g <= "1111";
+								b <= "1111";
 							END IF;
 						ELSE 		
 							IF (x_map = "0101"  AND y_map = "0101") THEN
@@ -98,8 +98,8 @@ BEGIN
 							g <= "1100";
 							b <= "0000";
 						ELSE
-							r <= "0000";
-							g <= "1001";
+							r <= "1111";
+							g <= "0000";
 							b <= "0000";
 						END IF; 
 					ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN
@@ -142,11 +142,11 @@ BEGIN
 					ELSIF (check_1 = '1') AND (check_2 = '0') THEN
 						IF (crate_vector(spritebit) = '1') THEN--crate
 							r <= "1001";
-							g <= "1100";
-							b <= "1100";
+							g <= "0101";
+							b <= "0000";
 						ELSE
-							r <= "0000";
-							g <= "1001";
+							r <= "0011";
+							g <= "0011";
 							b <= "0000";
 						END IF; 	
 					ELSIF (check_1 = '0') AND (check_2 = '1') THEN--empty
@@ -161,9 +161,9 @@ BEGIN
 							b <= "0000";
 							
 						ELSE
-							r <= "1110";
-							g <= "1110";
-							b <= "1110";
+							r <= "0111";
+							g <= "0111";
+							b <= "0111";
 						END IF;
 					END IF;
 				END IF;
@@ -171,5 +171,4 @@ BEGIN
 		END IF;
 	END PROCESS;
 END behaviour;
-
 
