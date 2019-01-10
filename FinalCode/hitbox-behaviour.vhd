@@ -66,8 +66,8 @@ BEGIN
 					new_state_p1  <= which_direction;
 					check_x_p1 <= "0000";--- could these be removed? the output of this isnt important at this state
 					check_y_p1 <= "0000";--- could these be removed? the output of this isnt important at this state
-					new_x_p1   <= x_p1;
-					new_y_p1   <= y_p1;
+					new_x_p1   <= "0001";
+					new_y_p1   <= "0001";
 
 				WHEN which_direction => 
 					begin_counting <= '0';
@@ -244,8 +244,8 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 					new_state_p2  <= which_direction;
 					check_x_p2 <= "0000";--- could these be removed? the output of this isnt important at this state
 					check_y_p2 <= "0000";--- could these be removed? the output of this isnt important at this state
-					new_x_p2   <= x_p2;
-					new_y_p2   <= y_p2;
+					new_x_p2   <= "1001";
+					new_y_p2   <= "1001";
 
 				WHEN which_direction => 
 					check_x_p2 <= "0000";
