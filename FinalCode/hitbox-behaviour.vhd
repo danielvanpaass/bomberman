@@ -234,8 +234,8 @@ BEGIN
 					new_state_p2  <= which_direction;
 					check_x_p2 <= "0000";--- could these be removed? the output of this isnt important at this state
 					check_y_p2 <= "0000";--- could these be removed? the output of this isnt important at this state
-					new_x_p2   <= "0001";
-					new_y_p2   <= "0001";
+					new_x_p2   <= "1001";
+					new_y_p2   <= "1001";
 
 				WHEN which_direction => 
 					begin_counting_p2 <= '0';
