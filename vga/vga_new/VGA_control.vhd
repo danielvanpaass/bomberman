@@ -42,7 +42,7 @@ ARCHITECTURE behaviour OF VGA_controller IS
 BEGIN
 PROCESS (h_count, v_count)
 begin-----to make sure that the rgb module does not paint outside the rectangle
-if h_count > begin_video AND h_count < end_video AND ( v_count < "0111011001" )  then --at this v_count value the last pixel of x10 y10 has been painted
+if h_count > ("000000001") AND h_count < ("011110100") AND ( v_count < "0111011001" )  then --at this v_count value the last pixel of x10 y10 has been painted
 	video_on <= '1';
 else
 	video_on <= '0';
