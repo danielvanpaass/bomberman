@@ -22,7 +22,7 @@ end component;
 	signal state, new_state: sound_state;
 	signal H, v_flag, bp_flag, be_flag, timer_on, timer_r, timer_r30, new_H, new_v, new_bp, new_be: std_logic;
 	signal count, count_v, count_bp, count_be, new_count_v, new_count_bp, new_count_be :std_logic_vector(15 downto 0);
-	signal length: std_logic_vector(4 downto 0);
+	signal length_signal: std_logic_vector(4 downto 0);
 	signal note, new_note: std_logic_vector(2 downto 0);
 begin
 
@@ -49,7 +49,7 @@ begin
 	end if;
 	end process;
 
-	lb12: process (state, victory, bomb_placed, bomb_exploded, H, length, note, count, v_flag, bp_flag, be_flag, count_v, count_be, count_bp)
+	lb12: process (state, victory, bomb_placed, bomb_exploded, H, length_signal, note, count, v_flag, bp_flag, be_flag, count_v, count_be, count_bp)
 	begin
 	case state is
 		when RESET_STATE =>
@@ -128,17 +128,17 @@ begin
 		new_count_v <= count_v;
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
-		if H = '1' AND length /= "11110"  then
+		if H = '1' AND length_signal /= "11110"  then
 			new_state <= OUTPUT_HIGH;
-		elsif H = '0' AND length /= "11110" then
+		elsif H = '0' AND length_signal /= "11110" then
 			new_state <= OUTPUT_LOW;
-		elsif length = "11110" AND note = "010" then
+		elsif length_signal = "11110" AND note = "010" then
 			new_state <= VICTORY_T2;
-		elsif length = "11110" AND note = "011" then
+		elsif length_signal = "11110" AND note = "011" then
 			new_state <= VICTORY_T3;
-		elsif length = "11110" AND note = "100" then
+		elsif length_signal = "11110" AND note = "100" then
 			new_state <= VICTORY_T4;
-		elsif length = "11110" AND note = "101" then
+		elsif length_signal = "11110" AND note = "101" then
 			new_state <= VICT_END;
 		else
 			new_state <= RESET_STATE;
@@ -172,7 +172,7 @@ begin
 		new_v <= v_flag;
 		new_bp <= bp_flag;
 		new_be <= be_flag;
-		if length = "00000" then
+		if length_signal = "00000" then
 			new_state <= OUTPUT_HIGH;	
 		else
 			new_state <= VICTORY_T2;
@@ -190,7 +190,7 @@ begin
 		new_v <= v_flag;
 		new_bp <= bp_flag;
 		new_be <= be_flag;
-		if length = "00000" then
+		if length_signal = "00000" then
 			new_state <= OUTPUT_HIGH;	
 		else
 			new_state <= VICTORY_T3;
@@ -208,7 +208,7 @@ begin
 		new_v <= v_flag;
 		new_bp <= bp_flag;
 		new_be <= be_flag;
-		if length = "00000" then
+		if length_signal = "00000" then
 			new_state <= OUTPUT_HIGH;	
 		else
 			new_state <= VICTORY_T4;
@@ -226,7 +226,7 @@ begin
 		new_v <= v_flag;
 		new_bp <= bp_flag;
 		new_be <= be_flag;
-		if length = "00000" then
+		if length_signal = "00000" then
 			new_state <= RESET_STATE;	
 		else
 			new_state <= VICT_END;
@@ -319,7 +319,7 @@ begin
 	
 	-- timer_r <= timer_on;
 	T1 : timer port map (clk, timer_on, count);
-	T1_30 : timer_30 port map (clk_30, timer_r30, length);
+	T1_30 : timer_30 port map (clk_30, timer_r30, length_signal);
 
 end behaviour;
 

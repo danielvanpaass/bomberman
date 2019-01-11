@@ -10,7 +10,7 @@ begin
 	begin
 	if (rising_edge (clk_30)) then
 		if timer_r30 = '0' then
-			count <= "00000";
+			count <= (others => '0');
 		else
 			count <= new_count;
 		end if;

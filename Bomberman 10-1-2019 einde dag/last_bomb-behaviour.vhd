@@ -15,6 +15,8 @@ process (clk, reset)
    if (rising_edge (clk)) then
      if (reset = '1') then
        state <= hold;
+	bombxsample <= "0000";
+	bombysample <= "0000";
      else
        state <= new_state;
 		 bombxsample <= new_bombxsample;

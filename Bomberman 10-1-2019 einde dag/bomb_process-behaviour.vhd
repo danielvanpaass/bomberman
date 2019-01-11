@@ -17,7 +17,7 @@ component bomb_overall is
 end component;
 
 component hitscan_top is
-   port(x_b   : IN std_logic_vector(3 downto 0);
+   port(X_b   : IN std_logic_vector(3 downto 0);
 	Y_b   : IN std_logic_vector(3 downto 0);
         res   : IN		std_logic;
 	clk   : IN  std_logic;
