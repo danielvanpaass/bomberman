@@ -1,0 +1,57 @@
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.numeric_std.ALL;
+
+ENTITY joystick_test IS
+	PORT
+	(
+		clk       	   : IN std_logic;
+		reset    	   : IN std_logic;
+		joystick1      : IN std_logic;
+		joystick2      : IN std_logic;
+		joystick3      : IN std_logic;
+		joystick4      : IN std_logic;
+		switch			: IN std_logic;
+		LED1       		: OUT std_logic;
+		LED2      		: OUT std_logic;
+		LED3      		: OUT std_logic;
+		LED4      		: OUT std_logic;
+		LED5      		: OUT std_logic
+	);
+END joystick_test;
+
+ARCHITECTURE behaviour OF joystick_test IS
+BEGIN
+PROCESS (clk, reset, joystick1, joystick2, joystick3, joystick4,switch)
+begin
+if(joystick1 = '1') then
+LED1 <= '1';
+else
+LED1 <= '0';
+end if;
+
+if(joystick2 = '1') then
+LED2 <= '1';
+else
+LED2 <= '0';
+end if;
+
+if(joystick3 = '1') then
+LED3 <= '1';
+else
+LED3 <= '0';
+end if;
+
+if(joystick4 = '1') then
+LED4 <= '1';
+else
+LED4 <= '0';
+end if;
+
+if(switch = '1') then
+LED5 <= '1';
+else
+LED5 <= '0';
+end if;
+END PROCESS;
+END behaviour;
