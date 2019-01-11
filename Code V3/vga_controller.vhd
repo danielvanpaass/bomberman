@@ -52,9 +52,9 @@ end process;
 
 -----------------------------
 --to create a 60Hz clock--
-PROCESS ( y)
+PROCESS ( v_count)
 begin-----to make sure that the rgb module does not paint outside the rectangle
-if (y="1010")  then --x y value the clock must be high, but it should not matter what  y value as long as it is periodic with 60Hz
+if (v_count = "0000001100")  then --this arbitrary v_count value only occurs with the freq. of 60hz
 	clock_60hz <= '1';
 else
 	clock_60hz <= '0';
