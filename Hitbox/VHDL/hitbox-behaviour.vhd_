@@ -294,8 +294,8 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 					new_state_p2  <= which_direction;
 					check_x_p2 <= "0000";--the value of check_x and y are irrelevant as check_x will not be use right now
 					check_y_p2 <= "0000";
-					new_x_p2   <= "1001";
-					new_y_p2   <= "1001";
+					new_x_p2   <= "0001";
+					new_y_p2   <= "0001";
 
 				WHEN which_direction => --the intended direction of the player is determined
 					begin_counting_p2 <= '0';
@@ -356,7 +356,7 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 					begin_counting_p2 <= '0';
 					new_x_p2   <= x_p2;
 					new_y_p2   <= y_p2;
-					check_x_p2 <= x_p2;
+					check_x_p2 <= (x_p2);
 					check_y_p2 <= std_logic_vector(unsigned(y_p2) + "0001");
 					if (x_p2 = "0001" AND std_logic_vector(unsigned(y_p2) + "0001") = "1001") THEN
 						new_state_p2 <= output_portal_bottom;
