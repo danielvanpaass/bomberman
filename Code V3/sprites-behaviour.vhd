@@ -105,25 +105,36 @@ BEGIN
 							g <= "0000";
 							b <= "0000";
 						END IF; 
+					
 					ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN
+						
 						IF (P_vector(spritebit) = '1') THEN
 							r <= "1111";
 							g <= "0000";
 							b <= "0000";
+						ELSIF((y_p1 = "0001" and x_p1 = "1001") OR (y_p1 = "1001" and x_p1 = "0001")) THEN
+							r <= "1000";
+							g <= "0000";
+							b <= "1000";
 						ELSE
 							r <= "1000";
 							g <= "1000";
 							b <= "1000";
-						END IF;
+						END IF;	
+
 					ELSIF (y_map = y_p2) AND (x_map = x_p2) THEN
 						IF (P_vector(spritebit) = '1') THEN
 							r <= "0000";
 							g <= "0000";
 							b <= "1111";
+						ELSIF((y_p2 = "0001" and x_p2 = "1001") OR (y_p2 = "1001" and x_p2 = "0001")) THEN
+							r <= "1000";
+							g <= "0000";
+							b <= "1000";
 						ELSE
 							r <= "1000";
 							g <= "1000";
-							b <= "1000";
+							b <= "1000";	
 						END IF;
 					ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
 						(x_map = x_bomb_b AND y_map = y_bomb_b AND bomb_b_enable = '1') OR
@@ -142,6 +153,11 @@ BEGIN
 							g <= "1000";
 							b <= "1000";
 						END IF; 
+					ELSIF((y_map = "0001" and x_map = "1001") OR (y_map = "1001" and x_p2 = "0001")) THEN
+						r <= "1000";
+						g <= "0000";
+						b <= "1000";
+
 					ELSIF (check_1 = '0') AND (check_2 = '1') THEN
 						IF (crate_vector(spritebit) = '1') THEN--crate
 							r <= "1001";
