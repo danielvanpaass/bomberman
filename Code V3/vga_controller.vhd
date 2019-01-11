@@ -52,7 +52,7 @@ end process;
 
 -----------------------------
 --to create a 60Hz clock--
-PROCESS ( v_count)
+PROCESS ( v_count, h_count)
 begin-----to make sure that the rgb module does not paint outside the rectangle
 if (v_count = "0000000001" and h_count = "000000001")  then --this arbitrary v_count in combination with h_count value only occurs with the freq. of 60hz
 	clock_60hz <= '1';
