@@ -8,10 +8,10 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
 	SIGNAL check_x_p1, check_y_p1, new_x_p1, new_y_p1, x_p1, y_p1 : std_logic_vector (3 DOWNTO 0);
 	SIGNAL check_x_p2, check_y_p2, new_x_p2, new_y_p2, x_p2, y_p2 : std_logic_vector (3 DOWNTO 0);
 	SIGNAL begin_counting_p1, begin_counting_p2, move_p1, move_p2                            : std_logic; ---!!!
-	SIGNAL count_players_p1, new_count_players_p1, count_players_p2, new_count_players_p2          : unsigned (22 DOWNTO 0);
+	SIGNAL count_players_p1, new_count_players_p1, count_players_p2, new_count_players_p2          : unsigned (4 DOWNTO 0);--(22 DOWNTO 0);
 	SIGNAL walls_and_crates_inverted                 : std_logic_vector(0 TO 120);
 
-	CONSTANT cooldown_end                            : unsigned(22 DOWNTO 0) := "00000000000000000100000"; ---"10110111000110110000000"--this equalshalf switch_to_p1,
+	CONSTANT cooldown_end                            : unsigned(4 DOWNTO 0) := "00010"; ---"10110111000110110000000"
 	--however, for simulation purposes we used much smaller values.
 BEGIN
 	walls_and_crates_inverted <= walls_and_crates;
@@ -49,9 +49,13 @@ BEGIN
 		END PROCESS;					
 
 		-- counter  P1
-	PROCESS (count_players_p1)
+	PROCESS ( count_players_p1)--v_clk,
 		BEGIN
+			--IF v_clk = '1' THEN			
 			new_count_players_p1 <= count_players_p1 + 1;
+			--ELSE 
+			--new_count_players_p1 <= count_players_p1;
+			--END IF;
 		END PROCESS;
 	--- counter cooldown clock for P1
 	PROCESS (clk, begin_counting_p2)
@@ -66,9 +70,13 @@ BEGIN
 		END PROCESS;					
 
 		-- counter P2 
-	PROCESS (count_players_p2)
+	PROCESS ( count_players_p2)--v_clk,
 		BEGIN
+			--IF v_clk = '1' THEN			
 			new_count_players_p2 <= count_players_p2 + 1;
+			--ELSE 
+			--new_count_players_p2 <= count_players_p2;
+			--END IF;
 		END PROCESS;
 		x_p1_out <= x_p1;--these will be the output of the system
 		x_p2_out <= x_p2;
@@ -322,7 +330,7 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 					new_y_p2   <= y_p2;
 					check_x_p2 <= std_logic_vector(unsigned(x_p2) + "0001");
 					check_y_p2 <= y_p2;
-					if(std_logic_vector(unsigned(x_p2) + "0001") = "1001" AND y_p2 = "0001") THEN
+					if(std_logic_vector(unsigned(x_p2) + "0001") = "1001" AND y_p2 = "0001") THEN--teleport from the right bottom tile
 						new_state_p2 <= output_portal_top;
 					else
 						new_state_p2 <= right_output;
@@ -334,7 +342,7 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 					new_y_p2   <= y_p2;
 					check_x_p2 <= std_logic_vector(unsigned(x_p2) - "0001");
 					check_y_p2 <= y_p2;
-					if (std_logic_vector(unsigned(x_p2) - "0001") = "0001" AND y_p2 = "1001") THEN
+					if (std_logic_vector(unsigned(x_p2) - "0001") = "0001" AND y_p2 = "1001") THEN--teleport from the left bottom tile
 						new_state_p2 <= output_portal_bottom;
 					else
 						new_state_p2 <= left_output;
@@ -439,7 +447,7 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 					END IF;
 					new_state_p2 <= cooldown_state;	
 
-				WHEN output_portal_bottom =>
+				WHEN output_portal_bottom =>--is being teleported to the upper right corner
 					begin_counting_p2 <= '0';
 					check_x_p2 <= "0000";
 					check_y_p2 <= "0000";
@@ -447,7 +455,7 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 					new_y_p2 <= "0001";
 					new_state_p2 <= cooldown_state;	
 
-				WHEN output_portal_top =>
+				WHEN output_portal_top =>--is being teleported to the upper left corner
 					begin_counting_p2 <= '0';
 					check_x_p2 <= "0000";
 					check_y_p2 <= "0000";
