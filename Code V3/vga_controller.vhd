@@ -9,7 +9,7 @@ ENTITY VGA_controller IS
 		reset      : IN std_logic;
 		vga_hsync  : OUT std_logic;
 		vga_vsync  : OUT std_logic;
-		clock_60hz : OUT std_logic; --mss wordt dit niet gepakt door alle systemen die het moet loaden omdat het zo kort aanstaat
+		clock_60hz : OUT std_logic; --for one full clock cycle '1' every 60hz
 		x_out      : OUT std_logic_vector(3 DOWNTO 0);
 		y_out      : OUT std_logic_vector(3 DOWNTO 0);
 		h_out      : OUT std_logic_vector(4 DOWNTO 0);

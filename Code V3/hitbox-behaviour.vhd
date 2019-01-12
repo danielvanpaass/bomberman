@@ -51,11 +51,11 @@ BEGIN
 		-- counter  P1
 	PROCESS ( count_players_p1)--v_clk,
 		BEGIN
-			--IF v_clk = '1' THEN			
+			IF v_clk = '1' THEN			
 			new_count_players_p1 <= count_players_p1 + 1;
-			--ELSE 
-			--new_count_players_p1 <= count_players_p1;
-			--END IF;
+			ELSE 
+			new_count_players_p1 <= count_players_p1;
+			END IF;
 		END PROCESS;
 	--- counter cooldown clock for P1
 	PROCESS (clk, begin_counting_p2)
@@ -72,11 +72,11 @@ BEGIN
 		-- counter P2 
 	PROCESS ( count_players_p2)--v_clk,
 		BEGIN
-			--IF v_clk = '1' THEN			
+			IF v_clk = '1' THEN			
 			new_count_players_p2 <= count_players_p2 + 1;
-			--ELSE 
-			--new_count_players_p2 <= count_players_p2;
-			--END IF;
+			ELSE 
+			new_count_players_p2 <= count_players_p2;
+			END IF;
 		END PROCESS;
 		x_p1_out <= x_p1;--these will be the output of the system
 		x_p2_out <= x_p2;
