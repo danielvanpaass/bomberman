@@ -7,8 +7,8 @@ ARCHITECTURE behaviour OF sprites IS
 	SIGNAL h_map : std_logic_vector (3 DOWNTO 0);
 	SIGNAL P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector , victory_vector_1, victory_vector_2, victory_vector_3: std_logic_vector (0 TO 120);
 	SIGNAL check_1, check_2 : std_logic;
-	SIGNAL spritebit : INTEGER RANGE 0 TO 120;
-	SIGNAL spritebit_victory : INTEGER RANGE 0 TO 241;
+	SIGNAL spritebit, inverted_spritebit : INTEGER RANGE 0 TO 120;
+	SIGNAL spritebit_victory : INTEGER RANGE 0 TO 241;--- komt deze wel voor in deze behavioural?
 	SIGNAL rgb : std_logic_vector(11 DOWNTO 0);
 BEGIN
 	v_map <= input_v_map(5 DOWNTO 2);
@@ -24,7 +24,7 @@ BEGIN
 	check_1 <= playground((10 - to_integer(unsigned(y_map))) * 22 + (10 - to_integer(unsigned(x_map))) * 2);
 	check_2 <= playground((10 - to_integer(unsigned(y_map))) * 22 + ((10 - to_integer(unsigned(x_map))) * 2) + 1);
 	spritebit <= (((to_integer(unsigned(h_map))) + (to_integer(unsigned(v_map)) * 11)));
-						
+	inverted_spritebit <= (((10-to_integer(unsigned(h_map))) + (to_integer(unsigned(v_map))*11)));				
 	PROCESS (clk, reset, victory, playground, x_p1, y_p1, x_bomb_a, y_bomb_a, bomb_a_enable, x_bomb_b, y_bomb_b, bomb_b_enable, x_bomb_c, y_bomb_c, bomb_c_enable, x_bomb_d, y_bomb_d, bomb_d_enable, x_bomb_e, y_bomb_e, bomb_e_enable, x_bomb_f, y_bomb_f, bomb_f_enable, x_bomb_g, y_bomb_g, bomb_g_enable, x_bomb_h, y_bomb_h, bomb_h_enable, x_map, y_map, h_map, v_map, input_h_map, input_v_map)
 	BEGIN
 		IF rising_edge (clk) THEN
@@ -107,34 +107,57 @@ BEGIN
 						END IF; 
 					
 					ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN
-						
-						IF (P_vector(spritebit) = '1') THEN
-							r <= "1111";
-							g <= "0000";
-							b <= "0000";
-						ELSIF((y_p1 = "0001" and x_p1 = "1001") OR (y_p1 = "1001" and x_p1 = "0001")) THEN
+						IF((y_p1 = "0001" and x_p1 = "1001") OR (y_p1 = "1001" and x_p1 = "0001")) THEN
 							r <= "1000";
 							g <= "0000";
 							b <= "1000";
+						ELSIF y_map(0) = '0' AND x_map(0) = '0' THEN
+							IF (P_vector(spritebit) = '1') THEN
+								r <= "1111";
+								g <= "0000";
+								b <= "0000";
+							ELSE
+								r <= "1000";
+								g <= "1000";
+								b <= "1000";
+							END IF;	
 						ELSE
-							r <= "1000";
-							g <= "1000";
-							b <= "1000";
-						END IF;	
-
+							IF (P_vector(inverted_spritebit) = '1') THEN--inverted sprite for alternating tiles
+								r <= "1111";
+								g <= "0000";
+								b <= "0000";
+							ELSE
+								r <= "1000";
+								g <= "1000";
+								b <= "1000";
+							END IF;	
+						END IF;
 					ELSIF (y_map = y_p2) AND (x_map = x_p2) THEN
-						IF (P_vector(spritebit) = '1') THEN
-							r <= "0000";
-							g <= "0000";
-							b <= "1111";
-						ELSIF((y_p2 = "0001" and x_p2 = "1001") OR (y_p2 = "1001" and x_p2 = "0001")) THEN
-							r <= "1000";
-							g <= "0000";
-							b <= "1000";
+						IF((y_p2 = "0001" and x_p2 = "1001") OR (y_p2 = "1001" and x_p2 = "0001")) THEN
+								r <= "1000";
+								g <= "0000";
+								b <= "1000";
+						ELSIF y_map(0) = '0' AND x_map(0) = '0' THEN 
+							IF (P_vector(spritebit) = '1') THEN
+								r <= "0000";
+								g <= "0000";
+								b <= "1111";
+							
+							ELSE
+								r <= "1000";
+								g <= "1000";
+								b <= "1000";	
+							END IF;
 						ELSE
-							r <= "1000";
-							g <= "1000";
-							b <= "1000";	
+							IF (P_vector(inverted_spritebit) = '1') THEN
+								r <= "0000";
+								g <= "0000";
+								b <= "1111";
+							ELSE
+								r <= "1000";
+								g <= "1000";
+								b <= "1000";	
+							END IF;
 						END IF;
 					ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
 						(x_map = x_bomb_b AND y_map = y_bomb_b AND bomb_b_enable = '1') OR
