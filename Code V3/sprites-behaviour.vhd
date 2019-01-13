@@ -110,7 +110,7 @@ BEGIN
 							r <= "1000";
 							g <= "0000";
 							b <= "1000";
-						ELSIF y_map(0) = '0' AND x_map(0) = '0' THEN--normal sprite
+						ELSIF y_map(0) = '1' AND x_map(0) = '1' THEN--normal sprite
 							IF (P_vector(spritebit) = '1') THEN
 								r <= "1111";
 								g <= "0000";
@@ -136,7 +136,7 @@ BEGIN
 								r <= "1000";
 								g <= "0000";
 								b <= "1000";
-						ELSIF y_map(0) = '0' AND x_map(0) = '0' THEN 
+						ELSIF y_map(0) = '1' AND x_map(0) = '1' THEN 
 							IF (P_vector(spritebit) = '1') THEN
 								r <= "0000";
 								g <= "0000";
