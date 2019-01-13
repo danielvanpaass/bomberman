@@ -8,7 +8,6 @@ ARCHITECTURE behaviour OF sprites IS
 	SIGNAL P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector , victory_vector_1, victory_vector_2, victory_vector_3: std_logic_vector (0 TO 120);
 	SIGNAL check_1, check_2 : std_logic;
 	SIGNAL spritebit, inverted_spritebit : INTEGER RANGE 0 TO 120;
-	SIGNAL spritebit_victory : INTEGER RANGE 0 TO 241;--- komt deze wel voor in deze behavioural?
 	SIGNAL rgb : std_logic_vector(11 DOWNTO 0);
 BEGIN
 	v_map <= input_v_map(5 DOWNTO 2);
