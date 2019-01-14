@@ -40,17 +40,7 @@ BEGIN
 					b <= "0000";
 				ELSE
 					IF victory(0) = '1' OR victory(1) = '1' THEN--someone has won
-							IF  (x_map = "0101"  AND y_map = "0101" AND victory = "11") THEN ---both have won
-								IF (P_vector(spritebit) = '1') THEN
-									r <= "1111";
-									g <= "0000";
-									b <= "1111";
-								ELSE 
-									r <= "1111";
-									g <= "1111";
-									b <= "1111";
-								END IF;
-							ELSIF (x_map = "0101"  AND y_map = "0101" AND victory(1) = '1') THEN--p1? has won
+							IF (x_map = "0101"  AND y_map = "0100" AND victory(1) = '1') THEN--p1? has won
 								IF (P_vector(spritebit) = '1') THEN
 									r <= "1111";
 									g <= "0000";
@@ -60,7 +50,7 @@ BEGIN
 									g <= "1111";
 									b <= "1111";
 								END IF;
-							ELSIF (x_map = "0101"  AND y_map = "0101" AND victory(0) = '1') THEN--p2? has won
+							ELSIF (x_map = "0101"  AND y_map = "0100" AND victory(0) = '1') THEN--p2? has won
 								IF (P_vector(spritebit) = '1') THEN
 									r <= "0000";
 									g <= "0000";
@@ -70,7 +60,7 @@ BEGIN
 									g <= "1111";
 									b <= "1111";
 								END IF;
-							ELSIF (x_map = "0110" AND y_map = "0101") THEN
+							ELSIF (x_map = "0100" AND y_map = "0101") THEN
 								IF (victory_vector_1(spritebit) = '1') THEN
 									r <= "0000";
 									g <= "0000";
@@ -80,7 +70,7 @@ BEGIN
 									g <= "1111";
 									b <= "1111";
 								END IF;
-							ELSIF (x_map = "0111" AND y_map = "0101") THEN
+							ELSIF (x_map = "0101" AND y_map = "0101") THEN
 								IF (victory_vector_2(spritebit) = '1') THEN
 									r <= "0000";
 									g <= "0000";
@@ -90,7 +80,7 @@ BEGIN
 									g <= "1111";
 									b <= "1111";
 								END IF;
-							ELSIF (x_map = "1000" AND y_map = "0101") THEN
+							ELSIF (x_map = "0110" AND y_map = "0101") THEN
 								IF (victory_vector_3(spritebit) = '1') THEN
 									r <= "0000";
 									g <= "0000";
