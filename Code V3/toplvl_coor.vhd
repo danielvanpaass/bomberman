@@ -9,9 +9,6 @@ entity toplvl_coor is
 	p1_y : in  std_logic_vector(3 downto 0);
 	p2_x : in  std_logic_vector(3 downto 0);
 	p2_y : in  std_logic_vector(3 downto 0);
-
---	p_bomb : in std_logic; --bomb planting commands
---	p_bombplant : in std_logic;
 	
 	p1_b : in std_logic;
 	p2_b : in std_logic;
@@ -53,16 +50,5 @@ entity toplvl_coor is
 	maptoVGA : out std_logic_vector(241 downto 0);
 	obstacle_grid : out std_logic_vector(120 downto 0));
 
---	y0 : out std_logic_vector(21 downto 0); --output array, 2 bits per tile, 11 tiles per row, 11 rows
---	y1 : out std_logic_vector(21 downto 0);
---	y2 : out std_logic_vector(21 downto 0);
---	y3 : out std_logic_vector(21 downto 0);
---	y4 : out std_logic_vector(21 downto 0);
---	y5 : out std_logic_vector(21 downto 0);
---	y6 : out std_logic_vector(21 downto 0);
---	y7 : out std_logic_vector(21 downto 0);
---	y8 : out std_logic_vector(21 downto 0);
---	y9 : out std_logic_vector(21 downto 0);
---	y10 : out std_logic_vector(21 downto 0);
 end toplvl_coor;
 
