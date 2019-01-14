@@ -13,15 +13,25 @@ LED5	Location	PIN_T18	Yes
 
 _______________________________________________
 
-clock_50mhz	Location	PIN_L1	Yes
-reset		Location	PIN_R22	Yes
-joystick1	Location	PIN_B19	Yes
-joystick2	Location	PIN_B20	Yes
-joystick3	Location	PIN_C22	Yes
-joystick4	Location	PIN_D22	Yes
-switch		Location	PIN_B18	Yes
-LED1		Location	PIN_R20	Yes
-LED2		Location	PIN_R19	Yes
-LED3		Location	PIN_U19	Yes
-LED4		Location	PIN_Y19	Yes
-LED5		Location	PIN_T18	Yes
+Ok		clock_50mhz	Location	  PIN_L1	Yes
+Ok		reset	Location	        PIN_R22	Yes
+Ok		joystick1	Location	    PIN_B13	Yes
+Ok		joystick2	Location	    PIN_B14	Yes
+Ok		joystick3	Location	    PIN_B15	Yes
+Ok		joystick4	Location	    PIN_B16	Yes
+Ok		switch	Location	      PIN_B17	Yes
+Ok		LED1	Location	        PIN_R20	Yes
+Ok		LED2	Location	        PIN_R19	Yes
+Ok		LED3	Location	        PIN_U19	Yes
+Ok		LED4	Location	        PIN_Y19	Yes
+Ok		LED5	Location	        PIN_T18	Yes
+Ok		joystick5	Location	    PIN_H13	Yes
+Ok		joystick6	Location	    PIN_G15	Yes
+Ok		joystick7	Location    	PIN_E15	Yes
+Ok		joystick8	Location	    PIN_G16	Yes
+Ok		switch2	Location	      PIN_F13	Yes
+Ok		LED6	Location	        PIN_U22	Yes
+Ok		LED7	Location	        PIN_U21	Yes
+Ok		LED8	Location	        PIN_V22	Yes
+Ok		LED9	Location	        PIN_V21	Yes
+Ok		LED10	Location	        PIN_W22	Yes
