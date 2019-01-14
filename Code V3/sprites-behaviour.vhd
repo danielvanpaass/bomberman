@@ -117,7 +117,7 @@ BEGIN
 					
 					ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN--p1
 						IF((y_p1 = "0001" and x_p1 = "1001") OR (y_p1 = "1001" and x_p1 = "0001")) THEN --this are the portals, they have higher priority than the player
-							r <= "0011";
+							r <= "1000";
 							g <= "0000";
 							b <= "0000";
 						ELSIF y_map(0) = '1' AND x_map(0) = '1' THEN--normal sprite
@@ -126,9 +126,9 @@ BEGIN
 								g <= "0000";
 								b <= "0000";
 							ELSE
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";
+								r <= "1100";
+								g <= "1100";
+								b <= "1100";
 							END IF;	
 						ELSE
 							IF (P_vector(inverted_spritebit) = '1') THEN--inverted sprite for alternating tiles
@@ -136,16 +136,16 @@ BEGIN
 								g <= "0000";
 								b <= "0000";
 							ELSE
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";
+								r <= "1100";
+								g <= "1100";
+								b <= "1100";
 							END IF;	
 						END IF;
 					ELSIF (y_map = y_p2) AND (x_map = x_p2) THEN--same but for p2
 						IF((y_p2 = "0001" and x_p2 = "1001") OR (y_p2 = "1001" and x_p2 = "0001")) THEN
 								r <= "0000";
 								g <= "0000";
-								b <= "0011";
+								b <= "1000";
 						ELSIF y_map(0) = '1' AND x_map(0) = '1' THEN 
 							IF (P_vector(spritebit) = '1') THEN
 								r <= "0000";
@@ -153,9 +153,9 @@ BEGIN
 								b <= "1111";
 							
 							ELSE
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";	
+								r <= "1100";
+								g <= "1100";
+								b <= "1100";	
 							END IF;
 						ELSE
 							IF (P_vector(inverted_spritebit) = '1') THEN
@@ -163,9 +163,9 @@ BEGIN
 								g <= "0000";
 								b <= "1111";
 							ELSE
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";	
+								r <= "1100";
+								g <= "1100";
+								b <= "1100";	
 							END IF;
 						END IF;
 					ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
@@ -181,9 +181,9 @@ BEGIN
 							g <= "0000";
 							b <= "0000";
 						ELSE
-							r <= "1000";
-							g <= "1000";
-							b <= "1000";
+							r <= "1100";
+							g <= "1100";
+							b <= "1100";
 						END IF; 
 					ELSIF((y_map = "0001" and x_map = "1001") OR (y_map = "1001" and x_map = "0001")) THEN--portal sprites
 						r <= "1000";
@@ -192,18 +192,18 @@ BEGIN
 
 					ELSIF (check_1 = '0') AND (check_2 = '1') THEN
 						IF (crate_vector(spritebit) = '1') THEN--crate
-							r <= "1001";
-							g <= "0101";
+							r <= "1000";
+							g <= "0100";
 							b <= "0000";
 						ELSE
-							r <= "1011";
-							g <= "0101";
+							r <= "1111";
+							g <= "1000";
 							b <= "0000";
 						END IF; 	
 					ELSIF (check_1 = '1') AND (check_2 = '0') THEN--empty
-							r <= "1000";
-							g <= "1000";
-							b <= "1000";
+							r <= "1100";
+							g <= "1100";
+							b <= "1100";
 					
 					ELSIF (check_1 = '1') AND (check_2 = '1') THEN---must be 11 so wall
 						IF (wall_vector(spritebit) = '1') THEN
