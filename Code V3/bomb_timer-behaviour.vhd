@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.ALL;
 use IEEE.numeric_std.ALL;
 
 architecture behaviour_bomb_timer of bomb_timer is
-signal count, new_count	: unsigned (6 downto 0);
+signal count, new_count	: unsigned (24 downto 0);
 
 begin
 	process (clk)
@@ -17,13 +17,9 @@ begin
 		end if;
 	end process;
 
-	process (count, clk_30)							-- Add one to new_count if timer is on
+	process (count)							-- Add one to new_count if timer is on
 	begin
-		if clk_30 = '1' then
-			new_count <= count + 1;
-		else
-			new_count <= count;
-		end if;
+		new_count <= count + 1;
 	end process;
 
 	count_out <= std_logic_vector (count);

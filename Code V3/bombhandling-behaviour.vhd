@@ -13,6 +13,22 @@ architecture behaviour of BombHandling is
             Y_p1:in std_logic_vector(3 downto 0);
             X_p2:in std_logic_vector(3 downto 0);
             Y_p2:in std_logic_vector(3 downto 0);
+	bomb_a_x : in std_logic_vector(3 downto 0);
+	bomb_a_y : in std_logic_vector(3 downto 0);
+	bomb_b_x : in std_logic_vector(3 downto 0);
+	bomb_b_y : in std_logic_vector(3 downto 0);
+	bomb_c_x : in std_logic_vector(3 downto 0);
+	bomb_c_y : in std_logic_vector(3 downto 0);
+	bomb_d_x : in std_logic_vector(3 downto 0);
+	bomb_d_y : in std_logic_vector(3 downto 0);
+	bomb_e_x : in std_logic_vector(3 downto 0);
+	bomb_e_y : in std_logic_vector(3 downto 0);
+	bomb_f_x : in std_logic_vector(3 downto 0);
+	bomb_f_y : in std_logic_vector(3 downto 0);
+	bomb_g_x : in std_logic_vector(3 downto 0);
+	bomb_g_y : in std_logic_vector(3 downto 0);
+	bomb_h_x : in std_logic_vector(3 downto 0);
+	bomb_h_y : in std_logic_vector(3 downto 0);
 	timer_p1 : in std_logic_vector(3 downto 0);
 	timer_p2 : in std_logic_vector(3 downto 0);
             lethal_flag:out std_logic;
@@ -159,7 +175,7 @@ begin
                                            reset => reset,explosion=>net_54,clk => clk, 
                                            clk_30 => clk_30_input,X_p1 => pos_xp1, -- INPUT
                                            Y_p1 => pos_yp1,X_p2 => pos_xp2, -- IN
-                                           Y_p2 => pos_yp2, -- IN
+                                           Y_p2 => pos_yp2, bomb_a_x => net_11, bomb_a_y => net_12, bomb_b_x => net_14, bomb_b_y => net_15, bomb_c_x => net_17, bomb_c_y => net_18, bomb_d_x => net_20, bomb_d_y => net_21, bomb_e_x => net_23, bomb_e_y => net_24, bomb_f_x => net_26, bomb_f_y => net_27, bomb_g_x => net_28, bomb_g_y => net_29, bomb_h_x => net_33, bomb_h_y => net_34,
 					timer_p1 => net_55,
 					timer_p2 => net_56,
                                            lethal_flag => net_43,
@@ -173,7 +189,7 @@ begin
                                            buff_p1 => net_41,
                                            buff_p2 => net_42);
    
-   toplvl_coor_2 : toplvl_coor port map (clk => clk, reset => reset, 
+   toplvl_coor_2 : toplvl_coor port map (clk => clk, reset => reset,
                                          p1_x => pos_xp1,p1_y => pos_yp1, 
                                          p2_x => pos_xp2,p2_y => pos_yp2, 
                                          p1_b => net_41,p2_b => net_42, 

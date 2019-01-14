@@ -30,10 +30,10 @@ process (state, flag_htoa,bombxsample,bombysample,bomb_a_x,bomb_a_y,bomb_b_x,bom
 	begin
 	case state is
 		when hold =>
-		new_bombxsample <= bombxsample;
-		new_bombysample <= bombysample;
-		expl_x <= bombxsample;
-		expl_y <= bombysample;
+		new_bombxsample <= "0000"; --bombxsample;
+		new_bombysample <= "0000"; --bombysample;
+		expl_x <= "0000"; --bombxsample;
+		expl_y <= "0000"; --bombysample;
 		explosion <= '0';
 		if (flag_htoa(7) = '1') then
 			new_state <= sample_h;

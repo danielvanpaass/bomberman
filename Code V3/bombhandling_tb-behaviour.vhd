@@ -76,7 +76,7 @@ test: bombhandling port map (clk, clk_30_input, reset, victoryflag, pos_xp1, pos
    pos_yp1(3) <= '0' after 0 ns;
    pos_yp2(0) <= '0' after 0 ns;
    pos_yp2(1) <= '0' after 0 ns;
-   pos_yp2(2) <= '0' after 0 ns;
+   pos_yp2(2) <= '1' after 0 ns;
    pos_yp2(3) <= '0' after 0 ns;
    bombp1 <= '0' after 0 ns,
 		'1' after 2000 ns,

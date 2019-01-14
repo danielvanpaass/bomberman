@@ -7,6 +7,7 @@ entity bomb_timer_main is
 	clk_30	   : in  std_logic;
 	timer1	   : in  std_logic;
 	reset 	   : in std_logic;
-        explosion  : out std_logic);
+        explosion  : out std_logic;
+	fin_explosion: out std_logic);
 end bomb_timer_main;
 

@@ -76,7 +76,7 @@ process (state, bombinit, expl,bombxsample,bombysample,playerx,playery)
 		new_bombysample <= bombysample;
 		bombx <= bombxsample;
 		bomby <= bombysample;
-		bombdisplay <= '1';
+		bombdisplay <= '0';
 		expl_flag <= '0';
 		if (expl = '0') then
 			new_state <= nobomb;
