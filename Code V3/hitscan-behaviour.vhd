@@ -5,7 +5,7 @@ use IEEE.numeric_std.ALL;
 architecture behaviour of hitscan is
 	type hit_state is (rest, undicided, horizontal, plusform, vertical, vert_wait, vert_out, hori_wait, hori_out, victory_1, victory_2);
 	signal state, new_state: hit_state;
-	signal FF1, new_FF1: std_logic;
+	signal FF1, new_FF1, new_lethal_flag, lethalflagbuff: std_logic;
 	signal coor_signed, new_coor_signed: signed(4 downto 0);
 	signal coor_unsigned_p1_x, coor_unsigned_p1_y, coor_unsigned_p2_x, coor_unsigned_p2_y, coor_unsigned_b_x, coor_unsigned_b_y, coor_unsigned, new_coor_unsigned: unsigned(3 downto 0);
 	signal new_coor_unsigned_p1_x, new_coor_unsigned_p1_y, new_coor_unsigned_p2_x, new_coor_unsigned_p2_y, new_coor_unsigned_b_x, new_coor_unsigned_b_y: unsigned(3 downto 0);
@@ -28,6 +28,7 @@ begin
 				lethaltile_x <= "0000";
 				coor_unsigned <= "0000";
 				coor_signed <= "00000";
+				lethalflagbuff <= '0';
 			else
 				state <= new_state;
 				FF1 <= new_FF1;
@@ -41,6 +42,7 @@ begin
 				lethaltile_x <= new_lethaltile_x;
 				coor_unsigned <= new_coor_unsigned;
 				coor_signed <= new_coor_signed;
+				lethalflagbuff <= new_lethal_flag;
 			end if;
 		end if;
 	end process;
@@ -53,7 +55,7 @@ begin
 				new_FF1 <= '0';
 				FF2_reset <= '1';
 				read <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_x <= "0000";
 				new_lethaltile_y <= "0000";
@@ -77,7 +79,7 @@ begin
 				new_FF1 <= FF1;
 				FF2_reset <= '0';
 				read <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_x <= "0000";
 				new_lethaltile_y <= "0000";
@@ -100,7 +102,7 @@ begin
 				FF2_reset <= '0';
 				read <= '0';				
 				new_FF1 <= FF1;
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_x <= "0000";
 				new_lethaltile_y <= "0000";
@@ -119,7 +121,7 @@ begin
 			when vertical =>
 				new_FF1 <= FF1;
 				read <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_y <= "0000";
 				new_coor_unsigned_p1_x <= coor_unsigned_p1_x;
@@ -137,7 +139,7 @@ begin
 				new_FF1 <= FF1;
 				FF2_reset <= '0';
 				read <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_x <= lethaltile_x;
 				new_lethaltile_y <= lethaltile_y;
@@ -170,7 +172,7 @@ begin
 				if coor_signed(4) = '0' then
 					new_lethaltile_y <= std_logic_vector(coor_signed(3 downto 0));
 					new_coor_unsigned <= unsigned(coor_signed(3 downto 0));
-					lethal_flag <= '1';
+					new_lethal_flag <= '1';
 					if (coor_unsigned_b_x = coor_unsigned_p1_x AND coor_unsigned_p1_y = coor_unsigned) then
 						new_state <= victory_2;
 					elsif (coor_unsigned_b_x = coor_unsigned_p2_x AND coor_unsigned_p2_y = coor_unsigned) then
@@ -194,7 +196,7 @@ begin
 			when horizontal =>
 				new_FF1 <= FF1;
 				read <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_x <= "0000";
 				new_coor_unsigned_p1_x <= coor_unsigned_p1_x;
@@ -212,7 +214,7 @@ begin
 				new_FF1 <= FF1;
 				FF2_reset <= '0';
 				read <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_x <= lethaltile_x;
 				new_lethaltile_y <= lethaltile_y;
@@ -228,7 +230,7 @@ begin
 			when hori_out =>
 				new_FF1 <= FF1;
 				FF2_reset <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				victoryv <= "00";
 				new_lethaltile_y <= lethaltile_y;
 				new_coor_unsigned_p1_x <= coor_unsigned_p1_x;
@@ -263,7 +265,7 @@ begin
 				new_FF1 <= FF1;
 				FF2_reset <= '0';
 				read <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				new_lethaltile_x <= "0000";
 				new_lethaltile_y <= "0000";
 				new_coor_unsigned_p1_x <= coor_unsigned_p1_x;
@@ -280,7 +282,7 @@ begin
 				new_FF1 <= FF1;
 				FF2_reset <= '0';
 				read <= '0';
-				lethal_flag <= '0';
+				new_lethal_flag <= '0';
 				new_lethaltile_x <= "0000";
 				new_lethaltile_y <= "0000";
 				new_coor_unsigned_p1_x <= coor_unsigned_p1_x;
@@ -295,7 +297,7 @@ begin
 				new_state <= victory_2;
 		end case;
 	end process;
-	
+	lethal_flag <= lethalflagbuff;
 	lethaltile_x_out <= lethaltile_x;
 	lethaltile_y_out <= lethaltile_y;
 end behaviour;
