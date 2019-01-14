@@ -37,8 +37,18 @@ BEGIN
 					g <= "0000";
 					b <= "0000";
 				ELSE
-					IF victory(1) = '1' THEN--someone has won
-							IF (x_map = "0101"  AND y_map = "0101" AND victory(0) = '1') THEN--p1? has won
+					IF victory(1) = '1' OR victory(2) = '1' THEN--someone has won
+							IF  (x_map = "0101"  AND y_map = "0101" AND victory = "11") THEN ---both have won
+								IF (P_vector(spritebit) = '1') THEN
+									r <= "1111";
+									g <= "0000";
+									b <= "1111";
+								ELSE 
+									r <= "1111";
+									g <= "1111";
+									b <= "1111";
+								END IF;
+							ELSIF (x_map = "0101"  AND y_map = "0101" AND victory(1) = '1') THEN--p1? has won
 								IF (P_vector(spritebit) = '1') THEN
 									r <= "1111";
 									g <= "0000";
@@ -48,7 +58,7 @@ BEGIN
 									g <= "1111";
 									b <= "1111";
 								END IF;
-							ELSIF (x_map = "0101"  AND y_map = "0101" AND victory(0) = '0') THEN--p2? has won
+							ELSIF (x_map = "0101"  AND y_map = "0101" AND victory(0) = '1') THEN--p2? has won
 								IF (P_vector(spritebit) = '1') THEN
 									r <= "0000";
 									g <= "0000";
@@ -107,9 +117,9 @@ BEGIN
 					
 					ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN--p1
 						IF((y_p1 = "0001" and x_p1 = "1001") OR (y_p1 = "1001" and x_p1 = "0001")) THEN --this are the portals, they have higher priority than the player
-							r <= "1000";
+							r <= "0011";
 							g <= "0000";
-							b <= "1000";
+							b <= "0000";
 						ELSIF y_map(0) = '1' AND x_map(0) = '1' THEN--normal sprite
 							IF (P_vector(spritebit) = '1') THEN
 								r <= "1111";
@@ -133,9 +143,9 @@ BEGIN
 						END IF;
 					ELSIF (y_map = y_p2) AND (x_map = x_p2) THEN--same but for p2
 						IF((y_p2 = "0001" and x_p2 = "1001") OR (y_p2 = "1001" and x_p2 = "0001")) THEN
-								r <= "1000";
+								r <= "0000";
 								g <= "0000";
-								b <= "1000";
+								b <= "0011";
 						ELSIF y_map(0) = '1' AND x_map(0) = '1' THEN 
 							IF (P_vector(spritebit) = '1') THEN
 								r <= "0000";
@@ -175,7 +185,7 @@ BEGIN
 							g <= "1000";
 							b <= "1000";
 						END IF; 
-					ELSIF((y_map = "0001" and x_map = "1001") OR (y_map = "1001" and x_p2 = "0001")) THEN--portal sprites
+					ELSIF((y_map = "0001" and x_map = "1001") OR (y_map = "1001" and x_map = "0001")) THEN--portal sprites
 						r <= "1000";
 						g <= "0000";
 						b <= "1000";
