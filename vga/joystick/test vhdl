@@ -11,18 +11,28 @@ ENTITY joystick_test IS
 		joystick2      : IN std_logic;
 		joystick3      : IN std_logic;
 		joystick4      : IN std_logic;
+		joystick5      : IN std_logic;
+		joystick6      : IN std_logic;
+		joystick7      : IN std_logic;
+		joystick8      : IN std_logic;
 		switch			: IN std_logic;
+		switch2			: IN std_logic;
 		LED1       		: OUT std_logic;
 		LED2      		: OUT std_logic;
 		LED3      		: OUT std_logic;
 		LED4      		: OUT std_logic;
-		LED5      		: OUT std_logic
+		LED5      		: OUT std_logic;
+		LED6      		: OUT std_logic;
+		LED7      		: OUT std_logic;
+		LED8      		: OUT std_logic;
+		LED9      		: OUT std_logic;
+		LED10      		: OUT std_logic
 	);
 END joystick_test;
 
 ARCHITECTURE behaviour OF joystick_test IS
 BEGIN
-PROCESS (clk, reset, joystick1, joystick2, joystick3, joystick4,switch)
+PROCESS (clk, reset, joystick1, joystick2, joystick3, joystick4, switch, joystick5, joystick6, joystick7, joystick8, switch2)
 begin
 if(joystick1 = '1') then
 LED1 <= '1';
@@ -48,10 +58,40 @@ else
 LED4 <= '0';
 end if;
 
+if(joystick5 = '1') then
+LED6 <= '1';
+else
+LED6 <= '0';
+end if;
+
+if(joystick6 = '1') then
+LED7 <= '1';
+else
+LED7 <= '0';
+end if;
+
+if(joystick7 = '1') then
+LED8 <= '1';
+else
+LED8 <= '0';
+end if;
+
+if(joystick8 = '1') then
+LED9 <= '1';
+else
+LED9 <= '0';
+end if;
+
 if(switch = '1') then
 LED5 <= '1';
 else
 LED5 <= '0';
+end if;
+
+if(switch2 = '1') then
+LED10 <= '1';
+else
+LED10 <= '0';
 end if;
 END PROCESS;
 END behaviour;
