@@ -273,7 +273,7 @@ begin
 				new_coor_unsigned_b_y <= coor_unsigned_b_y;
 				new_coor_signed <= "00000";
 				new_coor_unsigned <= "0000";
-				victoryv <= "00";
+				victoryv <= "10";
 				new_state <= victory_1;
 			when victory_2 =>
 				new_FF1 <= FF1;
@@ -290,7 +290,7 @@ begin
 				new_coor_unsigned_b_y <= coor_unsigned_b_y;
 				new_coor_signed <= "00000";
 				new_coor_unsigned <= "0000";
-				victoryv <= "00";
+				victoryv <= "01";
 				new_state <= victory_2;
 		end case;
 	end process;
