@@ -134,9 +134,9 @@ BEGIN
 								g <= "0000";
 								b <= "0000";
 							ELSIF (empty_vector(spritebit) = '1') THEN
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";
+								r <= "1011";
+								g <= "1011";
+								b <= "1011";
 							ELSE
 								r <= "1100";
 								g <= "1100";
@@ -148,9 +148,9 @@ BEGIN
 								g <= "0000";
 								b <= "0000";
 							ELSIF (empty_vector(spritebit) = '1') THEN
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";
+								r <= "1011";
+								g <= "1011";
+								b <= "1011";
 							ELSE
 								r <= "1100";
 								g <= "1100";
@@ -175,9 +175,9 @@ BEGIN
 								b <= "1111";
 							
 							ELSIF (empty_vector(spritebit) = '1') THEN
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";
+								r <= "1011";
+								g <= "1011";
+								b <= "1011";
 							ELSE
 								r <= "1100";
 								g <= "1100";
@@ -189,9 +189,9 @@ BEGIN
 								g <= "0000";
 								b <= "1111";
 							ELSIF (empty_vector(spritebit) = '1') THEN
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";
+								r <= "1011";
+								g <= "1011";
+								b <= "1011";
 							ELSE
 								r <= "1100";
 								g <= "1100";
@@ -211,9 +211,9 @@ BEGIN
 							g <= "0000";
 							b <= "0000";
 						ELSIF (empty_vector(spritebit) = '1') THEN
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";
+								r <= "1011";
+								g <= "1011";
+								b <= "1011";
 							ELSE
 								r <= "1100";
 								g <= "1100";
@@ -242,9 +242,9 @@ BEGIN
 						END IF; 	
 					ELSIF (check_1 = '1') AND (check_2 = '0') THEN--empty
 							IF (empty_vector(spritebit) = '1') THEN
-								r <= "1000";
-								g <= "1000";
-								b <= "1000";
+								r <= "1011";
+								g <= "1011";
+								b <= "1011";
 							ELSE
 								r <= "1100";
 								g <= "1100";
