@@ -100,13 +100,13 @@ BEGIN
 					check_y_p1 <= "0000";
 					new_x_p1   <= x_p1;
 					new_y_p1   <= y_p1;
-					IF ((down_p1 = '0') AND (up_p1 = '0') AND (left_p1 = '0') AND (right_p1 = '1')) THEN
+					IF ((down_p1 = '1') AND (up_p1 = '1') AND (left_p1 = '1') AND (right_p1 = '0')) THEN
 						new_state_p1 <= attempt_to_right;
-					ELSIF ((down_p1 = '0') AND (up_p1 = '0') AND (left_p1 = '1') AND (right_p1 = '0')) THEN
+					ELSIF ((down_p1 = '1') AND (up_p1 = '1') AND (left_p1 = '0') AND (right_p1 = '1')) THEN
 						new_state_p1 <= attempt_to_left;
-					ELSIF ((down_p1 = '0') AND (up_p1 = '1') AND (left_p1 = '0') AND (right_p1 = '0')) THEN
+					ELSIF ((down_p1 = '1') AND (up_p1 = '0') AND (left_p1 = '1') AND (right_p1 = '1')) THEN
 						new_state_p1 <= attempt_to_up;
-					ELSIF ((down_p1 = '1') AND (up_p1 = '0') AND (left_p1 = '0') AND (right_p1 = '0')) THEN
+					ELSIF ((down_p1 = '0') AND (up_p1 = '1') AND (left_p1 = '1') AND (right_p1 = '1')) THEN
 						new_state_p1 <= attempt_to_down;
 					ELSE
 						new_state_p1 <= which_direction;
@@ -311,13 +311,13 @@ PROCESS (right_p2, left_p2, up_p2, down_p2, dir_p2_state, new_x_p2, new_y_p2, x_
 					check_y_p2 <= "0000";
 					new_x_p2   <= x_p2;
 					new_y_p2   <= y_p2;
-					IF ((down_p2 = '0') AND (up_p2 = '0') AND (left_p2 = '0') AND (right_p2 = '1')) THEN
+					IF ((down_p2 = '1') AND (up_p2 = '1') AND (left_p2 = '1') AND (right_p2 = '0')) THEN
 						new_state_p2 <= attempt_to_right;
-					ELSIF ((down_p2 = '0') AND (up_p2 = '0') AND (left_p2 = '1') AND (right_p2 = '0')) THEN
+					ELSIF ((down_p2 = '1') AND (up_p2 = '1') AND (left_p2 = '0') AND (right_p2 = '1')) THEN
 						new_state_p2 <= attempt_to_left;
-					ELSIF ((down_p2 = '0') AND (up_p2 = '1') AND (left_p2 = '0') AND (right_p2 = '0')) THEN
+					ELSIF ((down_p2 = '1') AND (up_p2 = '0') AND (left_p2 = '1') AND (right_p2 = '1')) THEN
 						new_state_p2 <= attempt_to_up;
-					ELSIF ((down_p2 = '1') AND (up_p2 = '0') AND (left_p2 = '0') AND (right_p2 = '0')) THEN
+					ELSIF ((down_p2 = '0') AND (up_p2 = '1') AND (left_p2 = '1') AND (right_p2 = '1')) THEN
 						new_state_p2 <= attempt_to_down;
 					ELSE
 						new_state_p2 <= which_direction;
