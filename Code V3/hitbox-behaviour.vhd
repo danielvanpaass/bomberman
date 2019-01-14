@@ -11,7 +11,7 @@ ARCHITECTURE hitbox_behaviour OF hitbox IS
 	SIGNAL count_players_p1, new_count_players_p1, count_players_p2, new_count_players_p2          : unsigned (4 DOWNTO 0);--(22 DOWNTO 0);
 	SIGNAL walls_and_crates_inverted                 : std_logic_vector(0 TO 120);
 
-	CONSTANT cooldown_end                            : unsigned(4 DOWNTO 0) := "00010"; ---"10110111000110110000000"
+	CONSTANT cooldown_end                            : unsigned(4 DOWNTO 0) := "10100"; ---"10110111000110110000000"
 	--however, for simulation purposes we used much smaller values.
 BEGIN
 	walls_and_crates_inverted <= walls_and_crates;
