@@ -151,9 +151,6 @@ begin
 				new_coor_unsigned_b_y <= coor_unsigned_b_y;
 				new_coor_signed <= coor_signed;
 				new_coor_unsigned <= coor_unsigned;
-				FF2_reset <= '0';
-				read <= '0';
-				lethal_flag <= '0';
 				new_state <= vert_out;
 -- If a player is hit, the victory state will be taken. If a wall is met or it has checked enough tiles and needs to be a plus form, the FSM will go to horizontal. If it is not a plusform, the FSM will go to rest state. Otherwise it will go back to the wait state
 			when vert_out =>
@@ -189,7 +186,7 @@ begin
 				else
 					new_state <= vert_wait;
 					new_lethaltile_y <= lethaltile_y;
-					lethal_flag <= '0';
+					new_lethal_flag <= '0';
 					new_coor_unsigned <= coor_unsigned;
 				end if;
 -- If a player is hit, the victory state will be taken. If it checked enough tiles or has met a border wall, it will go to the rest state. Otherwise, it will go to the wait sate
@@ -244,7 +241,7 @@ begin
 				if coor_signed(4) = '0' then
 					new_lethaltile_x <= std_logic_vector(coor_signed(3 downto 0));
 					new_coor_unsigned <= unsigned(coor_signed(3 downto 0));
-					lethal_flag <= '1';
+					new_lethal_flag <= '1';
 					if (coor_unsigned_b_y  = coor_unsigned_p1_y AND coor_unsigned_p1_y = coor_unsigned) then
 						new_state <= victory_2;
 					elsif (coor_unsigned_b_y = coor_unsigned_p2_y AND coor_unsigned_p2_x = coor_unsigned) then
@@ -258,7 +255,7 @@ begin
 					new_state <= hori_wait;
 					new_lethaltile_x <= lethaltile_x;
 					new_coor_unsigned <= coor_unsigned;
-					lethal_flag <= '0';
+					new_lethal_flag <= '0';
 				end if;
 -- The victory states will generate a victory signal with the winning player
 			when victory_1 =>	
@@ -276,7 +273,7 @@ begin
 				new_coor_unsigned_b_y <= coor_unsigned_b_y;
 				new_coor_signed <= "00000";
 				new_coor_unsigned <= "0000";
-				victoryv <= "10";
+				victoryv <= "00";
 				new_state <= victory_1;
 			when victory_2 =>
 				new_FF1 <= FF1;
@@ -293,7 +290,7 @@ begin
 				new_coor_unsigned_b_y <= coor_unsigned_b_y;
 				new_coor_signed <= "00000";
 				new_coor_unsigned <= "0000";
-				victoryv <= "01";
+				victoryv <= "00";
 				new_state <= victory_2;
 		end case;
 	end process;
