@@ -117,7 +117,7 @@ BEGIN
 					
 					ELSIF (y_map = y_p1) AND (x_map = x_p1) THEN--p1
 						IF((y_p1 = "0001" and x_p1 = "1001") OR (y_p1 = "1001" and x_p1 = "0001")) THEN --this are the portals, they have higher priority than the player
-							r <= "1000";
+							r <= "1010";
 							g <= "0000";
 							b <= "0000";
 						ELSIF y_map(0) = '1' AND x_map(0) = '1' THEN--normal sprite
@@ -145,7 +145,7 @@ BEGIN
 						IF((y_p2 = "0001" and x_p2 = "1001") OR (y_p2 = "1001" and x_p2 = "0001")) THEN
 								r <= "0000";
 								g <= "0000";
-								b <= "1000";
+								b <= "1010";
 						ELSIF y_map(0) = '1' AND x_map(0) = '1' THEN 
 							IF (P_vector(spritebit) = '1') THEN
 								r <= "0000";
@@ -196,8 +196,8 @@ BEGIN
 							g <= "0100";
 							b <= "0000";
 						ELSE
-							r <= "1111";
-							g <= "1000";
+							r <= "1100";
+							g <= "0110";
 							b <= "0000";
 						END IF; 	
 					ELSIF (check_1 = '1') AND (check_2 = '0') THEN--empty
