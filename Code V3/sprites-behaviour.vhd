@@ -5,7 +5,7 @@ USE IEEE.numeric_std.ALL;
 ARCHITECTURE behaviour OF sprites IS
 	SIGNAL v_map : std_logic_vector (3 DOWNTO 0);
 	SIGNAL h_map : std_logic_vector (3 DOWNTO 0);
-	SIGNAL P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector , victory_vector_1, victory_vector_2, victory_vector_3: std_logic_vector (0 TO 120);
+	SIGNAL P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector , victory_vector_1, victory_vector_2, victory_vector_3, portal_vector, empty_vector: std_logic_vector (0 TO 120);
 	SIGNAL check_1, check_2 : std_logic;
 	SIGNAL spritebit, inverted_spritebit : INTEGER RANGE 0 TO 120;
 	SIGNAL rgb : std_logic_vector(11 DOWNTO 0);
@@ -21,7 +21,7 @@ BEGIN
 	wall_vector <= 			"1111101111111111011111111110111110000000000011011111011110111110110000000000011111011111111110111111111101111100000000000";
 	explosion_vector <= 			"0000000110001100010010100111000011001010000101100100001001000100100110000110010010001100100111100100111001001000000001100";
 	portal_vector <= "0011111110001000000010100011110011001000010110100110101101010001011010011100110010000010010011111000010000000100011111110";
-	empty_vecotr <= "0000011111100001101111000111001110011110001101111100001111111111111000011111011000111100111001110001111011000011111100000";
+	empty_vector <= "0000011111100001101111000111001110011110001101111100001111111111111000011111011000111100111001110001111011000011111100000";
 	check_1 <= playground((10 - to_integer(unsigned(y_map))) * 22 + (10 - to_integer(unsigned(x_map))) * 2);
 	check_2 <= playground((10 - to_integer(unsigned(y_map))) * 22 + ((10 - to_integer(unsigned(x_map))) * 2) + 1);
 	spritebit <= (((to_integer(unsigned(h_map))) + (to_integer(unsigned(v_map)) * 11)));
@@ -39,7 +39,7 @@ BEGIN
 					g <= "0000";
 					b <= "0000";
 				ELSE
-					IF victory(1) = '1' OR victory(2) = '1' THEN--someone has won
+					IF victory(0) = '1' OR victory(1) = '1' THEN--someone has won
 							IF  (x_map = "0101"  AND y_map = "0101" AND victory = "11") THEN ---both have won
 								IF (P_vector(spritebit) = '1') THEN
 									r <= "1111";
