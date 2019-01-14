@@ -7,13 +7,14 @@ architecture behaviour_bomb_main of bomb_timer_main is
 
 component bomb_timer is
    port(clk         : in  std_logic;
+	clk_30	    : in std_logic;
         count_reset : in  std_logic;
-        count_out   : out std_logic_vector(24 downto 0)
+        count_out   : out std_logic_vector(6 downto 0)
 	);
 end component;
 
 	signal state, new_state: bomb_state;
-	signal count_out: std_logic_vector(24 downto 0);
+	signal count_out: std_logic_vector(6 downto 0);
 	signal count_reset_signal : std_logic;
 begin
 	lbl1: process (clk, reset)
@@ -42,7 +43,7 @@ begin
 		when WAITING =>
 		explosion <= '0';
 		count_reset_signal <= '0';
-		if count_out = "1011111010111100001000000" then -- "1011111010111100001000000"
+		if count_out = "1111000" then -- "1011111010111100001000000"
 			new_state <= BOMB_EXPLOded;
 		else
 			new_state <= WAITING;
@@ -56,6 +57,6 @@ begin
 	end process;
 
 	
- 	T1 : bomb_timer port map(clk,count_reset_signal ,count_out);
+ 	T1 : bomb_timer port map(clk,clk_30,count_reset_signal ,count_out);
 
 end architecture behaviour_bomb_main;

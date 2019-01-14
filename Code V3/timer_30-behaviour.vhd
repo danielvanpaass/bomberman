@@ -6,9 +6,9 @@ architecture behaviour_timer30 of timer_30 is
 signal count, new_count : unsigned (4 downto 0);
 
 begin
-	process(clk_30, timer_r30)
+	process(clk, timer_r30)
 	begin
-	if (rising_edge (clk_30)) then
+	if (rising_edge (clk)) then
 		if timer_r30 = '0' then
 			count <= "00000";
 		else
@@ -17,9 +17,13 @@ begin
 	end if;
 	end process;
 
-	process (count)
+	process (count, clk_30)
 	begin
-		new_count <= count + 1;
+		if clk_30 = '1' then
+			new_count <= count + 1;
+		else
+			new_count <= count;
+		end if;
 	end process;
 
 	count_out <= std_logic_vector (count);

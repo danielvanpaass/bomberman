@@ -12,7 +12,8 @@ component timer is
 end component;
 
 component timer_30 is
-   port(clk_30   : in  std_logic;
+   port(clk  : in std_logic;
+	clk_30   : in  std_logic;
         timer_r30 : in  std_logic;
         count_out : out std_logic_vector(4 downto 0));
 end component;
@@ -319,7 +320,7 @@ begin
 	
 	-- timer_r <= timer_on;
 	T1 : timer port map (clk, timer_on, count);
-	T1_30 : timer_30 port map (clk_30, timer_r30, length_signal);
+	T1_30 : timer_30 port map (clk, clk_30, timer_r30, length_signal);
 
 end behaviour;
 

@@ -7,6 +7,7 @@ entity playground is
 	lethalx : in std_logic_vector(3 downto 0);
 	lethaly : in std_logic_vector(3 downto 0);
 	lethal : in std_logic;
+	bomb	: in std_logic_vector(4 downto 0);
 	y0 : out std_logic_vector(21 downto 0);
 	y1 : out std_logic_vector(21 downto 0);
 	y2 : out std_logic_vector(21 downto 0);
