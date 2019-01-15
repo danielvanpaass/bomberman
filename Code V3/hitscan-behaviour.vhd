@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.ALL;
 use IEEE.numeric_std.ALL;
 
 architecture behaviour of hitscan is
-	type hit_state is (rest, undicided, horizontal, plusform, vertical, vert_wait, vert_out, hori_wait, hori_out, LastCheckRest, LastCheckHori, victory_1, victory_2);
+	type hit_state is (rest, undicided, horizontal, plusform, vertical, vert_wait, vert_out, hori_wait, hori_out, LastCheckRestVert, LastCheckRestHori, LastCheckHori, victory_1, victory_2);
 	signal state, new_state: hit_state;
 	signal FF1, new_FF1, new_lethal_flag, lethalflagbuff: std_logic;
 	signal coor_signed, new_coor_signed: signed(4 downto 0);
@@ -179,7 +179,7 @@ begin
 					elsif (FF2_read = '1' and FF1 = '1') then
 						new_state <= LastCheckHori;
 					elsif FF2_read = '1' then
-						new_state <= LastCheckRest;
+						new_state <= LastCheckRestVert;
 					else
 						new_state <= vert_wait;
 					end if;
@@ -247,7 +247,7 @@ begin
 					elsif (coor_unsigned_b_y = coor_unsigned_p2_y AND coor_unsigned_p2_x = coor_unsigned) then
 						new_state <= victory_1;
 					elsif FF2_read = '1' then
-						new_state <= LastCheckRest;
+						new_state <= LastCheckRestHori;
 					else
 						new_state <= hori_wait;
 					end if;
@@ -272,8 +272,8 @@ begin
 				new_coor_unsigned_p2_y <= coor_unsigned_p2_y;
 				new_coor_unsigned_b_x <= coor_unsigned_b_x;
 				new_coor_unsigned_b_y <= coor_unsigned_b_y;
-				new_coor_signed <= "00000";
-				new_coor_unsigned <= "0000";
+				new_coor_signed <= coor_signed;
+				new_coor_unsigned <= coor_unsigned;
 				if (coor_unsigned_b_y  = coor_unsigned_p1_y AND coor_unsigned_p1_x = coor_unsigned) then
 					new_state <= victory_2;
 				elsif (coor_unsigned_b_y = coor_unsigned_p2_y AND coor_unsigned_p2_x = coor_unsigned) then
@@ -282,7 +282,31 @@ begin
 					new_state <= horizontal;
 				end if;
 
-			when LastCheckRest =>
+			when LastCheckRestVert =>
+				new_FF1 <= FF1;
+				FF2_reset <= '0';
+				read <= '0';
+				new_lethal_flag <= '0';
+				victoryv <= "00";
+				new_lethaltile_x <= "0000";
+				new_lethaltile_y <= "0000";
+				new_coor_unsigned_p1_x <= coor_unsigned_p1_x;
+				new_coor_unsigned_p1_y <= coor_unsigned_p1_y;
+				new_coor_unsigned_p2_x <= coor_unsigned_p2_x;
+				new_coor_unsigned_p2_y <= coor_unsigned_p2_y;
+				new_coor_unsigned_b_x <= coor_unsigned_b_x;
+				new_coor_unsigned_b_y <= coor_unsigned_b_y;
+				new_coor_signed <= coor_signed;
+				new_coor_unsigned <= coor_unsigned;
+				if (coor_unsigned_b_x  = coor_unsigned_p1_x AND coor_unsigned_p1_y = coor_unsigned) then
+					new_state <= victory_2;
+				elsif (coor_unsigned_b_x = coor_unsigned_p2_x AND coor_unsigned_p2_y = coor_unsigned) then
+					new_state <= victory_1;
+				else
+					new_state <= rest;
+				end if;
+
+		when LastCheckRestHori =>
 				new_FF1 <= FF1;
 				FF2_reset <= '0';
 				read <= '0';
@@ -305,7 +329,7 @@ begin
 				else
 					new_state <= rest;
 				end if;
-
+				
 -- The victory states will generate a victory signal with the winning player
 			when victory_1 =>	
 				new_FF1 <= FF1;
