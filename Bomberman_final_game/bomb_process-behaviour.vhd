@@ -12,10 +12,7 @@ component bomb_overall is
 	timer_p1 : in std_logic_vector(3 downto 0);
 	timer_p2 : in std_logic_vector(3 downto 0);
 	explosion  : out std_logic;
-	b_placed   : out std_logic;
-        explosion_bomb : out std_logic_vector(7 downto 0);
-	buff_p1	 : out std_logic;
-	buff_p2  : out std_logic);
+        explosion_bomb : out std_logic_vector(7 downto 0));
 end component;
 
 component hitscan_top is
@@ -53,7 +50,11 @@ b_explosion <= explosion_inbetween;
 T1 : timer_input port map (clk, clk_30, bombp1, reset, bomb_in1);
 T2 : timer_input port map (clk, clk_30, bombp2, reset, bomb_in2);
 
-BOMB_TIMERS : bomb_overall port map (clk, clk_30, reset, bomb_in1, bomb_in2, timer_p1, timer_p2, explosion_inbetween, b_placed, explosion_bomb, buff_p1, buff_p2);
+buff_p1 <= bomb_in1;
+buff_p2 <= bomb_in2;
+b_placed <= bomb_in1 OR bomb_in2;
+
+BOMB_TIMERS : bomb_overall port map (clk, clk_30, reset, bomb_in1, bomb_in2, timer_p1, timer_p2, explosion_inbetween, explosion_bomb);
 HITSCAN : hitscan_top port map (x_b, Y_b, reset, clk, explosion, X_p1, Y_p1, X_p2, Y_p2, lethal_flag, victoryv, lethaltile_x, lethaltile_y);
 
 end behaviour;

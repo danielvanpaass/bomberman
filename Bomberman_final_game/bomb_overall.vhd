@@ -10,9 +10,6 @@ entity bomb_overall is
 	timer_p1	: in std_logic_vector(3 downto 0);
 	timer_p2 : in std_logic_vector(3 downto 0);
 	explosion	 : out std_logic;
-	b_placed	  : out std_logic;
-        explosion_bomb : out std_logic_vector(7 downto 0);
-	buff_p1	 : out std_logic;
-	buff_p2  : out std_logic);
+        explosion_bomb : out std_logic_vector(7 downto 0));
 end bomb_overall;
 

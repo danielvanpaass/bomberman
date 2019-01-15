@@ -43,7 +43,7 @@ begin
 		when WAITING =>
 		explosion <= '0';
 		count_reset_signal <= '0';
-		if count_out = "10010110" then -- "1011111010111100001000000"
+		if count_out = "00000011" then -- "10010110"
 			new_state <= BOMB_EXPLOded;
 		else
 			new_state <= WAITING;

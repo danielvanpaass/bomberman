@@ -53,7 +53,7 @@ begin
 		when WAITING =>
 		bombout <= '0';
 		count_reset_signal <= '0';
-		if count_out = "00010100" then -- "1011111010111100001000000"
+		if count_out = "00000110" then -- "00010100"
 			new_state <= TIMER_RESET;
 		else
 			new_state <= WAITING;
