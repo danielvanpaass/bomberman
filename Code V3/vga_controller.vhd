@@ -37,8 +37,8 @@ ARCHITECTURE behaviour OF VGA_controller IS
 	SIGNAL h_count, new_h_count                      : std_logic_vector(8 DOWNTO 0);
 	SIGNAL v_count ,   new_v_count                     : std_logic_vector(9 DOWNTO 0);
 	SIGNAL h_sync, v_sync: std_logic;
-	CONSTANT begin_video : std_logic_vector(8 downto 0):= "000000000";
-	CONSTANT end_video  : std_logic_vector(8 downto 0):= "011110010";--242
+	CONSTANT begin_video : std_logic_vector(8 downto 0):= "000110000";
+	CONSTANT end_video  : std_logic_vector(8 downto 0):= "100100010";--242
 BEGIN
 PROCESS (h_count, v_count)
 begin-----to make sure that the rgb module does not paint outside the rectangle
