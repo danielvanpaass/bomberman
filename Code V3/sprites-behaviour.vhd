@@ -136,6 +136,22 @@ BEGIN
 								r <= "1111";
 								g <= "0100";
 								b <= "0100";
+							ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
+								(x_map = x_bomb_b AND y_map = y_bomb_b AND bomb_b_enable = '1') OR
+								(x_map = x_bomb_c AND y_map = y_bomb_c AND bomb_c_enable = '1') OR
+								(x_map = x_bomb_d AND y_map = y_bomb_d AND bomb_d_enable = '1') AND
+								(bomb_vector(spritebit) = '1') THEN
+									r <= "0010";
+									g <= "0000";
+									b <= "0000";
+							ELSIF  	(x_map = x_bomb_e AND y_map = y_bomb_e AND bomb_e_enable = '1') OR
+								(x_map = x_bomb_f AND y_map = y_bomb_f AND bomb_f_enable = '1') OR
+								(x_map = x_bomb_g AND y_map = y_bomb_g AND bomb_g_enable = '1') OR
+								(x_map = x_bomb_h AND y_map = y_bomb_h AND bomb_h_enable = '1')	AND
+								(bomb_vector(spritebit) = '1') THEN
+									r <= "0000";
+									g <= "0000";
+									b <= "0010"; 
 							ELSIF (empty_vector(spritebit) = '1') THEN
 								r <= "1011";
 								g <= "1011";
@@ -154,6 +170,22 @@ BEGIN
 								r <= "1111";
 								g <= "0100";
 								b <= "0100";
+							ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
+								(x_map = x_bomb_b AND y_map = y_bomb_b AND bomb_b_enable = '1') OR
+								(x_map = x_bomb_c AND y_map = y_bomb_c AND bomb_c_enable = '1') OR
+								(x_map = x_bomb_d AND y_map = y_bomb_d AND bomb_d_enable = '1') AND
+								(bomb_vector(spritebit) = '1') THEN
+									r <= "0010";
+									g <= "0000";
+									b <= "0000";
+							ELSIF  	(x_map = x_bomb_e AND y_map = y_bomb_e AND bomb_e_enable = '1') OR
+								(x_map = x_bomb_f AND y_map = y_bomb_f AND bomb_f_enable = '1') OR
+								(x_map = x_bomb_g AND y_map = y_bomb_g AND bomb_g_enable = '1') OR
+								(x_map = x_bomb_h AND y_map = y_bomb_h AND bomb_h_enable = '1')	AND
+								(bomb_vector(spritebit) = '1') THEN
+									r <= "0000";
+									g <= "0000";
+									b <= "0010";
 							ELSIF (empty_vector(spritebit) = '1') THEN
 								r <= "1011";
 								g <= "1011";
