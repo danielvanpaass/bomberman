@@ -7,7 +7,7 @@ entity bomb_process is
         reset   : IN		std_logic;
 	explosion : in std_logic;
 	clk   : IN  std_logic;
-	clk_30: IN std_logic;
+	clk_60: IN std_logic;
 	X_p1  : IN  std_logic_vector(3 downto 0);
         Y_p1  : IN  std_logic_vector(3 downto 0);
         X_p2  : IN  std_logic_vector(3 downto 0);

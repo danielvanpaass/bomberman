@@ -7,7 +7,7 @@ architecture behaviour of timer_input is
 
 component bomb_timer is
    port(clk         : in  std_logic;
-	clk_30	    : in std_logic;
+	clk_60	    : in  std_logic;
         count_reset : in  std_logic;
         count_out   : out std_logic_vector(7 downto 0)
 	);
@@ -53,7 +53,7 @@ begin
 		when WAITING =>
 		bombout <= '0';
 		count_reset_signal <= '0';
-		if count_out = "00000110" then -- "00010100"
+		if count_out = "00010100"then -- "00010100"
 			new_state <= TIMER_RESET;
 		else
 			new_state <= WAITING;
@@ -63,6 +63,6 @@ begin
 	end process;
 
 	
- 	T1 : bomb_timer port map(clk,clk_60,count_reset_signal ,count_out);
+ 	T1 : bomb_timer port map(clk, clk_60, count_reset_signal ,count_out);
 
 end architecture behaviour;

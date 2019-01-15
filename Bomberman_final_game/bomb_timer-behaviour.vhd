@@ -17,9 +17,9 @@ begin
 		end if;
 	end process;
 
-	process (count, clk_30)							-- Add one to new_count if timer is on
+	process (count, clk_60)							-- Add one to new_count if timer is on
 	begin
-		if clk_30 = '1' then
+		if clk_60 = '1' then
 			new_count <= count + 1;
 		else
 			new_count <= count;

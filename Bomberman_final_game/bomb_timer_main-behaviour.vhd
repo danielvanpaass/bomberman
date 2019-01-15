@@ -7,7 +7,7 @@ architecture behaviour_bomb_main of bomb_timer_main is
 
 component bomb_timer is
    port(clk         : in  std_logic;
-	clk_30	    : in std_logic;
+	clk_60	    : in std_logic;
         count_reset : in  std_logic;
         count_out   : out std_logic_vector(7 downto 0)
 	);
@@ -57,6 +57,6 @@ begin
 	end process;
 
 	
- 	T1 : bomb_timer port map(clk,clk_30,count_reset_signal ,count_out);
+ 	T1 : bomb_timer port map(clk,clk_60,count_reset_signal ,count_out);
 
 end architecture behaviour_bomb_main;

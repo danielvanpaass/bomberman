@@ -11,17 +11,17 @@ component timer is
 		count_out : out std_logic_vector(15 downto 0));
 end component;
 
-component timer_30 is
+component timer_60 is
    port(clk  : in std_logic;
-	clk_30   : in  std_logic;
-        timer_r30 : in  std_logic;
+	clk_60   : in  std_logic;
+        timer_r60 : in  std_logic;
         count_out : out std_logic_vector(4 downto 0));
 end component;
 
 
 
 	signal state, new_state: sound_state;
-	signal H, v_flag, bp_flag, be_flag, timer_on, timer_r, timer_r30, new_H, new_v, new_bp, new_be: std_logic;
+	signal H, v_flag, bp_flag, be_flag, timer_on, timer_r, timer_r60, new_H, new_v, new_bp, new_be: std_logic;
 	signal count, count_v, count_bp, count_be, new_count_v, new_count_bp, new_count_be :std_logic_vector(15 downto 0);
 	signal length_signal: std_logic_vector(4 downto 0);
 	signal note, new_note: std_logic_vector(2 downto 0);
@@ -61,7 +61,7 @@ begin
 		new_v <= '0';
 		new_bp <= '0';
 		new_be <= '0';
-		timer_r30 <= '0';
+		timer_r60 <= '0';
 		new_count_v <= "0000000000000000";
 		new_count_be <= "0000000000000000";
 		new_count_bp <= "0000000000000000";
@@ -83,7 +83,7 @@ begin
 		new_v <= '1';
 		new_bp <= '0';
 		new_be <= '0';
-		timer_r30 <= '0';
+		timer_r60 <= '0';
 		new_count_v <= count_v;
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -97,7 +97,7 @@ begin
 		new_v <= '0';
 		new_bp <= '1';
 		new_be <= '0';
-		timer_r30 <= '0';
+		timer_r60 <= '0';
 		new_count_bp <= "1111111111111111";
 		new_count_be <= count_be;
 		new_count_v <= count_v;
@@ -111,7 +111,7 @@ begin
 		new_v <= '0';
 		new_bp <= '0';
 		new_be <= '1';
-		timer_r30 <= '0';
+		timer_r60 <= '0';
 		new_count_be <= "1010111000111000";
 		new_count_v <= count_v;
 		new_count_bp <= count_bp;
@@ -122,7 +122,7 @@ begin
 		new_note <= note;
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '1';
+		timer_r60 <= '1';
 		new_v <= v_flag;
 		new_bp <= bp_flag;
 		new_be <= be_flag;
@@ -150,7 +150,7 @@ begin
 		new_note <= "010";
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '1';
+		timer_r60 <= '1';
 		new_count_v <= "1111010000100100";
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -166,7 +166,7 @@ begin
 		new_note <= "011";
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '0';
+		timer_r60 <= '0';
 		new_count_v <= "1010000000101000";
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -184,7 +184,7 @@ begin
 		new_note <= "100" ;
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '0';
+		timer_r60 <= '0';
 		new_count_v <= "0110000110101000";
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -202,7 +202,7 @@ begin
 		new_note <= "101";
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '0';
+		timer_r60 <= '0';
 		new_count_v <= "0011110100001001";
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -220,7 +220,7 @@ begin
 		new_note <= "111";
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '0';
+		timer_r60 <= '0';
 		new_count_v <= count_v;
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -238,7 +238,7 @@ begin
 		new_note <= note;
 		output <= '1';
 		timer_on <= '1';
-		timer_r30 <= '1';
+		timer_r60 <= '1';
 		new_count_v <= count_v;
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -256,7 +256,7 @@ begin
 		new_note <= note;
 		output <= '0';
 		timer_on <= '1';
-		timer_r30 <= '1';
+		timer_r60 <= '1';
 		new_count_v <= count_v;
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -274,7 +274,7 @@ begin
 		new_note <= note;
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '1';
+		timer_r60 <= '1';
 		new_count_v <= count_v;
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -288,7 +288,7 @@ begin
 		new_note <= note;
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '1';
+		timer_r60 <= '1';
 		new_count_v <= count_v;
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -302,7 +302,7 @@ begin
 		new_note <= note;
 		output <= '0';
 		timer_on <= '0';
-		timer_r30 <= '1';
+		timer_r60 <= '1';
 		new_count_v <= count_v;
 		new_count_be <= count_be;
 		new_count_bp <= count_bp;
@@ -320,7 +320,7 @@ begin
 	
 	-- timer_r <= timer_on;
 	T1 : timer port map (clk, timer_on, count);
-	T1_30 : timer_30 port map (clk, clk_30, timer_r30, length_signal);
+	T1_60 : timer_60 port map (clk, clk_60, timer_r60, length_signal);
 
 end behaviour;
 
