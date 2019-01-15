@@ -274,9 +274,9 @@ begin
 				new_coor_unsigned_b_y <= coor_unsigned_b_y;
 				new_coor_signed <= coor_signed;
 				new_coor_unsigned <= coor_unsigned;
-				if (coor_unsigned_b_y  = coor_unsigned_p1_y AND coor_unsigned_p1_x = coor_unsigned) then
+				if (coor_unsigned_b_x  = coor_unsigned_p1_x AND coor_unsigned_p1_y = coor_unsigned) then
 					new_state <= victory_2;
-				elsif (coor_unsigned_b_y = coor_unsigned_p2_y AND coor_unsigned_p2_x = coor_unsigned) then
+				elsif (coor_unsigned_b_x = coor_unsigned_p2_x AND coor_unsigned_p2_y = coor_unsigned) then
 					new_state <= victory_1;
 				else
 					new_state <= horizontal;
