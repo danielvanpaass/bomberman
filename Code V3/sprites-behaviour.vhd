@@ -5,7 +5,7 @@ USE IEEE.numeric_std.ALL;
 ARCHITECTURE behaviour OF sprites IS
 	SIGNAL v_map : std_logic_vector (3 DOWNTO 0);
 	SIGNAL h_map : std_logic_vector (3 DOWNTO 0);
-	SIGNAL P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector , victory_vector_1, victory_vector_2, victory_vector_3, portal_vector, empty_vector: std_logic_vector (0 TO 120);
+	SIGNAL P_vector, bomb_vector, crate_vector, explosion_vector, wall_vector , victory_vector_1, victory_vector_2, victory_vector_3, portal_vector, empty_vector, p_eyes: std_logic_vector (0 TO 120);
 	SIGNAL check_1, check_2 : std_logic;
 	SIGNAL spritebit, inverted_spritebit : INTEGER RANGE 0 TO 120;
 	SIGNAL rgb : std_logic_vector(11 DOWNTO 0);
@@ -16,6 +16,7 @@ BEGIN
 	victory_vector_2 <= 			"1110110001111101100011100011100111000111101110001111011100011011111000110111110001100111100011000111110110001111101100011";
  	victory_vector_3 <= 			"0011111000001111111000011000110000110000000001111000000001111100000000111100000000011000011000110000111111100000111110000";
 	P_vector <= 			"0011111110000111111100011000001100110101011000101010100011111111101111111111111111111111000110110110001101110000111000000";	
+	p_eyes <= 			"0000000000000000000000000000000000001111100000010101000000101010000000000000000000000000000000000000000000000000000000000";
 	bomb_vector <= 			"0000001100000000100101000001000100001111000000111111000011110011000111110010001111111100011111111000011111100000011110000";
 	crate_vector <=			"1111111111111100000111111100011111011101110110011111001100011100011001111100110111011101111100011111110000011111111111111";
 	wall_vector <= 			"1111101111111111011111111110111110000000000011011111011110111110110000000000011111011111111110111111111101111100000000000";
@@ -45,6 +46,10 @@ BEGIN
 									r <= "1111";
 									g <= "0000";
 									b <= "0000";
+								ELSIF (p_eyes(spritebit) = '1') THEN
+									r <= "1111";
+									g <= "0100";
+									b <= "0100";
 								ELSE 
 									r <= "1111";
 									g <= "1111";
@@ -55,12 +60,16 @@ BEGIN
 									r <= "0000";
 									g <= "0000";
 									b <= "1111";
+								ELSIF (p_eyes(spritebit) = '1') THEN
+									r <= "0100";
+									g <= "0100";
+									b <= "1111";
 								ELSE 
 									r <= "1111";
 									g <= "1111";
 									b <= "1111";
 								END IF;
-							ELSIF (x_map = "0100" AND y_map = "0101") THEN
+							ELSIF (x_map = "0100" AND y_map = "0110") THEN
 								IF (victory_vector_1(spritebit) = '1') THEN
 									r <= "0000";
 									g <= "0000";
@@ -70,7 +79,7 @@ BEGIN
 									g <= "1111";
 									b <= "1111";
 								END IF;
-							ELSIF (x_map = "0101" AND y_map = "0101") THEN
+							ELSIF (x_map = "0101" AND y_map = "0110") THEN
 								IF (victory_vector_2(spritebit) = '1') THEN
 									r <= "0000";
 									g <= "0000";
@@ -80,7 +89,7 @@ BEGIN
 									g <= "1111";
 									b <= "1111";
 								END IF;
-							ELSIF (x_map = "0110" AND y_map = "0101") THEN
+							ELSIF (x_map = "0110" AND y_map = "0110") THEN
 								IF (victory_vector_3(spritebit) = '1') THEN
 									r <= "0000";
 									g <= "0000";
@@ -123,6 +132,10 @@ BEGIN
 								r <= "1111";
 								g <= "0000";
 								b <= "0000";
+							ELSIF (p_eyes(spritebit) = '1') THEN
+								r <= "1111";
+								g <= "0100";
+								b <= "0100";
 							ELSIF (empty_vector(spritebit) = '1') THEN
 								r <= "1011";
 								g <= "1011";
@@ -137,6 +150,10 @@ BEGIN
 								r <= "1111";
 								g <= "0000";
 								b <= "0000";
+							ELSIF (p_eyes(spritebit) = '1') THEN
+								r <= "1111";
+								g <= "0100";
+								b <= "0100";
 							ELSIF (empty_vector(spritebit) = '1') THEN
 								r <= "1011";
 								g <= "1011";
@@ -149,7 +166,7 @@ BEGIN
 						END IF;
 					ELSIF (y_map = y_p2) AND (x_map = x_p2) THEN--same but for p2
 						IF((y_p2 = "0001" and x_p2 = "1001") OR (y_p2 = "1001" and x_p2 = "0001")) THEN
-								IF (portal_vector(spritebit) = '1') THEN
+							IF (portal_vector(spritebit) = '1') THEN
 								r <= "0000";
 								g <= "0000";
 								b <= "0000";
@@ -163,7 +180,10 @@ BEGIN
 								r <= "0000";
 								g <= "0000";
 								b <= "1111";
-							
+							ELSIF (p_eyes(spritebit) = '1') THEN
+									r <= "0100";
+									g <= "0100";
+									b <= "1111";
 							ELSIF (empty_vector(spritebit) = '1') THEN
 								r <= "1011";
 								g <= "1011";
@@ -178,6 +198,10 @@ BEGIN
 								r <= "0000";
 								g <= "0000";
 								b <= "1111";
+							ELSIF (p_eyes(spritebit) = '1') THEN
+									r <= "0100";
+									g <= "0100";
+									b <= "1111";	
 							ELSIF (empty_vector(spritebit) = '1') THEN
 								r <= "1011";
 								g <= "1011";
@@ -188,19 +212,18 @@ BEGIN
 								b <= "1100";
 							END IF;	
 						END IF;
-					ELSIF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
+					END IF;
+					
+					IF (x_map = x_bomb_a AND y_map = y_bomb_a AND bomb_a_enable = '1') OR --bomb
 						(x_map = x_bomb_b AND y_map = y_bomb_b AND bomb_b_enable = '1') OR
 						(x_map = x_bomb_c AND y_map = y_bomb_c AND bomb_c_enable = '1') OR
-						(x_map = x_bomb_d AND y_map = y_bomb_d AND bomb_d_enable = '1') OR
-						(x_map = x_bomb_e AND y_map = y_bomb_e AND bomb_e_enable = '1') OR
-						(x_map = x_bomb_f AND y_map = y_bomb_f AND bomb_f_enable = '1') OR
-						(x_map = x_bomb_g AND y_map = y_bomb_g AND bomb_g_enable = '1') OR
-						(x_map = x_bomb_h AND y_map = y_bomb_h AND bomb_h_enable = '1') THEN
-						IF (bomb_vector(spritebit) = '1') THEN
-							r <= "0000";
-							g <= "0000";
-							b <= "0000";
-						ELSIF (empty_vector(spritebit) = '1') THEN
+						(x_map = x_bomb_d AND y_map = y_bomb_d AND bomb_d_enable = '1') THEN
+						IF (((x_map = x_p1) and (y_map = x_p2)) OR ((x_map = x_p2) and (y_map = y_p2))) THEN
+							IF ((bomb_vector(spritebit) = '1') AND (P_vector(spritebit) = '0')) THEN
+								r <= "0010";
+								g <= "0000";
+								b <= "0000";
+							ELSIF (empty_vector(spritebit) = '1') THEN
 								r <= "1011";
 								g <= "1011";
 								b <= "1011";
@@ -208,7 +231,46 @@ BEGIN
 								r <= "1100";
 								g <= "1100";
 								b <= "1100";
-							END IF;	 
+							END IF;	
+						ELSIF (empty_vector(spritebit) = '1') THEN
+							r <= "1011";
+							g <= "1011";
+							b <= "1011";
+						ELSE
+							r <= "1100";
+							g <= "1100";
+							b <= "1100";
+						END IF;
+								
+					ELSIF (x_map = x_bomb_e AND y_map = y_bomb_e AND bomb_e_enable = '1') OR
+						(x_map = x_bomb_f AND y_map = y_bomb_f AND bomb_f_enable = '1') OR
+						(x_map = x_bomb_g AND y_map = y_bomb_g AND bomb_g_enable = '1') OR
+						(x_map = x_bomb_h AND y_map = y_bomb_h AND bomb_h_enable = '1') THEN
+						IF (((x_map = x_p1) and (y_map = x_p2)) OR ((x_map = x_p2) and (y_map = y_p2))) THEN
+							IF ((bomb_vector(spritebit) = '1') AND (P_vector(spritebit) = '0')) THEN
+								r <= "0000";
+								g <= "0000";
+								b <= "0010";
+							ELSIF (empty_vector(spritebit) = '1') THEN
+								r <= "1011";
+								g <= "1011";
+								b <= "1011";
+							ELSE
+								r <= "1100";
+								g <= "1100";
+								b <= "1100";
+							END IF;
+						ELSIF (empty_vector(spritebit) = '1') THEN
+							r <= "1011";
+							g <= "1011";
+							b <= "1011";
+						ELSE
+							r <= "1100";
+							g <= "1100";
+							b <= "1100";
+						END IF; 
+								
+							
 					ELSIF((y_map = "0001" and x_map = "1001") OR (y_map = "1001" and x_map = "0001")) THEN--portal sprites
 						IF (portal_vector(spritebit) = '1') THEN
 								r <= "0000";
